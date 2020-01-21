@@ -22,6 +22,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Spinner;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -30,6 +31,8 @@ import edu.wpi.first.wpilibj2.command.Command;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private final XboxController driverJoystick = new XboxController(0);
+  
   // Subsystem defined here!!!
   private final Chassis m_chassis = new Chassis();
   private final Climber m_climber = new Climber();
@@ -38,44 +41,94 @@ public class RobotContainer {
   private final Spinner m_spinner = new Spinner();
 
   // Command defined here!!!
+  //private final AutoMove m_autoCommand = new AutoMove(m_auto)
   private final BasicDrive m_basicDrive = new BasicDrive(m_chassis);
   private final BasicClimb m_basicClimb = new BasicClimb(m_climber);
   private final BasicIntake m_basicIntake = new BasicIntake(m_intake);
   private final BasicShoot m_basicShoot = new BasicShoot(m_shooter);
   private final BasicSpin m_basicSpin = new BasicSpin(m_spinner);
 
-  /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
-   */
+  // Button defined here!!!
+  private final JoystickButton buttonY = new JoystickButton(driverJoystick,Constants.buttonY);
+  private final JoystickButton buttonA = new JoystickButton(driverJoystick,Constants.buttonA);
+  private final JoystickButton buttonX = new JoystickButton(driverJoystick,Constants.buttonX);
+  private final JoystickButton buttonB = new JoystickButton(driverJoystick,Constants.buttonB);
+  
+  private final JoystickButton buttonRB = new JoystickButton(driverJoystick,Constants.buttonRB);
+  private final JoystickButton buttonLB = new JoystickButton(driverJoystick,Constants.buttonLB);
+  private final JoystickButton buttonBack = new JoystickButton(driverJoystick,Constants.buttonBack);
+  private final JoystickButton buttonOption = new JoystickButton(driverJoystick,Constants.buttonOption);
+  private final JoystickButton buttonJR = new JoystickButton(driverJoystick,Constants.buttonJR);
+  private final JoystickButton buttonJL = new JoystickButton(driverJoystick,Constants.buttonJL);
+
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-
     // Set Default Command!
-    m_chassis.setDefaultCommand(m_basicDrive);
+    //m_chassis.setDefaultCommand(m_basicDrive);
     //m_climber.setDefaultCommand();
     //m_intake.setDefaultCommand();
     //m_shooter.setDefaultCommand();
     //m_spinner.setDefaultCommand();
   }
 
-  /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
   private void configureButtonBindings() {
+    //Trig command defined here!!!!
+    //buttonY.whenPressed(m_basicSpin);
   }
 
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  //public Command getAutonomousCommand() {
+  /*
+  public Command getAutonomousCommand() {
      //An ExampleCommand will run in autonomous
-    //return m_autoCommand;
-  //}
+    return m_autoCommand;
+  }
+  */
+
+  public double getRawAxis(int AxisNumber){
+    return driverJoystick.getRawAxis(AxisNumber);
+  }
+
+  public boolean getrawButton(int ButtonNumber){
+    return driverJoystick.getRawButton(ButtonNumber);
+  }
+
+  public double getRawRX(){
+    double rawData = getRawAxis(Constants.axisJRX);
+    if(rawData > 0 && rawData < 1){
+      rawData = Constants.axisRXScale * Math.pow(Math.abs(rawData),Constants.axisRXExp);
+    }else if(rawData < 0 && rawData > -1){
+      rawData = Constants.axisRXScale * -Math.pow(Math.abs(rawData),Constants.axisRXExp);
+    }
+    return rawData;
+  }
+
+  public double getRawRY(){
+    double rawData = getRawAxis(Constants.axisJRY);
+    if(rawData > 0 && rawData < 1){
+      rawData = Constants.axisRYScale * Math.pow(Math.abs(rawData),Constants.axisRYExp);
+    }else if(rawData < 0 && rawData > -1){
+      rawData = Constants.axisRYScale * -Math.pow(Math.abs(rawData),Constants.axisRYExp);
+    }
+    return rawData;
+  }
+
+  public double getRawLX(){
+    double rawData = getRawAxis(Constants.axisJLX);
+    if(rawData > 0 && rawData < 1){
+      rawData = Constants.axisLXScale * Math.pow(Math.abs(rawData),Constants.axisLXExp);
+    }else if(rawData < 0 && rawData > -1){
+      rawData = Constants.axisLXScale * -Math.pow(Math.abs(rawData),Constants.axisLXExp);
+    }
+    return rawData;
+  }
+
+  public double getRawLY(){
+    double rawData = getRawAxis(Constants.axisJLY);
+    if(rawData > 0 && rawData < 1){
+      rawData = Constants.axisLYScale * Math.pow(Math.abs(rawData),Constants.axisLYExp);
+    }else if(rawData < 0 && rawData > -1){
+      rawData = Constants.axisLYScale * -Math.pow(Math.abs(rawData),Constants.axisLYExp);
+    }
+    return rawData;
+  }
 }

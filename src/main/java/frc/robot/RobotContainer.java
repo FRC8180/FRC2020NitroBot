@@ -7,7 +7,7 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
+//import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.chassis.BasicDrive;
 import frc.robot.commands.climber.BasicClimb;
@@ -99,6 +99,9 @@ public class RobotContainer {
     }else if(rawData < 0 && rawData > -1){
       rawData = Constants.axisRXScale * -Math.pow(Math.abs(rawData),Constants.axisRXExp);
     }
+    if(Constants.axisRXInvert){
+      rawData = rawData * -1;
+    }
     return rawData;
   }
 
@@ -108,6 +111,9 @@ public class RobotContainer {
       rawData = Constants.axisRYScale * Math.pow(Math.abs(rawData),Constants.axisRYExp);
     }else if(rawData < 0 && rawData > -1){
       rawData = Constants.axisRYScale * -Math.pow(Math.abs(rawData),Constants.axisRYExp);
+    }
+    if(Constants.axisRYInvert){
+      rawData = rawData * -1;
     }
     return rawData;
   }
@@ -119,6 +125,9 @@ public class RobotContainer {
     }else if(rawData < 0 && rawData > -1){
       rawData = Constants.axisLXScale * -Math.pow(Math.abs(rawData),Constants.axisLXExp);
     }
+    if(Constants.axisLXInvert){
+      rawData = rawData * -1;
+    }
     return rawData;
   }
 
@@ -128,6 +137,9 @@ public class RobotContainer {
       rawData = Constants.axisLYScale * Math.pow(Math.abs(rawData),Constants.axisLYExp);
     }else if(rawData < 0 && rawData > -1){
       rawData = Constants.axisLYScale * -Math.pow(Math.abs(rawData),Constants.axisLYExp);
+    }
+    if(Constants.axisLYInvert){
+      rawData = rawData * -1;
     }
     return rawData;
   }

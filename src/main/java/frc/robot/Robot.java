@@ -20,11 +20,11 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
 
   private Command m_autonomousCommand;
-  private static RobotContainer m_robotContainer;
+  public static RobotContainer m_oi;
 
   @Override
   public void robotInit() {
-    m_robotContainer = new RobotContainer();
+    m_oi = new RobotContainer();
   }
 
   /**

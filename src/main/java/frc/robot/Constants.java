@@ -41,4 +41,12 @@ public final class Constants {
     public static final double axisLXScale = 1;
     public static final double axisLYExp = 1;
     public static final double axisLYScale = 1;
+
+    //Shooter Setting
+    public static final byte shooterUpperMotor = 1;
+    public static final byte shooterLowerMotor = 2;
+    public static final boolean shooterUpperMotorInvert = false;
+    public static final boolean shooterLowerMotorInvert = false;
+    public static final int shooterUpperEncoderPPR = 2048;
+    public static final int shooterLowerEncoderPPR = 2048;
 }

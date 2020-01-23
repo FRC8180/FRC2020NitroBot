@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Chassis;
 
 public class BasicDrive extends CommandBase {
-  
+
   private final Chassis chassis;
   public BasicDrive(Chassis subsystem) {
     chassis = subsystem;
@@ -21,7 +21,6 @@ public class BasicDrive extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.

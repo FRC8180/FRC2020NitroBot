@@ -8,7 +8,7 @@
 package frc.robot;
 
 public final class Constants {
-
+    
     //Joystick index defined
     public static final byte buttonY = 4;
     public static final byte buttonA = 1;
@@ -43,10 +43,16 @@ public final class Constants {
     public static final double axisLYScale = 1;
 
     //Shooter Setting
-    public static final byte shooterUpperMotor = 1;
-    public static final byte shooterLowerMotor = 2;
+    public static final byte shooterUpperMotorID = 1;
+    public static final byte shooterLowerMotorID = 2;
     public static final boolean shooterUpperMotorInvert = false;
     public static final boolean shooterLowerMotorInvert = false;
     public static final int shooterUpperEncoderPPR = 2048;
     public static final int shooterLowerEncoderPPR = 2048;
+    public static final byte shooterUpperEncoderPinA = 7;
+    public static final byte shooterUpperEncoderPinB = 8;
+    public static final boolean shooterUpperEncoderDirectionInvert = true;
+    public static final byte shooterLowerEncoderPinA = 9;
+    public static final byte shooterLowerEncoderPinB = 10;
+    public static final boolean shooterLowerEncoderDirectionInvert = false;
 }

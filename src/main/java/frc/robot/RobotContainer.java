@@ -13,13 +13,13 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.commands.chassis.BasicDrive;
 import frc.robot.commands.climber.BasicClimb;
 import frc.robot.commands.intake.BasicIntake;
-import frc.robot.commands.shooter.BasicShoot;
+//import frc.robot.commands.shooter.BasicShoot;
 import frc.robot.commands.spinner.BasicSpin;
 
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
+//import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Spinner;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,7 +38,7 @@ public class RobotContainer {
   private final Chassis m_chassis = new Chassis();
   private final Climber m_climber = new Climber();
   private final Intake  m_intake  = new Intake();
-  private final Shooter m_shooter = new Shooter();
+  //private final Shooter m_shooter = new Shooter();
   private final Spinner m_spinner = new Spinner();
 
   // Command defined here!!!
@@ -46,7 +46,7 @@ public class RobotContainer {
   private final BasicDrive m_basicDrive = new BasicDrive(m_chassis);
   private final BasicClimb m_basicClimb = new BasicClimb(m_climber);
   private final BasicIntake m_basicIntake = new BasicIntake(m_intake);
-  private final BasicShoot m_basicShoot = new BasicShoot(m_shooter);
+  //private final BasicShoot m_basicShoot = new BasicShoot(m_shooter);
   private final BasicSpin m_basicSpin = new BasicSpin(m_spinner);
 
   // Button defined here!!!

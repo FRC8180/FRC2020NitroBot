@@ -30,9 +30,15 @@ public class BasicShoot extends CommandBase {
 
   @Override
   public void execute() {
+    double upperSpeed = Robot.m_oi.getRawAxis(Constants.axisRT);
+    double lowerSpeed = Robot.m_oi.getRawAxis(Constants.axisLT);
+    SmartDashboard.putNumber("upperSpeed", upperSpeed);
+    SmartDashboard.putNumber("lowerSpeed", lowerSpeed);
+    shooter.setUpperSpeed(upperSpeed);
+    shooter.setLowerSpeed(lowerSpeed);
+    SmartDashboard.putNumber("upperNowSpeed", shooter.getUpperPIDMeasurment());
+    SmartDashboard.putNumber("lowerNowSpeed", shooter.getLowerPIDMeasurment());
     SmartDashboard.putBoolean("Status", true);
-    shooter.setUpperSpeed(Robot.m_oi.getRawAxis(Constants.axisRT));
-    shooter.setLowerSpeed(Robot.m_oi.getRawAxis(Constants.axisLT));
   }
 
   @Override

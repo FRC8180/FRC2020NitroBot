@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+import edu.wpi.first.wpilibj.util.Color;
+import com.revrobotics.ColorMatch;
 
 public final class Constants {
 
@@ -49,4 +51,13 @@ public final class Constants {
     public static final boolean shooterLowerMotorInvert = false;
     public static final int shooterUpperEncoderPPR = 2048;
     public static final int shooterLowerEncoderPPR = 2048;
+
+    //Spinner Setting
+    public static final byte spinnerMotorPin = 4;
+    public static final double spinnerMotorSpeed = 0.5;
+    public static final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);   // Adjust parameters by distance
+    public static Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);  
+    public static Color kRedTarget = ColorMatch.makeColor(0.531, 0.335, 0.124);   
+    public static Color kYellowTarget = ColorMatch.makeColor(0.320, 0.542, 0.133); 
+
 }

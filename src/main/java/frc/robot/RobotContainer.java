@@ -70,7 +70,7 @@ public class RobotContainer {
     //m_climber.setDefaultCommand();
     //m_intake.setDefaultCommand();
     //m_shooter.setDefaultCommand(m_basicShoot);
-    //m_spinner.setDefaultCommand();
+    m_spinner.setDefaultCommand(m_basicSpin);
     //m_shooter.setDefaultCommand(m_basicShoot);
   }
 

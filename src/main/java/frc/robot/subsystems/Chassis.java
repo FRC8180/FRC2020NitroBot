@@ -7,18 +7,43 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 
 public class Chassis extends SubsystemBase {
+  private WPI_TalonSRX motorRF;
+  private WPI_TalonSRX motorRB;
+  private WPI_TalonSRX motorLF;
+  private WPI_TalonSRX motorLB;
 
   public Chassis() {
+    motorRF = new WPI_TalonSRX(Constants.chassisMotorRFID);
+    motorRB = new WPI_TalonSRX(Constants.chassisMotorRBID);
+    motorLF = new WPI_TalonSRX(Constants.chassisMotorLFID);
+    motorLB = new WPI_TalonSRX(Constants.chassisMotorLBID);
+    motorRF.setInverted(Constants.chassisMotorRInverted);
+    motorLF.setInverted(Constants.chassisMotorLInverted);
+    motorRB.follow(motorRF);
+    motorLB.follow(motorLF);
+  }
 
+  public void setMotorSpeed(double Lspd, double Rspd){
+    motorLF.set(Lspd);
+    motorRF.set(Rspd);
+  }
+
+  public void setMotorVoltage(double Lvoltage, double Rvoltage){
+    motorLF.setVoltage(Lvoltage);
+    motorRF.setVoltage(Rvoltage);
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    
   }
 
   @Override

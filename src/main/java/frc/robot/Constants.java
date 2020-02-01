@@ -42,19 +42,27 @@ public final class Constants {
     public static final double axisLYExp = 1;
     public static final double axisLYScale = 1;
 
+    //Chassis Setting
+    public static final byte chassisMotorRFID = 10;
+    public static final byte chassisMotorRBID = 11;
+    public static final byte chassisMotorLFID = 12;
+    public static final byte chassisMotorLBID = 13;
+    public static final boolean chassisMotorRInverted = false;
+    public static final boolean chassisMotorLInverted = false;
+
     //Shooter Setting
     public static final byte shooterUpperMotorID = 2;
     public static final byte shooterLowerMotorID = 1;
-    public static final boolean shooterUpperMotorInvert = false;
-    public static final boolean shooterLowerMotorInvert = false;
+    public static final boolean shooterUpperMotorInverted = false;
+    public static final boolean shooterLowerMotorInverted = false;
     public static final double shooterUpperMotorMaxPIDRPS = 60;
     public static final double shooterLowerMotorMaxPIDRPS = 60;
     public static final int shooterUpperEncoderPPR = 2048;
     public static final int shooterLowerEncoderPPR = 2048;
     public static final byte shooterUpperEncoderPinA = 7;
     public static final byte shooterUpperEncoderPinB = 6;
-    public static final boolean shooterUpperEncoderDirectionInvert = true;
+    public static final boolean shooterUpperEncoderDirectionInverted = true;
     public static final byte shooterLowerEncoderPinA = 9;
     public static final byte shooterLowerEncoderPinB = 8;
-    public static final boolean shooterLowerEncoderDirectionInvert = false;
+    public static final boolean shooterLowerEncoderDirectionInverted = false;
 }

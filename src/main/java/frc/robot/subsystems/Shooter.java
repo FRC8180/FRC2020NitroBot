@@ -42,11 +42,11 @@ public class Shooter extends SubsystemBase {
 
     upperMotor = new WPI_TalonSRX(Constants.shooterUpperMotorID);
     lowerMotor = new WPI_TalonSRX(Constants.shooterLowerMotorID);
-    upperMotor.setInverted(Constants.shooterUpperMotorInvert);
-    lowerMotor.setInverted(Constants.shooterLowerMotorInvert);
+    upperMotor.setInverted(Constants.shooterUpperMotorInverted);
+    lowerMotor.setInverted(Constants.shooterLowerMotorInverted);
 
-    upperEncoder = new Encoder(Constants.shooterUpperEncoderPinA,Constants.shooterUpperEncoderPinB,Constants.shooterUpperEncoderDirectionInvert);
-    lowerEncoder = new Encoder(Constants.shooterLowerEncoderPinA,Constants.shooterLowerEncoderPinB,Constants.shooterLowerEncoderDirectionInvert);
+    upperEncoder = new Encoder(Constants.shooterUpperEncoderPinA,Constants.shooterUpperEncoderPinB,Constants.shooterUpperEncoderDirectionInverted);
+    lowerEncoder = new Encoder(Constants.shooterLowerEncoderPinA,Constants.shooterLowerEncoderPinB,Constants.shooterLowerEncoderDirectionInverted);
     upperEncoder.reset();
     lowerEncoder.reset();
 

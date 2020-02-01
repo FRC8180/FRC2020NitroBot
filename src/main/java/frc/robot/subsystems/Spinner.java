@@ -18,70 +18,119 @@ import com.revrobotics.ColorMatch;
 import edu.wpi.first.wpilibj.DriverStation;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.Timer;
 
 public class Spinner extends SubsystemBase {
-  private final WPI_TalonSRX Motor_spinner;
-  private final WPI_TalonSRX risingMotor;
-  private final ColorSensorV3 m_colorSensor;
-  private final ColorMatch m_colorMatcher;
-  private final I2C.Port i2cPort;
-  private final Encoder m_Encoder;
-  int counter;
-  Color target;
-  Color detectedColor;
-  String gameData;
-  String colorString;
+
+  //private boolean rasePIDEnable = false;
+  //private double rasePIDSetpoint = 0;
+
+  private final WPI_TalonSRX spinMotor;
+  private final WPI_TalonSRX raseMotor;
+
+  private final ColorSensorV3 colorSensor;
+  private final ColorMatch colorMatcher;
+
+  //private final Encoder m_Encoder;
+  //private final PIDController rasePIDControl;
+  //private Timer timer;
+  //private double rasePreviousRotation = 0;
+  //private double rasePreviousTime = 0;
+  private String gameData;
+  //private Color detectedColor;
   ColorMatchResult match;
   /**
    * Creates a new Spinner.
    */
   public Spinner() {    
-    i2cPort = I2C.Port.kOnboard;
-    Motor_spinner = new WPI_TalonSRX(Constants.spinnerMotorPin); 
-    risingMotor = new WPI_TalonSRX(Constants.spinnerMotorPin); 
-    m_colorSensor = new ColorSensorV3(i2cPort);
-    m_colorMatcher = new ColorMatch();
-    m_Encoder = new Encoder(Constants.m_EncoderPinA,Constants.m_EncoderPinB,Constants.m_EncoderReverse);
-    m_colorMatcher.addColorMatch(Constants.kBlueTarget);
-    m_colorMatcher.addColorMatch(Constants.kGreenTarget);
-    m_colorMatcher.addColorMatch(Constants.kRedTarget);
-    m_colorMatcher.addColorMatch(Constants.kYellowTarget);
-    m_Encoder.reset();
+    spinMotor = new WPI_TalonSRX(Constants.spinnerSpinMotor);
+    raseMotor = new WPI_TalonSRX(Constants.spinnerRaseMotor);
+
+    colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+    colorMatcher = new ColorMatch();
+    //m_Encoder = new Encoder(Constants.m_EncoderPinA,Constants.m_EncoderPinB,Constants.m_EncoderReverse);
+
+    //rasePIDControl = new PIDController(0.1, 0, 0);
+    colorMatcher.addColorMatch(Constants.kBlueTarget);
+    colorMatcher.addColorMatch(Constants.kGreenTarget);
+    colorMatcher.addColorMatch(Constants.kRedTarget);
+    colorMatcher.addColorMatch(Constants.kYellowTarget);
+
+    //m_Encoder.reset();
   }
 
   @Override
   public void periodic() {
-    gameData = DriverStation.getInstance().getGameSpecificMessage();
+    //gameData = DriverStation.getInstance().getGameSpecificMessage();(!?????????????????????????????)
+
+    //if(rasePIDEnable){
+    //  upperPIDOutput(rasePIDControl.calculate(getUpperPIDMeasurment(), rasePIDSetpoint));
+    //}
+    
     // This method will be called once per scheduler run
   }
 
   public String getGameData(){
-    //gameData = DriverStation.getInstance().getGameSpecificMessage();
+    gameData = DriverStation.getInstance().getGameSpecificMessage();
     return gameData;
   }
 
-  public void spinnerrase(){
-    
-  }
-
   public Color getColor(){
-    detectedColor = m_colorSensor.getColor();
-    return detectedColor;
+    return colorSensor.getColor();
   }
-  public ColorMatchResult match(Color detected) {
-    match = m_colorMatcher.matchClosestColor(detected);
 
-    return match;
+  public ColorMatchResult match(Color detected) {
+    return colorMatcher.matchClosestColor(detected);
   }
+
 
   public void startMotor(){
-    Motor_spinner.set(Constants.spinnerMotorSpeed);
+    spinMotor.set(Constants.spinnerSpinMotorSpeed);
   }
 
   public void stopMotor(){
-    Motor_spinner.stopMotor();
+    spinMotor.stopMotor();
+  }
+  /*
+  public boolean spinnerPIDIsEnable(){
+    return rasePIDEnable;
+  }
+  
+  public void rasePIDEnable(){
+    rasePIDEnable = true;
+    rasePIDControl.reset();
   }
 
+  public void upperPIDDisable(){
+    rasePIDEnable = false;
+    upperPIDOutput(0);
+  }
+
+  public void setUpperSetpoint(double setpoint){
+    rasePIDSetpoint = setpoint;
+  }
+
+  public void upperPIDOutput(double output){
+    raseMotor.setVoltage(output);
+  }
+
+  public void upperPIDReset(){
+    rasePIDControl.reset();
+  }
+
+  public double getUpperPIDMeasurment(){
+    double rotation = m_Encoder.get();
+    double time = timer.get();
+    double deltaRotation = rotation - rasePreviousRotation;
+    double deltaTime = time - rasePreviousTime;
+    rasePreviousRotation = rotation;
+    rasePreviousTime = time;
+    double RPS = deltaRotation / deltaTime / Constants.shooterUpperEncoderPPR;
+    return RPS;
+  }
+
+  */
 
   @Override
   public void setDefaultCommand(final Command defaultCommand) {

@@ -14,45 +14,41 @@ import frc.robot.Robot;
 import frc.robot.subsystems.Shooter;
 
 public class BasicShoot extends CommandBase {
-  /**
-   * Creates a new BasicShoot.
-   */
-  private Shooter shooter;
+
+  private final Shooter shooter;
   public BasicShoot(Shooter subsystem) {
     shooter = subsystem;
     addRequirements(subsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    shooter.upperPIDDisable();
+    shooter.lowerPIDDisable();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Robot.m_oi.getRawButton(Constants.buttonB)){
-      shooter.setSetpoint(25);
-      shooter.enable();
-    }else{
-      shooter.setSetpoint(0);
-      shooter.disable();
-    }
-    System.out.println(shooter.getMeasurement());
-    SmartDashboard.putNumber("Now", shooter.getMeasurement());
+    double upperSpeed = Robot.m_oi.getRawAxis(Constants.axisRT);
+    double lowerSpeed = Robot.m_oi.getRawAxis(Constants.axisLT);
+    SmartDashboard.putNumber("upperSpeed", upperSpeed);
+    SmartDashboard.putNumber("lowerSpeed", lowerSpeed);
+    shooter.setUpperSpeed(upperSpeed);
+    shooter.setLowerSpeed(lowerSpeed);
+    SmartDashboard.putNumber("upperNowSpeed", shooter.getUpperPIDMeasurment());
+    SmartDashboard.putNumber("lowerNowSpeed", shooter.getLowerPIDMeasurment());
+    SmartDashboard.putBoolean("Status", true);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    SmartDashboard.putBoolean("Status", false);
+    shooter.setUpperSpeed(0);
     shooter.setLowerSpeed(0);
-    //
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;//Robot.m_oi.getRawButton(Constants.buttonOption);
+    return Robot.m_oi.getRawButton(Constants.buttonBack);
   }
 }

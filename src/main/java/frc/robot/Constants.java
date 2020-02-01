@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2018-2049 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import com.revrobotics.ColorMatch;
 
 public final class Constants {
-
+    
     //Joystick index defined
     public static final byte buttonY = 4;
     public static final byte buttonA = 1;
@@ -45,22 +45,34 @@ public final class Constants {
     public static final double axisLYScale = 1;
 
     //Shooter Setting
-    public static final byte shooterUpperMotor = 1;
-    public static final byte shooterLowerMotor = 2;
+    public static final byte shooterUpperMotorID = 2;
+    public static final byte shooterLowerMotorID = 1;
     public static final boolean shooterUpperMotorInvert = false;
     public static final boolean shooterLowerMotorInvert = false;
+    public static final double shooterUpperMotorMaxPIDRPS = 60;
+    public static final double shooterLowerMotorMaxPIDRPS = 60;
     public static final int shooterUpperEncoderPPR = 2048;
     public static final int shooterLowerEncoderPPR = 2048;
+    public static final byte shooterUpperEncoderPinA = 7;
+    public static final byte shooterUpperEncoderPinB = 6;
+    public static final boolean shooterUpperEncoderDirectionInvert = true;
+    public static final byte shooterLowerEncoderPinA = 9;
+    public static final byte shooterLowerEncoderPinB = 8;
+    public static final boolean shooterLowerEncoderDirectionInvert = false;
+
 
     //Spinner Setting
-    public static final byte spinnerMotorPin = 4;
+    public static final byte spinnerSpinMotor = 20;
+    public static final double spinnerSpinMotorSpeed = 0.5;
+    public static final byte spinnerRaseMotor = 21;
+
     public static final byte risingMotorPin  = 5;
     public static final byte m_EncoderPinA = 6;
     public static final byte m_EncoderPinB = 7;
     public static final boolean m_EncoderReverse = true;
-    public static final double spinnerMotorSpeed = 0.5;
     public static final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);   // Adjust parameters by distance
     public static Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);  
     public static Color kRedTarget = ColorMatch.makeColor(0.531, 0.335, 0.124);   
     public static Color kYellowTarget = ColorMatch.makeColor(0.320, 0.542, 0.133); 
+    
 }

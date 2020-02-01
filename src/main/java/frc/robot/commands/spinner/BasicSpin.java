@@ -12,7 +12,6 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.util.Color;
 import com.revrobotics.ColorMatchResult;
-import com.revrobotics.ColorMatch;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Spinner;
 
@@ -24,57 +23,47 @@ public class BasicSpin extends CommandBase {
     addRequirements(subsystem);
   }
 
-  int counter;
-  Color color_inf;
-  Color target;
-  Color detectedColor;
-  String gameData;
-  String colorString;
-  ColorMatchResult match;
-  ColorMatchResult match_inf;
+  private int counter = 0;
+  private Color color_inf;
+  private Color target;
+  private Color detectedColor;
+  private String gameData;
+  private String colorString;
+  private ColorMatchResult match;
+  private ColorMatchResult match_inf;
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     spinner.stopMotor();
-    counter = 0;
-    
-    
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     gameData = spinner.getGameData();
     if(gameData.length() > 0 && Robot.m_oi.getRawButton(Constants.buttonRB)){
-      detectedColor = spinner.getColor();
-      match = spinner.match(detectedColor);
+      getColorMatchResult();
       switch (gameData.charAt(0)){
-        
         case 'B' :
-        rotationControl(Constants.kRedTarget);
-        break;
-        
+          rotationControl(Constants.kRedTarget);
+          break;
         case 'G' :
-        rotationControl(Constants.kYellowTarget);
-        break;
-
+          rotationControl(Constants.kYellowTarget);
+          break;
         case 'Y' :
-        rotationControl(Constants.kGreenTarget);
-        break;
-       
+          rotationControl(Constants.kGreenTarget);
+          break;
         case 'R' :
-        rotationControl(Constants.kGreenTarget);
-        break;
+          rotationControl(Constants.kGreenTarget);
+          break;
       }
     }
+
     if(Robot.m_oi.getRawButton(Constants.buttonLB)){
       counter = 0;
-      detectedColor = spinner.getColor();
-      match = spinner.match(detectedColor);
+      getColorMatchResult();
       target = match.color;
-      while(counter < 24){
-        showColorInf();
+      while(counter < 27){
+        //showColorInf();
         detectedColor = spinner.getColor();
         match = spinner.match(detectedColor);
         spinner.startMotor();
@@ -89,13 +78,11 @@ public class BasicSpin extends CommandBase {
     }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     spinner.stopMotor();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
@@ -104,29 +91,28 @@ public class BasicSpin extends CommandBase {
   public void rotationControl(Color target){
     spinner.startMotor();
     while(match.color != target){
-      detectedColor = spinner.getColor();
-      match = spinner.match(detectedColor);
-      showColorInf();
+      getColorMatchResult();
+      //showColorInf();
     }
     spinner.stopMotor();
+  }
+
+  public void getColorMatchResult(){
+    detectedColor = spinner.getColor();
+    match = spinner.match(detectedColor);
   }
 
   public void showColorInf(){
     color_inf = spinner.getColor();
     match_inf = spinner.match(color_inf);
     if (match_inf.color == Constants.kBlueTarget) {
-
       colorString = "Blue";
-
     } else if (match_inf.color == Constants.kRedTarget) {
       colorString = "Red";
-
     } else if (match_inf.color == Constants.kGreenTarget) {
       colorString = "Green";
-
     } else if (match_inf.color == Constants.kYellowTarget) {
       colorString = "Yellow";
-
     } else {
       colorString = "Unknown";
     }
@@ -136,7 +122,6 @@ public class BasicSpin extends CommandBase {
     SmartDashboard.putNumber("Confidence", match_inf.confidence);
     SmartDashboard.putNumber("Counter", counter);
     SmartDashboard.putString("Detected Color", colorString);
-
   }
 }
 

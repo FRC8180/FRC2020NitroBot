@@ -7,7 +7,10 @@
 
 package frc.robot.commands.shooter;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.Shooter;
 
 public class BasicShoot extends CommandBase {
@@ -18,24 +21,34 @@ public class BasicShoot extends CommandBase {
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    shooter.upperPIDDisable();
+    shooter.lowerPIDDisable();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double upperSpeed = Robot.m_oi.getRawAxis(Constants.axisRT);
+    double lowerSpeed = Robot.m_oi.getRawAxis(Constants.axisLT);
+    SmartDashboard.putNumber("upperSpeed", upperSpeed);
+    SmartDashboard.putNumber("lowerSpeed", lowerSpeed);
+    shooter.setUpperSpeed(upperSpeed);
+    shooter.setLowerSpeed(lowerSpeed);
+    SmartDashboard.putNumber("upperNowSpeed", shooter.getUpperPIDMeasurment());
+    SmartDashboard.putNumber("lowerNowSpeed", shooter.getLowerPIDMeasurment());
+    SmartDashboard.putBoolean("Status", true);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    SmartDashboard.putBoolean("Status", false);
+    shooter.setUpperSpeed(0);
+    shooter.setLowerSpeed(0);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Robot.m_oi.getRawButton(Constants.buttonBack);
   }
 }

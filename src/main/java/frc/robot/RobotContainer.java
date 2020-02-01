@@ -9,10 +9,13 @@ package frc.robot;
 
 //import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.commands.chassis.BasicDrive;
 import frc.robot.commands.climber.BasicClimb;
 import frc.robot.commands.intake.BasicIntake;
+import frc.robot.commands.shooter.BasicPIDShoot;
 import frc.robot.commands.shooter.BasicShoot;
+import frc.robot.commands.shooter.ShooterSpeedTest;
 import frc.robot.commands.spinner.BasicSpin;
 
 import frc.robot.subsystems.Chassis;
@@ -21,22 +24,15 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Spinner;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-/**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
- */
 public class RobotContainer {
   private final XboxController driverJoystick = new XboxController(0);
   
   // Subsystem defined here!!!
   private final Chassis m_chassis = new Chassis();
   private final Climber m_climber = new Climber();
-  private final Intake m_intake = new Intake();
+  private final Intake  m_intake  = new Intake();
   private final Shooter m_shooter = new Shooter();
   private final Spinner m_spinner = new Spinner();
 
@@ -45,7 +41,9 @@ public class RobotContainer {
   private final BasicDrive m_basicDrive = new BasicDrive(m_chassis);
   private final BasicClimb m_basicClimb = new BasicClimb(m_climber);
   private final BasicIntake m_basicIntake = new BasicIntake(m_intake);
+  private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
   private final BasicShoot m_basicShoot = new BasicShoot(m_shooter);
+  private final ShooterSpeedTest m_shootTest = new ShooterSpeedTest(m_shooter);
   private final BasicSpin m_basicSpin = new BasicSpin(m_spinner);
 
   // Button defined here!!!
@@ -68,27 +66,32 @@ public class RobotContainer {
     //m_chassis.setDefaultCommand(m_basicDrive);
     //m_climber.setDefaultCommand();
     //m_intake.setDefaultCommand();
-    //m_shooter.setDefaultCommand();
+    m_shooter.setDefaultCommand(m_shootTest);
     //m_spinner.setDefaultCommand();
   }
 
   private void configureButtonBindings() {
     //Trig command defined here!!!!
-    //buttonY.whenPressed(m_basicSpin);
+    buttonOption.whenPressed(m_shootTest);
+    //buttonX.whenPressed(() -> m_chassis.(func));
   }
 
   /*
   public Command getAutonomousCommand() {
      //An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    //return m_autoCommand;
   }
   */
+  
+  public int getRawPOV(){
+    return driverJoystick.getPOV();
+  }
 
   public double getRawAxis(int AxisNumber){
     return driverJoystick.getRawAxis(AxisNumber);
   }
 
-  public boolean getrawButton(int ButtonNumber){
+  public boolean getRawButton(int ButtonNumber){
     return driverJoystick.getRawButton(ButtonNumber);
   }
 
@@ -143,4 +146,15 @@ public class RobotContainer {
     }
     return rawData;
   }
+
+  public void SetRumble(double Intensity){
+    driverJoystick.setRumble(RumbleType.kLeftRumble, Intensity);
+    driverJoystick.setRumble(RumbleType.kRightRumble, Intensity);
+  }
+
+  public void SetRumble(double leftIntensity,double rightIntensity){
+    driverJoystick.setRumble(RumbleType.kLeftRumble, leftIntensity);
+    driverJoystick.setRumble(RumbleType.kRightRumble, rightIntensity);
+  }
+
 }

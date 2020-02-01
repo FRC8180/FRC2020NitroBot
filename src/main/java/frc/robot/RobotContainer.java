@@ -66,7 +66,7 @@ public class RobotContainer {
     //m_chassis.setDefaultCommand(m_basicDrive);
     //m_climber.setDefaultCommand();
     //m_intake.setDefaultCommand();
-    m_shooter.setDefaultCommand(m_shootTest);
+    //m_shooter.setDefaultCommand(m_shootTest);
     //m_spinner.setDefaultCommand();
   }
 

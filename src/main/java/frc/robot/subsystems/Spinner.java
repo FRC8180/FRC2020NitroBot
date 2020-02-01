@@ -17,12 +17,15 @@ import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorMatch;
 import edu.wpi.first.wpilibj.DriverStation;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.Encoder;
 
 public class Spinner extends SubsystemBase {
   private final WPI_TalonSRX Motor_spinner;
+  private final WPI_TalonSRX risingMotor;
   private final ColorSensorV3 m_colorSensor;
   private final ColorMatch m_colorMatcher;
   private final I2C.Port i2cPort;
+  private final Encoder m_Encoder;
   int counter;
   Color target;
   Color detectedColor;
@@ -35,13 +38,15 @@ public class Spinner extends SubsystemBase {
   public Spinner() {    
     i2cPort = I2C.Port.kOnboard;
     Motor_spinner = new WPI_TalonSRX(Constants.spinnerMotorPin); 
+    risingMotor = new WPI_TalonSRX(Constants.spinnerMotorPin); 
     m_colorSensor = new ColorSensorV3(i2cPort);
     m_colorMatcher = new ColorMatch();
+    m_Encoder = new Encoder(Constants.m_EncoderPinA,Constants.m_EncoderPinB,Constants.m_EncoderReverse);
     m_colorMatcher.addColorMatch(Constants.kBlueTarget);
     m_colorMatcher.addColorMatch(Constants.kGreenTarget);
     m_colorMatcher.addColorMatch(Constants.kRedTarget);
     m_colorMatcher.addColorMatch(Constants.kYellowTarget);
-    
+    m_Encoder.reset();
   }
 
   @Override
@@ -55,7 +60,9 @@ public class Spinner extends SubsystemBase {
     return gameData;
   }
 
-  
+  public void spinnerrase(){
+    
+  }
 
   public Color getColor(){
     detectedColor = m_colorSensor.getColor();

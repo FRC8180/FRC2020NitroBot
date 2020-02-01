@@ -54,10 +54,13 @@ public final class Constants {
 
     //Spinner Setting
     public static final byte spinnerMotorPin = 4;
+    public static final byte risingMotorPin  = 5;
+    public static final byte m_EncoderPinA = 6;
+    public static final byte m_EncoderPinB = 7;
+    public static final boolean m_EncoderReverse = true;
     public static final double spinnerMotorSpeed = 0.5;
     public static final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);   // Adjust parameters by distance
     public static Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);  
     public static Color kRedTarget = ColorMatch.makeColor(0.531, 0.335, 0.124);   
     public static Color kYellowTarget = ColorMatch.makeColor(0.320, 0.542, 0.133); 
-
 }

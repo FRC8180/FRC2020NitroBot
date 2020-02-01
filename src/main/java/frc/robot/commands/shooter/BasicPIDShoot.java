@@ -11,18 +11,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.Utility;
 import frc.robot.subsystems.Shooter;
 
 public class BasicPIDShoot extends CommandBase {
 
-  private int upperRPS = 0;
-  private int lowerRPS = 0;
-  private boolean buttonYStatus = false;
-  private boolean buttonBStatus = false;
-  private boolean buttonXStatus = false;
-  private boolean buttonAStatus = false;
+  private double upperRPS = 20;
+  private double lowerRPS = 20;
+  private int buttonYStatus = 0;
+  private int buttonBStatus = 0;
+  private int buttonXStatus = 0;
+  private int buttonAStatus = 0;
   
-
   private final Shooter shooter;
   public BasicPIDShoot(Shooter subsystem) {
     shooter = subsystem;
@@ -37,49 +37,75 @@ public class BasicPIDShoot extends CommandBase {
 
   @Override
   public void execute(){
-    System.out.println(Robot.m_oi.getRawButton(Constants.buttonRB));
-    SmartDashboard.putNumber("UpperTargetRPS", upperRPS);
-    SmartDashboard.putNumber("UpperNowRPS", shooter.getUpperPIDMeasurment());
-    SmartDashboard.putNumber("LowerTargetRPS", lowerRPS);
-    SmartDashboard.putNumber("LowerNowRPS", shooter.getLowerPIDMeasurment());
-    
-    if(Robot.m_oi.getRawButton(Constants.buttonY) && !buttonYStatus){
-      upperRPS += 5;
-      buttonYStatus = true;
-    }else if(Robot.m_oi.getRawButton(Constants.buttonY)){
-      buttonYStatus = false;
+    if(Robot.m_oi.getRawButton(Constants.buttonY) && buttonYStatus == 0){
+      upperRPS += 2.5;
+      buttonYStatus = 1;
+    }else if(!Robot.m_oi.getRawButton(Constants.buttonY) && buttonYStatus == 1){
+      buttonYStatus = 0;
     }
-    if(Robot.m_oi.getRawButton(Constants.buttonB) && !buttonBStatus){
-      upperRPS -= 5;
-      buttonBStatus = true;
-    }else if(Robot.m_oi.getRawButton(Constants.buttonB)){
-      buttonBStatus = false;
+    if(Robot.m_oi.getRawButton(Constants.buttonB) && buttonBStatus == 0){
+      upperRPS -= 2.5;
+      buttonBStatus = 1;
+    }else if(!Robot.m_oi.getRawButton(Constants.buttonB) && buttonBStatus == 1){
+      buttonBStatus = 0;
     }
 
-    if(Robot.m_oi.getRawButton(Constants.buttonX) && !buttonXStatus){
-      lowerRPS += 5;
-      buttonXStatus = true;
-    }else if(Robot.m_oi.getRawButton(Constants.buttonX)){
-      buttonXStatus = false;
+    if(Robot.m_oi.getRawButton(Constants.buttonX) && buttonXStatus == 0){
+      lowerRPS += 2.5;
+      buttonXStatus = 1;
+    }else if(!Robot.m_oi.getRawButton(Constants.buttonX) && buttonXStatus == 1){
+      buttonXStatus = 0;
     }
-    if(Robot.m_oi.getRawButton(Constants.buttonA) && !buttonAStatus){
-      lowerRPS -= 5;
-      buttonAStatus = true;
-    }else if(Robot.m_oi.getRawButton(Constants.buttonA)){
-      buttonAStatus = false;
+    if(Robot.m_oi.getRawButton(Constants.buttonA) && buttonAStatus == 0){
+      lowerRPS -= 2.5;
+      buttonAStatus = 1;
+    }else if(!Robot.m_oi.getRawButton(Constants.buttonA) && buttonAStatus == 1) {
+      buttonAStatus = 0;
     }
-    
+
+    upperRPS = Utility.Constrain(upperRPS, 0, Constants.shooterUpperMotorMaxPIDRPS);
+    lowerRPS = Utility.Constrain(lowerRPS, 0, Constants.shooterLowerMotorMaxPIDRPS);
+
+    SmartDashboard.putNumber("UpperTargetRPS", upperRPS);
+    SmartDashboard.putNumber("LowerTargetRPS", lowerRPS);
+
+    if(upperRPS > 0){
+      if(!shooter.upperPIDIsEnable()){
+        shooter.upperPIDEnable();
+      }
+      shooter.setUpperSetpoint(upperRPS);
+    }else{
+      shooter.upperPIDDisable();
+      shooter.upperPIDReset();
+    }
+
+    if(lowerRPS > 0){
+      if(!shooter.lowerPIDIsEnable()){
+        shooter.lowerPIDEnable();
+      }
+      shooter.setLowerSetpoint(lowerRPS);
+    }else{
+      shooter.lowerPIDDisable();
+      shooter.lowerPIDReset();
+    }
+
+    SmartDashboard.putBoolean("upperPID", shooter.upperPIDIsEnable());
+    SmartDashboard.putBoolean("lowerPID", shooter.lowerPIDIsEnable());
+
+    SmartDashboard.putNumber("UpperNowRPS", shooter.getUpperPIDMeasurment());
+    SmartDashboard.putNumber("LowerNowRPS", shooter.getLowerPIDMeasurment());
+    SmartDashboard.putBoolean("status", true);
   }
 
   @Override
   public void end(boolean interrupted) {
-    System.out.println("LOLOLOLL");
+    SmartDashboard.putBoolean("status", false);
     shooter.upperPIDDisable();
     shooter.lowerPIDDisable();
   }
   
   @Override
   public boolean isFinished() {
-    return false;
+    return Robot.m_oi.getRawButton(Constants.buttonBack);
   }
 }

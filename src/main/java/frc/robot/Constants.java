@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2018-2049 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -43,16 +43,18 @@ public final class Constants {
     public static final double axisLYScale = 1;
 
     //Shooter Setting
-    public static final byte shooterUpperMotorID = 1;
-    public static final byte shooterLowerMotorID = 2;
+    public static final byte shooterUpperMotorID = 2;
+    public static final byte shooterLowerMotorID = 1;
     public static final boolean shooterUpperMotorInvert = false;
     public static final boolean shooterLowerMotorInvert = false;
+    public static final double shooterUpperMotorMaxPIDRPS = 60;
+    public static final double shooterLowerMotorMaxPIDRPS = 60;
     public static final int shooterUpperEncoderPPR = 2048;
     public static final int shooterLowerEncoderPPR = 2048;
     public static final byte shooterUpperEncoderPinA = 7;
-    public static final byte shooterUpperEncoderPinB = 8;
+    public static final byte shooterUpperEncoderPinB = 6;
     public static final boolean shooterUpperEncoderDirectionInvert = true;
     public static final byte shooterLowerEncoderPinA = 9;
-    public static final byte shooterLowerEncoderPinB = 10;
+    public static final byte shooterLowerEncoderPinB = 8;
     public static final boolean shooterLowerEncoderDirectionInvert = false;
 }

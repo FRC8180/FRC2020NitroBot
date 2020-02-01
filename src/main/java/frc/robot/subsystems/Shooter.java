@@ -37,8 +37,8 @@ public class Shooter extends SubsystemBase {
   private double lowerPreviousTime = 0;
 
   public Shooter() {
-    upperPID = new PIDController(1.5, 0.15, 0.05);
-    lowerPID = new PIDController(1.5, 0.15, 0.05);
+    upperPID = new PIDController(0.1, 0, 0.15);
+    lowerPID = new PIDController(1, 0.1, 0.01);
 
     upperMotor = new WPI_TalonSRX(Constants.shooterUpperMotorID);
     lowerMotor = new WPI_TalonSRX(Constants.shooterLowerMotorID);
@@ -47,6 +47,8 @@ public class Shooter extends SubsystemBase {
 
     upperEncoder = new Encoder(Constants.shooterUpperEncoderPinA,Constants.shooterUpperEncoderPinB,Constants.shooterUpperEncoderDirectionInvert);
     lowerEncoder = new Encoder(Constants.shooterLowerEncoderPinA,Constants.shooterLowerEncoderPinB,Constants.shooterLowerEncoderDirectionInvert);
+    upperEncoder.reset();
+    lowerEncoder.reset();
 
     timer = new Timer();
     timer.reset();
@@ -69,6 +71,13 @@ public class Shooter extends SubsystemBase {
     super.setDefaultCommand(defaultCommand);
   }
 
+  public boolean upperPIDIsEnable(){
+    return upperPIDEnable;
+  }
+
+  public boolean lowerPIDIsEnable(){
+    return lowerPIDEnable;
+  }
   
   public void upperPIDEnable(){
     upperPIDEnable = true;

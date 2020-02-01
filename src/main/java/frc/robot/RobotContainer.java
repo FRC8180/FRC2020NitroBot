@@ -40,7 +40,7 @@ public class RobotContainer {
   private final BasicDrive m_basicDrive = new BasicDrive(m_chassis);
   private final BasicClimb m_basicClimb = new BasicClimb(m_climber);
   private final BasicIntake m_basicIntake = new BasicIntake(m_intake);
-  //private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
+  private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
   private final BasicShoot m_basicShoot = new BasicShoot(m_shooter);
   private final BasicSpin m_basicSpin = new BasicSpin(m_spinner);
 
@@ -70,7 +70,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     //Trig command defined here!!!!
-    buttonOption.whenPressed(m_basicShoot);
+    buttonOption.whenPressed(m_basicPIDShoot);
     //buttonX.whenPressed(() -> m_chassis.(func));
   }
 

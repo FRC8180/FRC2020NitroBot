@@ -15,7 +15,6 @@ import frc.robot.subsystems.Shooter;
 
 public class BasicShoot extends CommandBase {
 
-  private boolean finish = false;
   private final Shooter shooter;
   public BasicShoot(Shooter subsystem) {
     shooter = subsystem;

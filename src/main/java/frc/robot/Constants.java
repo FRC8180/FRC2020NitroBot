@@ -45,8 +45,8 @@ public final class Constants {
     public static final double axisLYScale = 1;
 
     //Shooter Setting
-    public static final byte shooterUpperMotorID = 2;
-    public static final byte shooterLowerMotorID = 1;
+    public static final byte shooterUpperMotorID = 55;
+    public static final byte shooterLowerMotorID = 77;
     public static final boolean shooterUpperMotorInvert = false;
     public static final boolean shooterLowerMotorInvert = false;
     public static final double shooterUpperMotorMaxPIDRPS = 60;
@@ -60,19 +60,22 @@ public final class Constants {
     public static final byte shooterLowerEncoderPinB = 8;
     public static final boolean shooterLowerEncoderDirectionInvert = false;
 
-
     //Spinner Setting
-    public static final byte spinnerSpinMotor = 20;
+    public static final byte spinnerSpinMotor = 21;
     public static final double spinnerSpinMotorSpeed = 0.5;
-    public static final byte spinnerRaseMotor = 21;
+    public static final byte spinnerriseMotor = 1;
 
-    public static final byte risingMotorPin  = 5;
-    public static final byte m_EncoderPinA = 6;
-    public static final byte m_EncoderPinB = 7;
-    public static final boolean m_EncoderReverse = true;
+    public static final byte m_EncoderPinA = 0;
+    public static final byte m_EncoderPinB = 1;
+    public static final boolean m_EncoderReverse = false;
     public static final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);   // Adjust parameters by distance
-    public static Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);  
-    public static Color kRedTarget = ColorMatch.makeColor(0.531, 0.335, 0.124);   
-    public static Color kYellowTarget = ColorMatch.makeColor(0.320, 0.542, 0.133); 
+    public static final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);  
+    public static final Color kRedTarget = ColorMatch.makeColor(0.531, 0.335, 0.124);   
+    public static final Color kYellowTarget = ColorMatch.makeColor(0.320, 0.542, 0.133); 
     
+    //CPIntake
+    public static final byte CPintakeMotor = 51;
+    public static final byte CPrise = 1;
+    public static final double CPintakeMotorSpeed_in = 1;
+    public static final double CPintakeMotorSpeed_out = -CPintakeMotorSpeed_in;
 }

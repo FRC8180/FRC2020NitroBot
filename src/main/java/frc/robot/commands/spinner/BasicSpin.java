@@ -35,12 +35,21 @@ public class BasicSpin extends CommandBase {
   @Override
   public void initialize() {
     spinner.stopMotor();
+    spinner.risePIDDisable();
   }
 
   @Override
   public void execute() {
+    SmartDashboard.putNumber("PID",spinner.get());
     gameData = spinner.getGameData();
+    showColorInf();
     if(gameData.length() > 0 && Robot.m_oi.getRawButton(Constants.buttonRB)){
+      showColorInf();
+      spinner.risePIDReset();
+      SmartDashboard.putNumber("2", spinner.getrisePIDMeasurment());
+      PID(1024);
+
+      SmartDashboard.putNumber("3", spinner.getrisePIDMeasurment());
       getColorMatchResult();
       switch (gameData.charAt(0)){
         case 'B' :
@@ -56,25 +65,29 @@ public class BasicSpin extends CommandBase {
           rotationControl(Constants.kGreenTarget);
           break;
       }
+      PID(0);
     }
 
     if(Robot.m_oi.getRawButton(Constants.buttonLB)){
+      spinner.risePIDReset();
+      PID(-1024);
       counter = 0;
       getColorMatchResult();
       target = match.color;
+      
       while(counter < 27){
-        //showColorInf();
+        showColorInf();
         detectedColor = spinner.getColor();
         match = spinner.match(detectedColor);
         spinner.startMotor();
         if(match.color != target && match.confidence > 0.96){
           counter++;
-          detectedColor = spinner.getColor();
-          match = spinner.match(detectedColor);
           target = match.color;
         }
       }
+      
       spinner.stopMotor();
+      PID(0);
     }
   }
 
@@ -88,18 +101,42 @@ public class BasicSpin extends CommandBase {
     return false;
   }
 
-  public void rotationControl(Color target){
+  public void rotationControl(Color targetColor){
     spinner.startMotor();
-    while(match.color != target){
-      getColorMatchResult();
-      //showColorInf();
+    counter =0;
+    detectedColor = spinner.getColor();
+    match = spinner.match(detectedColor);
+    target = match.color;
+    while(counter < 16 ){
+      showColorInf();
+      detectedColor = spinner.getColor();
+      match = spinner.match(detectedColor);
+      if(match.color == targetColor){
+        break;
+      }else if(match.color != target && match.confidence > 0.96){
+        counter++;
+        target = match.color;
+      }
     }
     spinner.stopMotor();
   }
 
-  public void getColorMatchResult(){
+  public ColorMatchResult getColorMatchResult(){
     detectedColor = spinner.getColor();
-    match = spinner.match(detectedColor);
+    return spinner.match(detectedColor);
+  }
+
+  public void PID(int setpoint){
+    spinner.setriseSetpoint(setpoint);
+    spinner.risePIDEnable();
+    while(true){
+      spinner.motorRun();
+      SmartDashboard.putNumber("get", spinner.get());
+      if(spinner.atSetpoint()){
+        spinner.risePIDDisable();
+        break;
+      }
+    }
   }
 
   public void showColorInf(){

@@ -12,11 +12,12 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.commands.chassis.BasicDrive;
 import frc.robot.commands.climber.BasicClimb;
+import frc.robot.commands.cpbot.BasicCPIntake;
 import frc.robot.commands.intake.BasicIntake;
 import frc.robot.commands.shooter.BasicPIDShoot;
 import frc.robot.commands.shooter.BasicShoot;
 import frc.robot.commands.spinner.BasicSpin;
-
+import frc.robot.subsystems.CPIntake;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
@@ -34,6 +35,7 @@ public class RobotContainer {
   private final Intake  m_intake  = new Intake();
   private final Shooter m_shooter = new Shooter();
   private final Spinner m_spinner = new Spinner();
+  private final CPIntake m_cpIntake = new CPIntake();
 
   // Command defined here!!!
   //private final AutoMove m_autoCommand = new AutoMove(m_auto)
@@ -43,6 +45,7 @@ public class RobotContainer {
   private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
   private final BasicShoot m_basicShoot = new BasicShoot(m_shooter);
   private final BasicSpin m_basicSpin = new BasicSpin(m_spinner);
+  private final BasicCPIntake m_basicCPIntake = new BasicCPIntake(m_cpIntake) ;
 
   // Button defined here!!!
   private final JoystickButton buttonY = new JoystickButton(driverJoystick,Constants.buttonY);
@@ -68,12 +71,13 @@ public class RobotContainer {
     m_spinner.setDefaultCommand(m_basicSpin);
     //m_shooter.setDefaultCommand(m_basicShoot);
     //m_spinner.setDefaultCommand();
-
+    //m_cpIntake.setDefaultCommand(m_basicCPIntake);
+    
   }
 
   private void configureButtonBindings() {
     //Trig command defined here!!!!
-    buttonOption.whenPressed(m_basicPIDShoot);
+    //buttonOption.whenPressed(m_basicPIDShoot);
     //buttonX.whenPressed(() -> m_chassis.(func));
   }
 

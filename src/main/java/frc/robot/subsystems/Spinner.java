@@ -19,24 +19,20 @@ import edu.wpi.first.wpilibj.DriverStation;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.Timer;
 
 public class Spinner extends SubsystemBase {
 
-  //private boolean rasePIDEnable = false;
-  //private double rasePIDSetpoint = 0;
+  private boolean risePIDEnable = false;
+  private double risePIDSetpoint = 0;
 
   private final WPI_TalonSRX spinMotor;
-  private final WPI_TalonSRX raseMotor;
+  private final WPI_TalonSRX riseMotor;
 
   private final ColorSensorV3 colorSensor;
   private final ColorMatch colorMatcher;
 
-  //private final Encoder m_Encoder;
-  //private final PIDController rasePIDControl;
-  //private Timer timer;
-  //private double rasePreviousRotation = 0;
-  //private double rasePreviousTime = 0;
+  private final Encoder m_Encoder;
+  private final PIDController risePIDControl;
   private String gameData;
   //private Color detectedColor;
   ColorMatchResult match;
@@ -45,30 +41,37 @@ public class Spinner extends SubsystemBase {
    */
   public Spinner() {    
     spinMotor = new WPI_TalonSRX(Constants.spinnerSpinMotor);
-    raseMotor = new WPI_TalonSRX(Constants.spinnerRaseMotor);
+    riseMotor = new WPI_TalonSRX(Constants.spinnerriseMotor);
 
     colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
     colorMatcher = new ColorMatch();
-    //m_Encoder = new Encoder(Constants.m_EncoderPinA,Constants.m_EncoderPinB,Constants.m_EncoderReverse);
+    m_Encoder = new Encoder(Constants.m_EncoderPinA,Constants.m_EncoderPinB,Constants.m_EncoderReverse);
 
-    //rasePIDControl = new PIDController(0.1, 0, 0);
+    risePIDControl = new PIDController(0.1, 0, 0);
     colorMatcher.addColorMatch(Constants.kBlueTarget);
     colorMatcher.addColorMatch(Constants.kGreenTarget);
     colorMatcher.addColorMatch(Constants.kRedTarget);
     colorMatcher.addColorMatch(Constants.kYellowTarget);
-
-    //m_Encoder.reset();
+    risePIDControl.setTolerance(10);
+    m_Encoder.reset();
   }
 
   @Override
   public void periodic() {
     //gameData = DriverStation.getInstance().getGameSpecificMessage();(!?????????????????????????????)
 
-    //if(rasePIDEnable){
-    //  upperPIDOutput(rasePIDControl.calculate(getUpperPIDMeasurment(), rasePIDSetpoint));
-    //}
+    
     
     // This method will be called once per scheduler run
+  }
+
+  public void motorRun(){
+    if(risePIDEnable){
+      risePIDOutput(risePIDControl.calculate(getrisePIDMeasurment(), risePIDSetpoint));
+    }
+  }
+  public double get(){
+    return m_Encoder.getDistance();
   }
 
   public String getGameData(){
@@ -92,45 +95,43 @@ public class Spinner extends SubsystemBase {
   public void stopMotor(){
     spinMotor.stopMotor();
   }
-  /*
+  
   public boolean spinnerPIDIsEnable(){
-    return rasePIDEnable;
+    return risePIDEnable;
   }
   
-  public void rasePIDEnable(){
-    rasePIDEnable = true;
-    rasePIDControl.reset();
+  public void risePIDEnable(){
+    risePIDEnable = true;
   }
 
-  public void upperPIDDisable(){
-    rasePIDEnable = false;
-    upperPIDOutput(0);
+  public boolean atSetpoint(){
+    return risePIDControl.atSetpoint();
   }
 
-  public void setUpperSetpoint(double setpoint){
-    rasePIDSetpoint = setpoint;
+  public void risePIDDisable(){
+    risePIDEnable = false;
+    risePIDOutput(0);
+    
+   
   }
 
-  public void upperPIDOutput(double output){
-    raseMotor.setVoltage(output);
+  public double getrisePIDMeasurment(){
+    return m_Encoder.get();
   }
 
-  public void upperPIDReset(){
-    rasePIDControl.reset();
+  public void setriseSetpoint(double setpoint){
+    risePIDSetpoint = setpoint;
   }
 
-  public double getUpperPIDMeasurment(){
-    double rotation = m_Encoder.get();
-    double time = timer.get();
-    double deltaRotation = rotation - rasePreviousRotation;
-    double deltaTime = time - rasePreviousTime;
-    rasePreviousRotation = rotation;
-    rasePreviousTime = time;
-    double RPS = deltaRotation / deltaTime / Constants.shooterUpperEncoderPPR;
-    return RPS;
+  public void risePIDOutput(double output){
+    riseMotor.setVoltage(output);
   }
 
-  */
+  public void risePIDReset(){
+    risePIDControl.reset();
+  }
+
+  
 
   @Override
   public void setDefaultCommand(final Command defaultCommand) {

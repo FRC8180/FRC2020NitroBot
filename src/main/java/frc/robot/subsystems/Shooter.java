@@ -37,19 +37,14 @@ public class Shooter extends SubsystemBase {
   private double lowerPreviousTime = 0;
 
   public Shooter() {
-    upperPID = new PIDController(0.1, 0, 0.15);
-    lowerPID = new PIDController(1, 0.1, 0.01);
-
+    upperPID = new PIDController(1.5, 0.15, 0.05);
+    lowerPID = new PIDController(1.5, 0.15, 0.05);
     upperMotor = new WPI_TalonSRX(Constants.shooterUpperMotorID);
     lowerMotor = new WPI_TalonSRX(Constants.shooterLowerMotorID);
-    upperMotor.setInverted(Constants.shooterUpperMotorInverted);
-    lowerMotor.setInverted(Constants.shooterLowerMotorInverted);
-
-    upperEncoder = new Encoder(Constants.shooterUpperEncoderPinA,Constants.shooterUpperEncoderPinB,Constants.shooterUpperEncoderDirectionInverted);
-    lowerEncoder = new Encoder(Constants.shooterLowerEncoderPinA,Constants.shooterLowerEncoderPinB,Constants.shooterLowerEncoderDirectionInverted);
-    upperEncoder.reset();
-    lowerEncoder.reset();
-
+    upperMotor.setInverted(Constants.shooterUpperMotorInvert);
+    lowerMotor.setInverted(Constants.shooterLowerMotorInvert);
+    upperEncoder = new Encoder(Constants.shooterUpperEncoderPinA,Constants.shooterUpperEncoderPinB,Constants.shooterUpperEncoderDirectionInvert);
+    lowerEncoder = new Encoder(Constants.shooterLowerEncoderPinA,Constants.shooterLowerEncoderPinB,Constants.shooterLowerEncoderDirectionInvert);
     timer = new Timer();
     timer.reset();
     timer.start();
@@ -71,14 +66,6 @@ public class Shooter extends SubsystemBase {
     super.setDefaultCommand(defaultCommand);
   }
 
-  public boolean upperPIDIsEnable(){
-    return upperPIDEnable;
-  }
-
-  public boolean lowerPIDIsEnable(){
-    return lowerPIDEnable;
-  }
-  
   public void upperPIDEnable(){
     upperPIDEnable = true;
     upperPID.reset();
@@ -115,15 +102,6 @@ public class Shooter extends SubsystemBase {
     lowerMotor.setVoltage(output);
   }
 
-  public void upperPIDReset(){
-    upperPID.reset();
-  }
-
-  public void lowerPIDReset(){
-    lowerPID.reset();
-  }
-  
-
   public double getUpperPIDMeasurment(){
     double rotation = upperEncoder.get();
     double time = timer.get();
@@ -145,14 +123,7 @@ public class Shooter extends SubsystemBase {
     double RPS = deltaRotation / deltaTime / Constants.shooterLowerEncoderPPR;
     return RPS;
   }
-  
-  public void setUpperSpeed(double speed){
-    upperPIDEnable = false;
-    upperMotor.set(speed);
-  }
 
-  public void setLowerSpeed(double speed){
-    lowerPIDEnable = false;
-    lowerMotor.set(speed);
-  }
+
+  
 }

@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2049 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -42,27 +42,49 @@ public final class Constants {
     public static final double axisLYExp = 1;
     public static final double axisLYScale = 1;
 
-    //Chassis Setting
-    public static final byte chassisMotorRFID = 10;
-    public static final byte chassisMotorRBID = 11;
-    public static final byte chassisMotorLFID = 12;
-    public static final byte chassisMotorLBID = 13;
-    public static final boolean chassisMotorRInverted = false;
-    public static final boolean chassisMotorLInverted = false;
-
     //Shooter Setting
-    public static final byte shooterUpperMotorID = 2;
-    public static final byte shooterLowerMotorID = 1;
-    public static final boolean shooterUpperMotorInverted = false;
-    public static final boolean shooterLowerMotorInverted = false;
-    public static final double shooterUpperMotorMaxPIDRPS = 60;
-    public static final double shooterLowerMotorMaxPIDRPS = 60;
+    public static final byte shooterUpperMotorID = 1;
+    public static final byte shooterLowerMotorID = 2;
+    public static final boolean shooterUpperMotorInvert = false;
+    public static final boolean shooterLowerMotorInvert = false;
     public static final int shooterUpperEncoderPPR = 2048;
     public static final int shooterLowerEncoderPPR = 2048;
     public static final byte shooterUpperEncoderPinA = 7;
-    public static final byte shooterUpperEncoderPinB = 6;
-    public static final boolean shooterUpperEncoderDirectionInverted = true;
+    public static final byte shooterUpperEncoderPinB = 8;
+    public static final boolean shooterUpperEncoderDirectionInvert = true;
     public static final byte shooterLowerEncoderPinA = 9;
-    public static final byte shooterLowerEncoderPinB = 8;
-    public static final boolean shooterLowerEncoderDirectionInverted = false;
+    public static final byte shooterLowerEncoderPinB = 10;
+    public static final boolean shooterLowerEncoderDirectionInvert = false;
+    
+    public static final int chassisLiftTalonSRX = 1;
+    public static final int chassisFollower1TalonSRX =0;
+    public static final int chassisRightTalonSRX = 2;
+    public static final int chassisFolower2TalonSRX = 3;
+
+    public static int _smoothing =0;
+    public static int _pov = -1;
+
+    /* 
+    * Which PID slot to pull gains from. Starting 2018, you can choose from
+	 * 0,1,2 or 3. Only the first two (0,1) are visible in web-based
+	 * configuration.
+     * */
+    public static final int kSlotIdx = 0;
+
+	/**
+	 * Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops. For
+	 * now we just want the primary one.
+	 */
+	public static final int kPIDLoopIdx = 0;
+
+	/**
+	 * set to zero to skip waiting for confirmation, set to nonzero to wait and
+	 * report to DS if action fails.
+	 */
+    public static final int kTimeoutMs = 30;
+    	/**
+	 * Gains used in Motion Magic, to be adjusted accordingly
+     * Gains(kp, ki, kd, kf, izone, peak output);
+     */
+    public static final Gain kGains = new Gain(0.2, 0.0, 0.0, 0.2, 0, 1.0);
 }

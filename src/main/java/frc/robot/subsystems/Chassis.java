@@ -37,7 +37,7 @@ public class Chassis extends SubsystemBase {
   private double lockAngle = 0;
 
   public Chassis() {
-    PID = new PIDController(0, 0, 0);
+    PID = new PIDController(0.1, 0, 0.01);
 
     motorRF = new WPI_TalonSRX(Constants.chassisMotorRFID);
     motorRB = new WPI_TalonSRX(Constants.chassisMotorRBID);
@@ -48,7 +48,7 @@ public class Chassis extends SubsystemBase {
     motorRB.follow(motorRF);
     motorLB.follow(motorLF);
 
-    navx = new AHRS(SPI.Port.kOnboardCS0);
+    navx = new AHRS(SPI.Port.kMXP);
     navx.reset();
 
     timer = new Timer();
@@ -61,11 +61,6 @@ public class Chassis extends SubsystemBase {
     if(PIDEnable){
       PIDOutput(PID.calculate(PIDMeasurment(), PIDSetpoint));
     }
-    /*
-    ahrs.pidGet();
-    ahrs.getPIDSourceType();
-    ahrs.setPIDSourceType(ahrs.getPIDSourceType());
-    */
   }
 
   @Override
@@ -109,8 +104,13 @@ public class Chassis extends SubsystemBase {
 
 
   public void setMotorSpeed(double Lspd, double Rspd){
-    motorLF.set(Lspd * Constants.chassisMotorSpeedScale);
-    motorRF.set(Rspd * Constants.chassisMotorSpeedScale);
+    if(Robot.m_oi.getRawAxis(Constants.axisRT) > Constants.chassisPIDRestartTime){
+      motorLF.set(Lspd * Constants.chassisMotorSlowModeSpeedScale);
+      motorRF.set(Rspd * Constants.chassisMotorSlowModeSpeedScale);
+    }else{
+      motorLF.set(Lspd * Constants.chassisMotorNormalModeSpeedScale);
+      motorRF.set(Rspd * Constants.chassisMotorNormalModeSpeedScale);
+    }
   }
 
   public void setMotorVoltage(double Lvoltage, double Rvoltage){
@@ -132,5 +132,13 @@ public class Chassis extends SubsystemBase {
 
   public void setLockAngle(double angle){
     lockAngle = angle;
+  }
+
+  public double getWorldLinearAccelX(){
+    return navx.getWorldLinearAccelX();
+  }
+
+  public double getWorldLinearAccelY(){
+    return navx.getWorldLinearAccelY();
   }
 }

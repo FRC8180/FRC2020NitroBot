@@ -7,7 +7,6 @@
 
 package frc.robot.commands.chassis;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
@@ -21,6 +20,10 @@ public class AssistDrive extends CommandBase {
   private boolean disable = false;
   private double previousTime = 0;
 
+  double last_world_linear_accel_x = 0;
+  double last_world_linear_accel_y = 0;
+  final static double kCollisionThreshold_DeltaG = 0.2f;
+
   Chassis chassis;
   public AssistDrive(Chassis subsystem) {
     chassis = subsystem;
@@ -30,12 +33,28 @@ public class AssistDrive extends CommandBase {
   @Override
   public void initialize() {
     chassis.setLockAngle(chassis.getRawAngle());
+    chassis.PIDEnable();
     timer = new Timer();
+    timer.reset();
+    timer.start();
   }
 
   @Override
   public void execute() {
-    if(disable = true){
+    /*
+    System.out.println("~~~~~~~~~~~");
+    double curr_world_linear_accel_x = chassis.getWorldLinearAccelX();
+    double currentJerkX = curr_world_linear_accel_x - last_world_linear_accel_x;
+    double curr_world_linear_accel_y = chassis.getWorldLinearAccelY();
+    double currentJerkY = curr_world_linear_accel_y - last_world_linear_accel_y;
+    last_world_linear_accel_y = curr_world_linear_accel_y;
+    last_world_linear_accel_x = curr_world_linear_accel_x;
+    if ( ( Math.abs(currentJerkX) > kCollisionThreshold_DeltaG ) ||
+         ( Math.abs(currentJerkY) > kCollisionThreshold_DeltaG)) {
+        System.out.println("Aahahhahhahhhahhhhahhh");
+    }
+    */
+    if(disable){
       chassis.setLockAngle(chassis.getRawAngle());
       chassis.PIDEnable();
       disable = false;

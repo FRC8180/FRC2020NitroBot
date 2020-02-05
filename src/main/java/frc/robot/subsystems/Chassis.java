@@ -18,14 +18,13 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 
 public class Chassis extends SubsystemBase {
   private final PIDController PID;
   private boolean PIDEnable = false;
   private double PIDSetpoint = 0;
-  private double PIDOutput = 0;
-
 
   private Timer timer;
   private AHRS navx;
@@ -62,7 +61,6 @@ public class Chassis extends SubsystemBase {
     if(PIDEnable){
       PIDOutput(PID.calculate(PIDMeasurment(), PIDSetpoint));
     }
-
     /*
     ahrs.pidGet();
     ahrs.getPIDSourceType();
@@ -87,6 +85,7 @@ public class Chassis extends SubsystemBase {
   }
 
   public void PIDReset(){
+    PIDSetpoint = 0;
     PID.reset();
   }
 
@@ -99,11 +98,13 @@ public class Chassis extends SubsystemBase {
   }
 
   public double PIDMeasurment(){
-    return 0;
+    return getCalAngle();
   }
 
   public void PIDOutput(double output){
-    
+    double Rspd = Robot.m_oi.getLY() - output;
+    double Lspd = Robot.m_oi.getLY() + output;
+    setMotorSpeed(Lspd, Rspd);
   }
 
 
@@ -115,6 +116,10 @@ public class Chassis extends SubsystemBase {
   public void setMotorVoltage(double Lvoltage, double Rvoltage){
     motorLF.setVoltage(Lvoltage);
     motorRF.setVoltage(Rvoltage);
+  }
+
+  public void setMotorStop(){
+    setMotorSpeed(0, 0);
   }
 
   public double getRawAngle(){

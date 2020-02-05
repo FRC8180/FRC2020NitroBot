@@ -24,7 +24,7 @@ public class CPIntake extends SubsystemBase {
   
   public CPIntake() {
     intake = new WPI_TalonSRX(Constants.CPintakeMotor);
-    rase = new WPI_TalonSRX(Constants.CPRase);
+    rase = new WPI_TalonSRX(Constants.CPrise);
   }
 
   @Override

@@ -34,6 +34,8 @@ public class Spinner extends SubsystemBase {
   private final Encoder m_Encoder;
   private final PIDController risePIDControl;
   private String gameData;
+  private boolean positionControlEnable;
+  private boolean rotationControlEnable;
   //private Color detectedColor;
   ColorMatchResult match;
   /**
@@ -46,7 +48,8 @@ public class Spinner extends SubsystemBase {
     colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
     colorMatcher = new ColorMatch();
     m_Encoder = new Encoder(Constants.m_EncoderPinA,Constants.m_EncoderPinB,Constants.m_EncoderReverse);
-
+    positionControlEnable = false;
+    rotationControlEnable = false;
     risePIDControl = new PIDController(0.1, 0, 0);
     colorMatcher.addColorMatch(Constants.kBlueTarget);
     colorMatcher.addColorMatch(Constants.kGreenTarget);
@@ -59,9 +62,6 @@ public class Spinner extends SubsystemBase {
   @Override
   public void periodic() {
     //gameData = DriverStation.getInstance().getGameSpecificMessage();(!?????????????????????????????)
-
-    
-    
     // This method will be called once per scheduler run
   }
 
@@ -95,10 +95,35 @@ public class Spinner extends SubsystemBase {
   public void stopMotor(){
     spinMotor.stopMotor();
   }
+
+  public void positionControlEnable(){
+    positionControlEnable = true;
+  }
+
+  public boolean positionControlIsEnable(){
+    return positionControlEnable;
+  }
+
+  public void positionControlDisable(){
+    positionControlEnable = false;
+  }
+
+  public boolean rotationControlIsEnable(){
+    return rotationControlEnable;
+  }
   
+  public void rotationControlEnable(){
+    rotationControlEnable = true;
+  }
+
+  public void rotationControlDisable(){
+    rotationControlEnable = false;
+  }
+
   public boolean spinnerPIDIsEnable(){
     return risePIDEnable;
   }
+
   
   public void risePIDEnable(){
     risePIDEnable = true;
@@ -111,8 +136,6 @@ public class Spinner extends SubsystemBase {
   public void risePIDDisable(){
     risePIDEnable = false;
     risePIDOutput(0);
-    
-   
   }
 
   public double getrisePIDMeasurment(){

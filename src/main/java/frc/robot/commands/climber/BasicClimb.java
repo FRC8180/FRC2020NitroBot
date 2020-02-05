@@ -8,6 +8,8 @@
 package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.Climber;
 
 public class BasicClimb extends CommandBase {
@@ -27,6 +29,15 @@ public class BasicClimb extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    /*
+    if(Robot.m_oi.getRawButton(Constants.buttonX)){
+      climber.encoderReset();
+      climber.setSetPoint(Constants.liftSetPoint);
+    }
+    */
+    if(Robot.m_oi.getRawAxis(Constants.axisJRY) > 0.2 || Robot.m_oi.getRawAxis(Constants.axisJRY) <0.2){
+      climber.setLiftMotorSpeed(Robot.m_oi.getRawAxis(Constants.axisJRY)*0.5);
+    }
   }
 
   // Called once the command ends or is interrupted.

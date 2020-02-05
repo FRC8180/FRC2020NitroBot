@@ -61,21 +61,36 @@ public final class Constants {
     public static final boolean shooterLowerEncoderDirectionInvert = false;
 
     //Spinner Setting
-    public static final byte spinnerSpinMotor = 21;
-    public static final double spinnerSpinMotorSpeed = 0.5;
-    public static final byte spinnerriseMotor = 1;
+    public static final byte spinnerSpinMotor = 4;
+    public static final double spinnerSpinMotorSpeed = 1;
+    public static final byte spinnerriseMotor = 99;
 
     public static final byte m_EncoderPinA = 0;
     public static final byte m_EncoderPinB = 1;
     public static final boolean m_EncoderReverse = false;
-    public static final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);   // Adjust parameters by distance
-    public static final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);  
-    public static final Color kRedTarget = ColorMatch.makeColor(0.531, 0.335, 0.124);   
-    public static final Color kYellowTarget = ColorMatch.makeColor(0.320, 0.542, 0.133); 
+    public static final Color kBlueTarget = ColorMatch.makeColor(0.135, 0.429, 0.400);   // Adjust parameters by distance
+    public static final Color kGreenTarget = ColorMatch.makeColor(0.183, 0.554, 0.260);  
+    public static final Color kRedTarget = ColorMatch.makeColor(0.460, 0.370, 0.161);   
+    public static final Color kYellowTarget = ColorMatch.makeColor(0.326, 0.537, 0.137); 
     
-    //CPIntake
+    //CPIntake setting
     public static final byte CPintakeMotor = 51;
     public static final byte CPrise = 1;
     public static final double CPintakeMotorSpeed_in = 1;
     public static final double CPintakeMotorSpeed_out = -CPintakeMotorSpeed_in;
+
+    //Climber setting
+    public static final byte liftEncoderPinA = 88;
+    public static final byte liftEncoderPinB = 88;
+    public static final boolean  liftlEncoderReverse = false;
+    public static final double liftSetPoint = 1234;
+    public static final byte liftMotorID = 99; 
+
+    //intake setting
+    public static final byte intakeMotorID = 98;
+    public static final byte intakeRiserMotorID = 98;
+    public static final byte intakeRiserEncoderPinA = 97;
+    public static final byte intakeRiserEncoderPinB = 96;
+    public static final boolean intakeRiserlEncoderReverse = true;
+    
 }

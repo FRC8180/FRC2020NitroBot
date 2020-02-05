@@ -99,20 +99,12 @@ public class Shooter extends SubsystemBase {
     lowerPIDOutput(0);
   }
 
-  public void setUpperSetpoint(double setpoint){
+  public void setUpperPIDSetpoint(double setpoint){
     upperPIDSetpoint = setpoint;
   }
 
-  public void setLowerSetpoint(double setpoint){
+  public void setLowerPIDSetpoint(double setpoint){
     lowerPIDSetpoint = setpoint;
-  }
-
-  public void upperPIDOutput(double output){
-    upperMotor.setVoltage(output);
-  }
-
-  public void lowerPIDOutput(double output){
-    lowerMotor.setVoltage(output);
   }
 
   public void upperPIDReset(){
@@ -123,6 +115,13 @@ public class Shooter extends SubsystemBase {
     lowerPID.reset();
   }
   
+  public void upperPIDOutput(double output){
+    upperMotor.setVoltage(output);
+  }
+
+  public void lowerPIDOutput(double output){
+    lowerMotor.setVoltage(output);
+  }
 
   public double getUpperPIDMeasurment(){
     double rotation = upperEncoder.get();

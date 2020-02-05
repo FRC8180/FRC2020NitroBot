@@ -33,6 +33,7 @@ public final class Constants {
     public static final boolean axisLXInvert = false;
     public static final boolean axisLYInvert = true;
 
+    public static final double joystickDeadZone = 0.2;
     public static final double axisRXExp = 1;
     public static final double axisRXScale = 1;
     public static final double axisRYExp = 1;
@@ -49,6 +50,7 @@ public final class Constants {
     public static final byte chassisMotorLBID = 13;
     public static final boolean chassisMotorRInverted = false;
     public static final boolean chassisMotorLInverted = false;
+    public static final double chassisMotorSpeedScale = 0.3;
 
     //Shooter Setting
     public static final byte shooterUpperMotorID = 2;

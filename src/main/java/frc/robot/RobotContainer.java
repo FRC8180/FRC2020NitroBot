@@ -10,6 +10,7 @@ package frc.robot;
 //import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import frc.robot.commands.chassis.AssistDrive;
 import frc.robot.commands.chassis.BasicDrive;
 import frc.robot.commands.climber.BasicClimb;
 import frc.robot.commands.intake.BasicIntake;
@@ -38,6 +39,7 @@ public class RobotContainer {
   // Command defined here!!!
   //private final AutoMove m_autoCommand = new AutoMove(m_auto)
   private final BasicDrive m_basicDrive = new BasicDrive(m_chassis);
+  private final AssistDrive m_assistDrive = new AssistDrive(m_chassis);
   private final BasicClimb m_basicClimb = new BasicClimb(m_climber);
   private final BasicIntake m_basicIntake = new BasicIntake(m_intake);
   private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
@@ -61,7 +63,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     // Set Default Command!
-    //m_chassis.setDefaultCommand(m_basicDrive);
+    m_chassis.setDefaultCommand(m_assistDrive);
     //m_climber.setDefaultCommand();
     //m_intake.setDefaultCommand();
     //m_shooter.setDefaultCommand(m_basicShoot);
@@ -70,7 +72,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     //Trig command defined here!!!!
-    buttonOption.whenPressed(m_basicPIDShoot);
+    //buttonOption.whenPressed(m_basicPIDShoot);
     //buttonX.whenPressed(() -> m_chassis.(func));
   }
 
@@ -93,7 +95,7 @@ public class RobotContainer {
     return driverJoystick.getRawButton(ButtonNumber);
   }
 
-  public double getRawRX(){
+  public double getRX(){
     double rawData = getRawAxis(Constants.axisJRX);
     if(rawData > 0 && rawData < 1){
       rawData = Constants.axisRXScale * Math.pow(Math.abs(rawData),Constants.axisRXExp);
@@ -105,8 +107,12 @@ public class RobotContainer {
     }
     return rawData;
   }
+  public boolean isRXDeadzone(){
+    double rawRX = getRawAxis(Constants.axisJRX);
+    return (rawRX < Constants.joystickDeadZone && rawRX > -Constants.joystickDeadZone);
+  }
 
-  public double getRawRY(){
+  public double getRY(){
     double rawData = getRawAxis(Constants.axisJRY);
     if(rawData > 0 && rawData < 1){
       rawData = Constants.axisRYScale * Math.pow(Math.abs(rawData),Constants.axisRYExp);
@@ -118,8 +124,12 @@ public class RobotContainer {
     }
     return rawData;
   }
+  public boolean isRYDeadzone(){
+    double rawRY = getRawAxis(Constants.axisJRY);
+    return (rawRY < Constants.joystickDeadZone && rawRY > -Constants.joystickDeadZone);
+  }
 
-  public double getRawLX(){
+  public double getLX(){
     double rawData = getRawAxis(Constants.axisJLX);
     if(rawData > 0 && rawData < 1){
       rawData = Constants.axisLXScale * Math.pow(Math.abs(rawData),Constants.axisLXExp);
@@ -131,8 +141,12 @@ public class RobotContainer {
     }
     return rawData;
   }
+  public boolean isLXDeadzone(){
+    double rawLX = getRawAxis(Constants.axisJLX);
+    return (rawLX < Constants.joystickDeadZone && rawLX > -Constants.joystickDeadZone);
+  }
 
-  public double getRawLY(){
+  public double getLY(){
     double rawData = getRawAxis(Constants.axisJLY);
     if(rawData > 0 && rawData < 1){
       rawData = Constants.axisLYScale * Math.pow(Math.abs(rawData),Constants.axisLYExp);
@@ -143,6 +157,10 @@ public class RobotContainer {
       rawData = rawData * -1;
     }
     return rawData;
+  }
+  public boolean isLYDeadzone(){
+    double rawLY = getRawAxis(Constants.axisJLY);
+    return (rawLY < Constants.joystickDeadZone && rawLY > -Constants.joystickDeadZone);
   }
 
   public void SetRumble(double Intensity){

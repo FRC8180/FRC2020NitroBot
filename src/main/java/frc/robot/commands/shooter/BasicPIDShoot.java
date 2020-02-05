@@ -73,7 +73,7 @@ public class BasicPIDShoot extends CommandBase {
       if(!shooter.upperPIDIsEnable()){
         shooter.upperPIDEnable();
       }
-      shooter.setUpperSetpoint(upperRPS);
+      shooter.setUpperPIDSetpoint(upperRPS);
     }else{
       shooter.upperPIDDisable();
       shooter.upperPIDReset();
@@ -83,7 +83,7 @@ public class BasicPIDShoot extends CommandBase {
       if(!shooter.lowerPIDIsEnable()){
         shooter.lowerPIDEnable();
       }
-      shooter.setLowerSetpoint(lowerRPS);
+      shooter.setLowerPIDSetpoint(lowerRPS);
     }else{
       shooter.lowerPIDDisable();
       shooter.lowerPIDReset();

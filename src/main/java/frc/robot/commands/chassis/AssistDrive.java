@@ -8,33 +8,34 @@
 package frc.robot.commands.chassis;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
-import frc.robot.Utility;
 import frc.robot.subsystems.Chassis;
 
-public class BasicDrive extends CommandBase {
-  private final Chassis chassis;
-  public BasicDrive(Chassis subsystem) {
+public class AssistDrive extends CommandBase {
+
+  private boolean disable = false;
+
+  Chassis chassis;
+  public AssistDrive(Chassis subsystem) {
     chassis = subsystem;
     addRequirements(subsystem);
   }
 
   @Override
   public void initialize() {
-
+    
   }
 
   @Override
   public void execute() {
-    double Rspd = Robot.m_oi.getLY() - Robot.m_oi.getRX();
-    double Lspd = Robot.m_oi.getLY() + Robot.m_oi.getRX();
-    Rspd = Utility.Constrain(Rspd, -1, 1);
-    Lspd = Utility.Constrain(Lspd, -1, 1);
-    chassis.setMotorSpeed(Lspd, Rspd);
+    if(disable = true){
+      
+      disable = false;
+    }
   }
-  
+
   @Override
   public void end(boolean interrupted) {
+    disable = true;
   }
 
   @Override

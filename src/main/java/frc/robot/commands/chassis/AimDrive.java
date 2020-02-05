@@ -8,26 +8,31 @@
 package frc.robot.commands.chassis;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.Vision.Vision;
 import frc.robot.subsystems.Chassis;
-import frc.robot.system.PID_System;
+//import frc.robot.system.PID_System;
 
-public class PIDDrive extends CommandBase {
+public class AimDrive extends CommandBase {
   /**
    * Creates a new PIDDrive.
    */
-  public PID_System PID = new PID_System();
+  //public PID_System PID = new PID_System();
   //public double Gryo_HeadingAngle;
+  
   public Timer pid_timer = new Timer();
   public boolean PIDEnable = false;
+  /*
   public double kp = 0.04;
   public double ki = 0.0;
   public double kd = 0.1;
+  */
+
   private final Chassis chassis;
-  public PIDDrive(Chassis subsystem) {
+  public AimDrive(Chassis subsystem) {
     chassis = subsystem;
     addRequirements(subsystem);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -36,15 +41,17 @@ public class PIDDrive extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    /*
     PID.Init();
     PID.Enable_PID(true);
     PID.Enable_AntiWindUp(true, 1);
     PID.Enable_AutoStop(false, 0, 0);
     PID.Enable_TimeOut(false, 0);
     PIDEnable = true;
+    */
+    //Gryo_HeadingAngle = chassis.get_Angle();
     pid_timer.reset();
     pid_timer.start();
-    //Gryo_HeadingAngle = chassis.get_Angle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -58,15 +65,12 @@ public class PIDDrive extends CommandBase {
     //boolean deadzone = Robot.m_oi.getRXState();
     //double angle = (((((chassis.get_Angle() + (360 - Gryo_HeadingAngle)) % 360) + 180) % 360) - 180);
     //System.out.println(angle);
-    if(Robot.m_oi.getRawButton(Constants.buttonB)){
-      double visionAngle = vision.getVisionResult("h_angle");
-      System.out.println(visionAngle);
-      double pid = PID.PID(visionAngle, kp, ki, kd);
-      //System.out.println(pid);
-      rspd = -pid;
-      lspd = pid;
-    }
-    
+    double visionAngle = vision.getVisionResult("h_angle");
+    System.out.println(visionAngle);
+    double pid = chassis.aimPID();
+    rspd = -pid;
+    lspd = pid;
+    chassis.setMotorSpeed(lspd*Constants.outputPercent, rspd*Constants.outputPercent);
     /*
     if(deadzone){
      if(PIDEnable){
@@ -85,7 +89,7 @@ public class PIDDrive extends CommandBase {
       lspd = Joystick_LY + Joystick_RX;
     }
     */
-    chassis.setMotorSpeed(lspd*Constants.outputPercent, rspd*Constants.outputPercent);
+    
   }
 
 

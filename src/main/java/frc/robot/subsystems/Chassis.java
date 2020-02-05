@@ -11,7 +11,8 @@ import com.kauailabs.navx.frc.AHRS;
 import frc.robot.Vision.Vision;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
-//import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -19,12 +20,20 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 public class Chassis extends SubsystemBase {
+  private boolean PIDEnable = false;
+  private double PIDSetpoint = 0;
   private WPI_TalonSRX motorRF;
   private WPI_TalonSRX motorRB;
   private WPI_TalonSRX motorLF;
   private WPI_TalonSRX motorLB;
-
+  private PIDController PID;
+  private Timer timer;
   private AHRS ahrs;
+  private Vision vision;
+
+  public double kp = 0.04;
+  public double ki = 0.0;
+  public double kd = 0.1;
 
   public Chassis() {
     motorRF = new WPI_TalonSRX(Constants.chassisMotorRFID);
@@ -36,11 +45,17 @@ public class Chassis extends SubsystemBase {
     //motorRB.follow(motorRF);
     //motorLB.follow(motorLF);
     
+    /*
     try {
       ahrs = new AHRS(SPI.Port.kMXP);
     } catch (RuntimeException ex) {
       DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
     }
+    */
+    PID = new PIDController(kp, ki, kd);
+    timer = new Timer();
+    timer.reset();
+    timer.start();
   }
 
   public void setMotorSpeed(double Lspd, double Rspd){
@@ -57,8 +72,15 @@ public class Chassis extends SubsystemBase {
     else{
       motorRF.set(Rspd);
     }
-    
-    
+  }
+
+  public double aimPID(){
+    if (PIDEnable){
+      return PID.calculate(getVisionAngle(), PIDSetpoint);
+    }
+    else{
+      return 0;
+    }
   }
 
   public void setMotorVoltage(double Lvoltage, double Rvoltage){
@@ -67,7 +89,11 @@ public class Chassis extends SubsystemBase {
   } 
 
   public double get_Angle() {
-    return 0; //ahrs.getAngle();
+    return ahrs.getAngle();
+  }
+
+  public double getVisionAngle(){
+    return vision.getVisionResult("h_angle");
   }
 
   @Override

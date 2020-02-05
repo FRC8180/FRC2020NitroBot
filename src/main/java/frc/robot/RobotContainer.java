@@ -11,7 +11,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.commands.chassis.BasicDrive;
-import frc.robot.commands.chassis.PIDDrive;
+import frc.robot.commands.chassis.AimDrive;
 import frc.robot.commands.climber.BasicClimb;
 import frc.robot.commands.intake.BasicIntake;
 import frc.robot.commands.shooter.BasicPIDShoot;
@@ -40,7 +40,7 @@ public class RobotContainer {
   // Command defined here!!!
   //private final AutoMove m_autoCommand = new AutoMove(m_auto)
   private final BasicDrive m_basicDrive = new BasicDrive(m_chassis);
-  private final PIDDrive m_pidDrive = new PIDDrive(m_chassis);
+  private final AimDrive m_aimDrive = new AimDrive(m_chassis);
   private final BasicClimb m_basicClimb = new BasicClimb(m_climber);
   private final BasicIntake m_basicIntake = new BasicIntake(m_intake);
   private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
@@ -67,7 +67,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     // Set Default Command!
-    m_chassis.setDefaultCommand(m_pidDrive);
+    m_chassis.setDefaultCommand(m_aimDrive);
     //m_climber.setDefaultCommand();
     //m_intake.setDefaultCommand();
     //m_shooter.setDefaultCommand(m_shootTest);
@@ -77,6 +77,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     //Trig command defined here!!!!
     buttonOption.whenPressed(m_shootTest);
+    buttonB.whenPressed(m_aimDrive);
     //buttonX.whenPressed(() -> m_chassis.(func));
   }
 

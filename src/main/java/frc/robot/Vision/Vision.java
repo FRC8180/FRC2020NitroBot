@@ -17,6 +17,7 @@ public class Vision {
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable table = inst.getTable("PublicVision");
         NetworkTableEntry data = table.getEntry(name);
+        //"State": state
         boolean result = data.getBoolean(false);
         System.out.println(result);
         return result;
@@ -24,7 +25,7 @@ public class Vision {
     public double getVisionResult(String name) {
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable table = inst.getTable("PublicVision");
-        //"State": state
+        
         //"x": Center_x
         //"y": Center_y
         //"width": width

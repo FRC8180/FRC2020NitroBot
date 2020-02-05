@@ -11,18 +11,19 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.commands.chassis.BasicDrive;
+import frc.robot.commands.chassis.PIDDrive;
 import frc.robot.commands.climber.BasicClimb;
 import frc.robot.commands.intake.BasicIntake;
 import frc.robot.commands.shooter.BasicPIDShoot;
 import frc.robot.commands.shooter.BasicShoot;
 import frc.robot.commands.shooter.ShooterSpeedTest;
-import frc.robot.commands.spinner.BasicSpin;
+//import frc.robot.commands.spinner.BasicSpin;
 
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Spinner;
+//import frc.robot.subsystems.Spinner;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -34,17 +35,18 @@ public class RobotContainer {
   private final Climber m_climber = new Climber();
   private final Intake  m_intake  = new Intake();
   private final Shooter m_shooter = new Shooter();
-  private final Spinner m_spinner = new Spinner();
+  //private final Spinner m_spinner = new Spinner();
 
   // Command defined here!!!
   //private final AutoMove m_autoCommand = new AutoMove(m_auto)
   private final BasicDrive m_basicDrive = new BasicDrive(m_chassis);
+  private final PIDDrive m_pidDrive = new PIDDrive(m_chassis);
   private final BasicClimb m_basicClimb = new BasicClimb(m_climber);
   private final BasicIntake m_basicIntake = new BasicIntake(m_intake);
   private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
   private final BasicShoot m_basicShoot = new BasicShoot(m_shooter);
   private final ShooterSpeedTest m_shootTest = new ShooterSpeedTest(m_shooter);
-  private final BasicSpin m_basicSpin = new BasicSpin(m_spinner);
+  //private final BasicSpin m_basicSpin = new BasicSpin(m_spinner);
 
   // Button defined here!!!
   private final JoystickButton buttonY = new JoystickButton(driverJoystick,Constants.buttonY);
@@ -59,15 +61,17 @@ public class RobotContainer {
   private final JoystickButton buttonJR = new JoystickButton(driverJoystick,Constants.buttonJR);
   private final JoystickButton buttonJL = new JoystickButton(driverJoystick,Constants.buttonJL);
 
+  private boolean RXinDeadZone = false;
+
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
     // Set Default Command!
-    //m_chassis.setDefaultCommand(m_basicDrive);
+    m_chassis.setDefaultCommand(m_pidDrive);
     //m_climber.setDefaultCommand();
     //m_intake.setDefaultCommand();
     //m_shooter.setDefaultCommand(m_shootTest);
-    //m_spinner.setDefaultCommand();
+    //m_spinner.setDefaultCommand(m_pidDrive);
   }
 
   private void configureButtonBindings() {
@@ -97,15 +101,30 @@ public class RobotContainer {
 
   public double getRawRX(){
     double rawData = getRawAxis(Constants.axisJRX);
-    if(rawData > 0 && rawData < 1){
+    if(rawData >= Constants.deadZone && rawData <= 1){
       rawData = Constants.axisRXScale * Math.pow(Math.abs(rawData),Constants.axisRXExp);
-    }else if(rawData < 0 && rawData > -1){
+    }else if(rawData <= -Constants.deadZone && rawData > -1){
       rawData = Constants.axisRXScale * -Math.pow(Math.abs(rawData),Constants.axisRXExp);
     }
+    /*
+    else{
+      RXinDeadZone = true;
+    }
+    */
     if(Constants.axisRXInvert){
       rawData = rawData * -1;
     }
+    
     return rawData;
+  }
+
+  public boolean getRXState(){
+    if(getRawAxis(Constants.axisJRX) < Constants.deadZone && getRawAxis(Constants.axisJRX) > Constants.deadZone){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   public double getRawRY(){
@@ -123,9 +142,9 @@ public class RobotContainer {
 
   public double getRawLX(){
     double rawData = getRawAxis(Constants.axisJLX);
-    if(rawData > 0 && rawData < 1){
+    if(rawData > 0 && rawData <= 1){
       rawData = Constants.axisLXScale * Math.pow(Math.abs(rawData),Constants.axisLXExp);
-    }else if(rawData < 0 && rawData > -1){
+    }else if(rawData < 0 && rawData >= -1){
       rawData = Constants.axisLXScale * -Math.pow(Math.abs(rawData),Constants.axisLXExp);
     }
     if(Constants.axisLXInvert){
@@ -136,10 +155,12 @@ public class RobotContainer {
 
   public double getRawLY(){
     double rawData = getRawAxis(Constants.axisJLY);
-    if(rawData > 0 && rawData < 1){
+    if(rawData > Constants.deadZone && rawData <= 1){
       rawData = Constants.axisLYScale * Math.pow(Math.abs(rawData),Constants.axisLYExp);
-    }else if(rawData < 0 && rawData > -1){
+    }else if(rawData < -Constants.deadZone && rawData >= -1){
       rawData = Constants.axisLYScale * -Math.pow(Math.abs(rawData),Constants.axisLYExp);
+    }else{
+      rawData = 0;
     }
     if(Constants.axisLYInvert){
       rawData = rawData * -1;

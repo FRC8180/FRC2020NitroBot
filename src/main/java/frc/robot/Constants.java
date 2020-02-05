@@ -7,9 +7,14 @@
 
 package frc.robot;
 
+import com.revrobotics.ColorMatch;
+
+import edu.wpi.first.wpilibj.util.Color;
+
 public final class Constants {
     
     //Joystick index defined
+    public static final double deadZone = 0.3;
     public static final byte buttonY = 4;
     public static final byte buttonA = 1;
     public static final byte buttonX = 3;
@@ -57,4 +62,27 @@ public final class Constants {
     public static final byte shooterLowerEncoderPinA = 9;
     public static final byte shooterLowerEncoderPinB = 8;
     public static final boolean shooterLowerEncoderDirectionInvert = false;
+
+    //Spinner Setting
+    public static final byte spinnerSpinMotor = 20;
+    public static final double spinnerSpinMotorSpeed = 0.5;
+    public static final byte spinnerRaseMotor = 21;
+
+    public static final byte risingMotorPin  = 5;
+    public static final byte m_EncoderPinA = 6;
+    public static final byte m_EncoderPinB = 7;
+    public static final boolean m_EncoderReverse = true;
+    public static final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);   // Adjust parameters by distance
+    public static Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);  
+    public static Color kRedTarget = ColorMatch.makeColor(0.531, 0.335, 0.124);   
+    public static Color kYellowTarget = ColorMatch.makeColor(0.320, 0.542, 0.133); 
+
+    //Chassis Setting
+    public static final byte chassisMotorRFID = 4;
+    public static final byte chassisMotorRBID = 1;
+    public static final byte chassisMotorLFID = 3;
+    public static final byte chassisMotorLBID = 2;
+    public static final boolean chassisMotorRInverted = false;
+    public static final boolean chassisMotorLInverted = true;
+    public static final double outputPercent = 0.5;
 }

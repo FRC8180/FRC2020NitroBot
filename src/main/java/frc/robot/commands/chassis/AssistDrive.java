@@ -9,6 +9,7 @@ package frc.robot.commands.chassis;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.Utility;
 import frc.robot.subsystems.Chassis;
@@ -37,19 +38,6 @@ public class AssistDrive extends CommandBase {
 
   @Override
   public void execute() {
-    /*
-    System.out.println("~~~~~~~~~~~");
-    double curr_world_linear_accel_x = chassis.getWorldLinearAccelX();
-    double currentJerkX = curr_world_linear_accel_x - last_world_linear_accel_x;
-    double curr_world_linear_accel_y = chassis.getWorldLinearAccelY();
-    double currentJerkY = curr_world_linear_accel_y - last_world_linear_accel_y;
-    last_world_linear_accel_y = curr_world_linear_accel_y;
-    last_world_linear_accel_x = curr_world_linear_accel_x;
-    if ( ( Math.abs(currentJerkX) > kCollisionThreshold_DeltaG ) ||
-         ( Math.abs(currentJerkY) > kCollisionThreshold_DeltaG)) {
-        System.out.println("Aahahhahhahhhahhhhahhh");
-    }
-    */
     if(disable){
       chassis.setLockAngle(chassis.getRawAngle());
       chassis.PIDEnable();
@@ -62,7 +50,7 @@ public class AssistDrive extends CommandBase {
     if(Robot.m_oi.isRXDeadzone()){
       if(chassis.PIDIsEnable()){
       }else{
-        if(timer.get() >= previousTime + 0.25){
+        if(timer.get() >= previousTime + Constants.chassisPIDRestartTime){
           chassis.setLockAngle(chassis.getRawAngle());
           chassis.PIDEnable();
         }

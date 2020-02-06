@@ -7,9 +7,9 @@
 
 package frc.robot;
 
-//import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import frc.robot.commands.chassis.AimDrive;
 import frc.robot.commands.chassis.AssistDrive;
 import frc.robot.commands.chassis.BasicDrive;
 import frc.robot.commands.climber.BasicClimb;
@@ -44,6 +44,7 @@ public class RobotContainer {
   //private final AutoMove m_autoCommand = new AutoMove(m_auto)
   private final BasicDrive m_basicDrive = new BasicDrive(m_chassis);
   private final AssistDrive m_assistDrive = new AssistDrive(m_chassis);
+  private final AimDrive m_aimDrive = new AimDrive(m_chassis);
   private final BasicClimb m_basicClimb = new BasicClimb(m_climber);
   private final BasicIntake m_basicIntake = new BasicIntake(m_intake);
   private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
@@ -67,7 +68,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     // Set Default Command!
-    m_chassis.setDefaultCommand(m_assistDrive);
+    //m_chassis.setDefaultCommand(m_assistDrive);
     //m_climber.setDefaultCommand();
     //m_intake.setDefaultCommand();
     //m_shooter.setDefaultCommand(m_basicShoot);
@@ -76,7 +77,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     //Trig command defined here!!!!
-    //buttonOption.whenPressed(m_basicPIDShoot);
+    buttonB.whenPressed(m_aimDrive);
     //buttonX.whenPressed(() -> m_chassis.(func));
   }
 
@@ -185,7 +186,7 @@ public class RobotContainer {
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     NetworkTable table = inst.getTable(tableName);
     NetworkTableEntry data = table.getEntry(keyName);
-    double result = data.getDouble(0);
+    double result = data.getDouble(0.0);
     return result;
   }
 }

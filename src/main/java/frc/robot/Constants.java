@@ -54,9 +54,9 @@ public final class Constants {
     public static final double chassisPIDRestartTime = 0.25;
 
     //Shooter Setting
-    public static final byte shooterUpperMotorID = 20;
-    public static final byte shooterLowerMotorID = 21;
-    public static final boolean shooterUpperMotorInverted = false;
+    public static final byte shooterUpperMotorID = 2;
+    public static final byte shooterLowerMotorID = 1;
+    public static final boolean shooterUpperMotorInverted = true;
     public static final boolean shooterLowerMotorInverted = false;
     public static final double shooterUpperMotorMaxPIDRPS = 60;
     public static final double shooterLowerMotorMaxPIDRPS = 60;

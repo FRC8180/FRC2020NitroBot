@@ -11,9 +11,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.Utility;
 import frc.robot.subsystems.Shooter;
 
 public class BasicShoot extends CommandBase {
+
+  private int buttonYStatus = 0;
+  private int buttonBStatus = 0;
+  private int buttonXStatus = 0;
+  private int buttonAStatus = 0;
+
+  private double upperVoltage = 0;
+  private double lowerVoltage = 0;
 
   private final Shooter shooter;
   public BasicShoot(Shooter subsystem) {
@@ -29,6 +38,40 @@ public class BasicShoot extends CommandBase {
 
   @Override
   public void execute() {
+    SmartDashboard.putBoolean("status", true);
+    if(Robot.m_oi.getRawButton(Constants.buttonY) && buttonYStatus == 0){
+      upperVoltage += 0.5;
+      buttonYStatus = 1;
+    }else if(!Robot.m_oi.getRawButton(Constants.buttonY) && buttonYStatus == 1){
+      buttonYStatus = 0;
+    }
+    if(Robot.m_oi.getRawButton(Constants.buttonB) && buttonBStatus == 0){
+      upperVoltage -= 0.5;
+      buttonBStatus = 1;
+    }else if(!Robot.m_oi.getRawButton(Constants.buttonB) && buttonBStatus == 1){
+      buttonBStatus = 0;
+    }
+
+    if(Robot.m_oi.getRawButton(Constants.buttonX) && buttonXStatus == 0){
+      lowerVoltage += 0.5;
+      buttonXStatus = 1;
+    }else if(!Robot.m_oi.getRawButton(Constants.buttonX) && buttonXStatus == 1){
+      buttonXStatus = 0;
+    }
+    if(Robot.m_oi.getRawButton(Constants.buttonA) && buttonAStatus == 0){
+      lowerVoltage -= 0.5;
+      buttonAStatus = 1;
+    }else if(!Robot.m_oi.getRawButton(Constants.buttonA) && buttonAStatus == 1) {
+      buttonAStatus = 0;
+    }
+
+    upperVoltage = Utility.Constrain(upperVoltage, 0, 10);
+    lowerVoltage = Utility.Constrain(lowerVoltage, 0, 10);
+
+    SmartDashboard.putNumber("UpperVoltage", upperVoltage);
+    SmartDashboard.putNumber("LowerVoltage", lowerVoltage);
+    
+    /*
     double upperSpeed = Robot.m_oi.getRawAxis(Constants.axisRT);
     double lowerSpeed = Robot.m_oi.getRawAxis(Constants.axisLT);
     SmartDashboard.putNumber("upperSpeed", upperSpeed);
@@ -38,6 +81,7 @@ public class BasicShoot extends CommandBase {
     SmartDashboard.putNumber("upperNowSpeed", shooter.getUpperPIDMeasurment());
     SmartDashboard.putNumber("lowerNowSpeed", shooter.getLowerPIDMeasurment());
     SmartDashboard.putBoolean("Status", true);
+    */
   }
 
   @Override

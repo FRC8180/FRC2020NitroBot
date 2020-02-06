@@ -77,7 +77,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     //Trig command defined here!!!!
-    buttonB.whenPressed(m_aimDrive);
+    buttonB.whenPressed(m_basicShoot);
     //buttonX.whenPressed(() -> m_chassis.(func));
   }
 

@@ -20,10 +20,6 @@ public class AssistDrive extends CommandBase {
   private boolean disable = false;
   private double previousTime = 0;
 
-  double last_world_linear_accel_x = 0;
-  double last_world_linear_accel_y = 0;
-  final static double kCollisionThreshold_DeltaG = 0.2f;
-
   Chassis chassis;
   public AssistDrive(Chassis subsystem) {
     chassis = subsystem;

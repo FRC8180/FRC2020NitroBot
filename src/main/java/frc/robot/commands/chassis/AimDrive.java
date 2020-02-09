@@ -13,6 +13,7 @@ import frc.robot.subsystems.Chassis;
 public class AimDrive extends CommandBase {
   
   private boolean disable = false;
+  private boolean PIDBugIgnore = true;
 
   Chassis chassis;
   public AimDrive(Chassis subsystem) {
@@ -23,12 +24,12 @@ public class AimDrive extends CommandBase {
   @Override
   public void initialize() {
     chassis.aimPIDEnable();
-    chassis.aimPIDSetTolerance(5);
+    chassis.aimPIDSetTolerance(2);
   }
 
   @Override
   public void execute(){
-    if(disable = true){
+    if(disable){
       chassis.aimPIDEnable();
       disable = false;
     }
@@ -36,12 +37,21 @@ public class AimDrive extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    chassis.aimPIDDisable();
     chassis.setMotorStop();
     disable = true;
+    PIDBugIgnore = true;
   }
 
   @Override
   public boolean isFinished() {
-    return chassis.aimPIDIsStable();
+    boolean finished = chassis.aimPIDIsStable();
+    if(finished && PIDBugIgnore){
+      PIDBugIgnore = false;
+      return false;
+    }else if(finished && !PIDBugIgnore){
+      return true;
+    }
+    return false;
   }
 }

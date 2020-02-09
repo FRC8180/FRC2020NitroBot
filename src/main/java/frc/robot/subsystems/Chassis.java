@@ -20,11 +20,11 @@ import frc.robot.Robot;
 
 
 public class Chassis extends SubsystemBase {
-  private final PIDController PID;
+  private PIDController PID;
   private boolean PIDEnable = false;
   private double PIDSetpoint = 0;
 
-  private final PIDController aimPID;
+  private PIDController aimPID;
   private boolean aimPIDEnable = false;
   private double aimPIDSetpoint = 0;
 
@@ -153,11 +153,11 @@ public class Chassis extends SubsystemBase {
     aimPID.setTolerance(value);
   }
   public double aimPIDMeasurment(){
-    return Robot.m_oi.ntGetDouble("PublicVision", "h_angle");
+    return (Robot.m_oi.ntGetDouble("Vision", "h_angle"));
   }
   public void aimPIDOutput(double output){
-    double Rspd = Robot.m_oi.getLY() - output;
-    double Lspd = Robot.m_oi.getLY() + output;
+    double Rspd = Robot.m_oi.getLY() + output;
+    double Lspd = Robot.m_oi.getLY() - output;
     setMotorSpeed(Lspd, Rspd);
   }
   public boolean aimPIDIsStable(){

@@ -15,7 +15,7 @@ import frc.robot.subsystems.Chassis;
 public class AimDrive extends CommandBase {
   
   private boolean disable = false;
-  private boolean PIDBugIgnore = true;
+  //private boolean PIDBugIgnore = true;
 
   Chassis chassis;
   public AimDrive(Chassis subsystem) {
@@ -26,7 +26,6 @@ public class AimDrive extends CommandBase {
   @Override
   public void initialize() {
     chassis.aimPIDEnable();
-    chassis.aimPIDSetTolerance(1);
   }
 
   @Override
@@ -42,7 +41,7 @@ public class AimDrive extends CommandBase {
     chassis.aimPIDDisable();
     chassis.setMotorStop();
     disable = true;
-    PIDBugIgnore = true;
+    //PIDBugIgnore = true;
   }
 
   @Override
@@ -57,6 +56,6 @@ public class AimDrive extends CommandBase {
     }
     return false;
     */
-    return Robot.m_oi.getRawButton(Constants.buttonBack);
+    return chassis.aimPIDIsStable();
   }
 }

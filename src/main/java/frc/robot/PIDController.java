@@ -9,7 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Timer;
 
-public class PID {
+public class PIDController {
 
   private Timer timer;
 
@@ -36,7 +36,7 @@ public class PID {
   private double intergral = 0;
   private double derivative = 0;
 
-  public PID(double Kp, double Ki, double Kd){
+  public PIDController(double Kp, double Ki, double Kd){
     timer = new Timer();
     timer.reset();
     timer.start();
@@ -55,6 +55,7 @@ public class PID {
 
   public void enable(){
     funcEnable = true;
+    this.reset();
   }
   public void disable(){
     funcEnable = false;
@@ -104,7 +105,7 @@ public class PID {
     return funcTimeOut;
   }
 
-  public double caculate(double measurment, double setpoint){
+  public double calculate(double measurment, double setpoint){
     if(funcEnable){
       error = setpoint - measurment;
       intergral = intergral + error;

@@ -12,17 +12,16 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Network;
+import frc.robot.PIDController;
 import frc.robot.Robot;
 
 
 public class Chassis extends SubsystemBase {
   private PIDController PID;
-  private boolean PIDEnable = false;
   private double PIDSetpoint = 0;
 
   private PIDController aimPID;
@@ -41,8 +40,14 @@ public class Chassis extends SubsystemBase {
   private double lockAngle = 0;
 
   public Chassis() {
+
     PID = new PIDController(0.1, 0, 0.01);
+    PID.enable();
+
     aimPID = new PIDController(0.025, 0, 0.01);
+    aimPID.enable();
+    aimPID.enableAutoStop(1, 0.25);
+    aimPID.enableTimeOut(2);
 
     motorRF = new WPI_TalonSRX(Constants.chassisMotorRFID);
     motorRB = new WPI_TalonSRX(Constants.chassisMotorRBID);
@@ -65,12 +70,8 @@ public class Chassis extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(PIDEnable){
-      PIDOutput(PID.calculate(PIDMeasurment(), PIDSetpoint));
-    }
-    if(aimPIDEnable){
-      aimPIDOutput(aimPID.calculate(aimPIDMeasurment(), aimPIDSetpoint));
-    }
+    PIDOutput(PID.calculate(PIDMeasurment(), PIDSetpoint));
+    aimPIDOutput(aimPID.calculate(aimPIDMeasurment(), aimPIDSetpoint));
   }
 
   @Override
@@ -79,12 +80,12 @@ public class Chassis extends SubsystemBase {
     super.setDefaultCommand(defaultCommand);
   }
 
+
   public void PIDEnable(){
-    PIDEnable = true;
-    PID.reset();
+    PID.enable();
   }
   public void PIDDisable(){
-    PIDEnable = false;
+    PID.disable();
     PIDOutput(0);
   }
   public void PIDReset(){
@@ -92,13 +93,10 @@ public class Chassis extends SubsystemBase {
     PID.reset();
   }
   public boolean PIDIsEnable(){
-    return PIDEnable;
+    return PID.isEnable();
   }
   public void PIDSetSetpoint(double setpoint){
     PIDSetpoint = setpoint;
-  }
-  public void PIDSetTolerance(double value){
-    PID.setTolerance(value);
   }
   public double PIDMeasurment(){
     return getCalAngle();
@@ -108,6 +106,7 @@ public class Chassis extends SubsystemBase {
     double Lspd = Robot.m_oi.getLY() + output;
     setMotorSpeed(Lspd, Rspd);
   }
+
 
   public void setMotorSpeed(double Lspd, double Rspd){
     if(Robot.m_oi.getRawAxis(Constants.axisRT) > Constants.chassisPIDRestartTime){
@@ -126,6 +125,7 @@ public class Chassis extends SubsystemBase {
     setMotorSpeed(0, 0);
   }
 
+
   public double getRawAngle(){
     return navx.getAngle() % 360;
   }
@@ -136,25 +136,22 @@ public class Chassis extends SubsystemBase {
     lockAngle = angle;
   }
 
+  
   public void aimPIDEnable(){
-    aimPIDEnable = true;
-    aimPID.reset();
+    aimPID.enable();
   }
   public void aimPIDDisable(){
-    aimPIDEnable = false;
+    aimPID.disable();
     aimPIDOutput(0);
   }
   public void aimPIDReset(){
     aimPID.reset();
   }
   public boolean aimPIDIsEnable(){
-    return aimPIDEnable;
+    return aimPID.isEnable();
   }
   public void aimPIDSetSetpoint(double setpoint){
     aimPIDSetpoint = setpoint;
-  }
-  public void aimPIDSetTolerance(double value){
-    aimPID.setTolerance(value);
   }
   public double aimPIDMeasurment(){
     return (network.ntGetDouble("Vision", "h_angle"));
@@ -165,6 +162,6 @@ public class Chassis extends SubsystemBase {
     setMotorSpeed(Lspd, Rspd);
   }
   public boolean aimPIDIsStable(){
-    return aimPID.atSetpoint();
+    return aimPID.finished();
   }
 }

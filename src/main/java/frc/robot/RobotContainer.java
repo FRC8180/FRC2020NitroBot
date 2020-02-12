@@ -26,10 +26,6 @@ import frc.robot.subsystems.Spinner;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-
 public class RobotContainer {
   private final XboxController driverJoystick = new XboxController(0);
   
@@ -173,20 +169,5 @@ public class RobotContainer {
   public void SetRumble(double leftIntensity,double rightIntensity){
     driverJoystick.setRumble(RumbleType.kLeftRumble, leftIntensity);
     driverJoystick.setRumble(RumbleType.kRightRumble, rightIntensity);
-  }
-
-  public boolean ntGetBoolean(String tableName, String keyName){
-    NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    NetworkTable table = inst.getTable(tableName);
-    NetworkTableEntry data = table.getEntry(keyName);
-    boolean result = data.getBoolean(false);
-    return result;
-  }
-  public double ntGetDouble(String tableName, String keyName){
-    NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    NetworkTable table = inst.getTable(tableName);
-    NetworkTableEntry data = table.getEntry(keyName);
-    double result = data.getDouble(0.0);
-    return result;
   }
 }

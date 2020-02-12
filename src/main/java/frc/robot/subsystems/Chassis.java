@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Network;
 import frc.robot.Robot;
 
 
@@ -30,6 +31,7 @@ public class Chassis extends SubsystemBase {
 
   private Timer timer;
   private AHRS navx;
+  private Network network;
 
   private WPI_TalonSRX motorRF;
   private WPI_TalonSRX motorRB;
@@ -40,7 +42,7 @@ public class Chassis extends SubsystemBase {
 
   public Chassis() {
     PID = new PIDController(0.1, 0, 0.01);
-    aimPID = new PIDController(0.1, 0, 0.01);
+    aimPID = new PIDController(0.025, 0, 0.01);
 
     motorRF = new WPI_TalonSRX(Constants.chassisMotorRFID);
     motorRB = new WPI_TalonSRX(Constants.chassisMotorRBID);
@@ -57,6 +59,8 @@ public class Chassis extends SubsystemBase {
     timer = new Timer();
     timer.reset();
     timer.start();
+
+    network = new Network();
   }
 
   @Override
@@ -153,7 +157,7 @@ public class Chassis extends SubsystemBase {
     aimPID.setTolerance(value);
   }
   public double aimPIDMeasurment(){
-    return (Robot.m_oi.ntGetDouble("Vision", "h_angle"));
+    return (network.ntGetDouble("Vision", "h_angle"));
   }
   public void aimPIDOutput(double output){
     double Rspd = Robot.m_oi.getLY() + output;

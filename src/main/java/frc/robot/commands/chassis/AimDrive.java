@@ -8,6 +8,8 @@
 package frc.robot.commands.chassis;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.Chassis;
 
 public class AimDrive extends CommandBase {
@@ -24,7 +26,7 @@ public class AimDrive extends CommandBase {
   @Override
   public void initialize() {
     chassis.aimPIDEnable();
-    chassis.aimPIDSetTolerance(2);
+    chassis.aimPIDSetTolerance(1);
   }
 
   @Override
@@ -45,6 +47,7 @@ public class AimDrive extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    /*
     boolean finished = chassis.aimPIDIsStable();
     if(finished && PIDBugIgnore){
       PIDBugIgnore = false;
@@ -53,5 +56,7 @@ public class AimDrive extends CommandBase {
       return true;
     }
     return false;
+    */
+    return Robot.m_oi.getRawButton(Constants.buttonBack);
   }
 }

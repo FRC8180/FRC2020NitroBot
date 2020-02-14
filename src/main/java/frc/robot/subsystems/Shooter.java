@@ -27,6 +27,7 @@ public class Shooter extends SubsystemBase {
 
   private WPI_TalonSRX upperMotor;
   private WPI_TalonSRX lowerMotor;
+  private WPI_TalonSRX inputMotor;
   private Encoder upperEncoder;
   private Encoder lowerEncoder;
   private Timer timer;
@@ -42,6 +43,7 @@ public class Shooter extends SubsystemBase {
 
     upperMotor = new WPI_TalonSRX(Constants.shooterUpperMotorID);
     lowerMotor = new WPI_TalonSRX(Constants.shooterLowerMotorID);
+    inputMotor = new WPI_TalonSRX(Constants.inputMotorID);
     upperMotor.setInverted(Constants.shooterUpperMotorInvert);
     lowerMotor.setInverted(Constants.shooterLowerMotorInvert);
 
@@ -63,6 +65,10 @@ public class Shooter extends SubsystemBase {
     if(lowerPIDEnable){
       lowerPIDOutput(lowerPID.calculate(getLowerPIDMeasurment(), lowerPIDSetpoint));
     }
+  }
+
+  public void setInputMotorSpeed(double speed){
+    inputMotor.set(speed);
   }
 
   @Override

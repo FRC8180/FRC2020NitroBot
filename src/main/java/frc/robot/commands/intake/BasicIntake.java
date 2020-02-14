@@ -34,7 +34,7 @@ public class BasicIntake extends CommandBase {
       intake.encoderReset();
       intake.setSetPoint(256);
       intake.intakeRiserPIDEnable();
-      intake.setIntakeMotorSpeed(1);
+      intake.setIntakeMotorSpeed(Constants.intakeMotorSpeed);
     }else if(Robot.m_oi.getRawButton(Constants.buttonA) && intake.intakeRiserPIDIsEnable()){
       intake.setIntakeMotorSpeed(0);
       intake.setSetPoint(0);

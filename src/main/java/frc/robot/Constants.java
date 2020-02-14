@@ -45,9 +45,9 @@ public final class Constants {
     public static final double axisLYScale = 1;
 
     //Shooter Setting
-    public static final byte shooterUpperMotorID = 55;
-    public static final byte shooterLowerMotorID = 77;
-    public static final boolean shooterUpperMotorInvert = false;
+    public static final byte shooterUpperMotorID = 85;
+    public static final byte shooterLowerMotorID = 25;
+    public static final boolean shooterUpperMotorInvert = true;
     public static final boolean shooterLowerMotorInvert = false;
     public static final double shooterUpperMotorMaxPIDRPS = 60;
     public static final double shooterLowerMotorMaxPIDRPS = 60;
@@ -59,14 +59,15 @@ public final class Constants {
     public static final byte shooterLowerEncoderPinA = 9;
     public static final byte shooterLowerEncoderPinB = 8;
     public static final boolean shooterLowerEncoderDirectionInvert = false;
+    public static final byte inputMotorID = 3;
 
     //Spinner Setting
-    public static final byte spinnerSpinMotor = 4;
+    public static final byte spinnerSpinMotor = 88;
     public static final double spinnerSpinMotorSpeed = 1;
-    public static final byte spinnerriseMotor = 99;
+    public static final byte spinnerriseMotor = 4;
 
-    public static final byte m_EncoderPinA = 0;
-    public static final byte m_EncoderPinB = 1;
+    public static final byte m_EncoderPinA = 1;
+    public static final byte m_EncoderPinB = 2;
     public static final boolean m_EncoderReverse = false;
     public static final Color kBlueTarget = ColorMatch.makeColor(0.135, 0.429, 0.400);   // Adjust parameters by distance
     public static final Color kGreenTarget = ColorMatch.makeColor(0.183, 0.554, 0.260);  
@@ -74,23 +75,23 @@ public final class Constants {
     public static final Color kYellowTarget = ColorMatch.makeColor(0.326, 0.537, 0.137); 
     
     //CPIntake setting
-    public static final byte CPintakeMotor = 51;
+    public static final byte CPintakeMotor = 88;
     public static final byte CPrise = 1;
     public static final double CPintakeMotorSpeed_in = 1;
     public static final double CPintakeMotorSpeed_out = -CPintakeMotorSpeed_in;
 
     //Climber setting
-    public static final byte liftEncoderPinA = 88;
-    public static final byte liftEncoderPinB = 88;
-    public static final boolean  liftlEncoderReverse = false;
+    public static final byte liftEncoderPinA = 8;
+    public static final byte liftEncoderPinB = 9;
+    public static final boolean  liftlEncoderReverse = true;
     public static final double liftSetPoint = 1234;
     public static final byte liftMotorID = 99; 
 
     //intake setting
     public static final byte intakeMotorID = 98;
     public static final byte intakeRiserMotorID = 98;
-    public static final byte intakeRiserEncoderPinA = 97;
-    public static final byte intakeRiserEncoderPinB = 96;
-    public static final boolean intakeRiserlEncoderReverse = true;
-    
+    public static final byte intakeRiserEncoderPinA = 6;
+    public static final byte intakeRiserEncoderPinB = 5;
+    public static final boolean intakeRiserlEncoderReverse = false;
+    public static final double intakeMotorSpeed = 0.8;
 }

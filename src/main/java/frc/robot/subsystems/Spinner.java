@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 public class Spinner extends SubsystemBase {
 
   private boolean risePIDEnable = false;
-  private double risePIDSetpoint = 0;
+  private double risePIDSetpoint;
 
   private final WPI_TalonSRX spinMotor;
   private final WPI_TalonSRX riseMotor;
@@ -32,7 +32,7 @@ public class Spinner extends SubsystemBase {
   private final ColorMatch colorMatcher;
 
   private final Encoder m_Encoder;
-  private final PIDController risePIDControl;
+  private PIDController risePIDControl;
   private String gameData;
   private boolean positionControlEnable;
   private boolean rotationControlEnable;
@@ -59,18 +59,25 @@ public class Spinner extends SubsystemBase {
     m_Encoder.reset();
   }
 
+
   @Override
   public void periodic() {
+    /*if(spinnerPIDIsEnable()){
+      risePIDOutput(risePIDControl.calculate(getrisePIDMeasurment(), risePIDSetpoint));
+    }*/
     //gameData = DriverStation.getInstance().getGameSpecificMessage();(!?????????????????????????????)
     // This method will be called once per scheduler run
   }
 
+  public void setRiseMotorSpeed(double speed){
+    riseMotor.set(speed);
+  }
+
   public void motorRun(){
-    if(risePIDEnable){
-      risePIDOutput(risePIDControl.calculate(getrisePIDMeasurment(), risePIDSetpoint));
-    }
+    risePIDOutput(risePIDControl.calculate(getrisePIDMeasurment(), risePIDSetpoint));
   }
   public double get(){
+    
     return m_Encoder.getDistance();
   }
 
@@ -144,6 +151,12 @@ public class Spinner extends SubsystemBase {
 
   public void setriseSetpoint(double setpoint){
     risePIDSetpoint = setpoint;
+    risePIDControl.setSetpoint(setpoint);
+    //risePIDControl.
+  }
+
+  public double getSetpoint(){
+    return risePIDControl.getSetpoint();
   }
 
   public void risePIDOutput(double output){
@@ -151,6 +164,7 @@ public class Spinner extends SubsystemBase {
   }
 
   public void risePIDReset(){
+    m_Encoder.reset();
     risePIDControl.reset();
   }
 

@@ -35,6 +35,7 @@ public class BasicShoot extends CommandBase {
     SmartDashboard.putNumber("lowerSpeed", lowerSpeed);
     shooter.setUpperSpeed(upperSpeed);
     shooter.setLowerSpeed(lowerSpeed);
+    shooter.setInputMotorSpeed(0.2);
     SmartDashboard.putNumber("upperNowSpeed", shooter.getUpperPIDMeasurment());
     SmartDashboard.putNumber("lowerNowSpeed", shooter.getLowerPIDMeasurment());
     SmartDashboard.putBoolean("Status", true);
@@ -45,10 +46,12 @@ public class BasicShoot extends CommandBase {
     SmartDashboard.putBoolean("Status", false);
     shooter.setUpperSpeed(0);
     shooter.setLowerSpeed(0);
+    shooter.setInputMotorSpeed(0);
   }
 
   @Override
   public boolean isFinished() {
-    return Robot.m_oi.getRawButton(Constants.buttonBack);
+    //return Robot.m_oi.getRawButton(Constants.buttonBack);
+    return false;
   }
 }

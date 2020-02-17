@@ -102,6 +102,10 @@ public class Intake extends SubsystemBase {
     return intakeRiserEcoder.get();
   }
 
+  public void setIntakeRiserMotorSpeed(double speed) {
+    intakeRiserMotor.set(speed);
+  }
+
   @Override
   public void setDefaultCommand(Command defaultCommand) {
     // TODO Auto-generated method stub

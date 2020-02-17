@@ -12,12 +12,10 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.Intake;
 
-public class BasicIntake extends CommandBase {
-  /**
-   * Creates a new BasicIntake.
-   */
+public class BasicPIDIntake extends CommandBase {
+
   private final Intake intake;
-  public BasicIntake(Intake subsystem) {
+  public BasicPIDIntake(Intake subsystem) {
     intake = subsystem;
     addRequirements(subsystem);
   }
@@ -25,21 +23,29 @@ public class BasicIntake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    intake.intakeRiserPIDDisable();
+    intake.setIntakeMotorSpeed(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Robot.m_oi.getRawButton(Constants.buttonA)){
+    if(Robot.m_oi.getRawButton(Constants.buttonA) && !intake.intakeRiserPIDIsEnable()){
+      intake.encoderReset();
+      intake.setSetPoint(256);
+      intake.intakeRiserPIDEnable();
       intake.setIntakeMotorSpeed(Constants.intakeMotorSpeed);
-    }else if(Robot.m_oi.getRawButton(Constants.buttonBack)){
-      intake.setIntakeRiserMotorSpeed(Constants.intakeRiserMotorSpeed);
-    }else if(Robot.m_oi.getRawButton(Constants.buttonLB)){
-      intake.setIntakeRiserMotorSpeed(-Constants.intakeRiserMotorSpeed);
-    }else{
+    }else if(Robot.m_oi.getRawButton(Constants.buttonA) && intake.intakeRiserPIDIsEnable()){
       intake.setIntakeMotorSpeed(0);
-      intake.setIntakeRiserMotorSpeed(0);
+      intake.setSetPoint(0);
+      intake.intakeRiserPIDEnable();
     }
+    if(intake.intakeRiserPIDIsEnable()){
+      if(intake.atSetpoint()){
+        intake.intakeRiserPIDDisable();
+      }
+    }
+    
   }
 
   // Called once the command ends or is interrupted.

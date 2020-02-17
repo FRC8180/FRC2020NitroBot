@@ -168,7 +168,9 @@ public class Spinner extends SubsystemBase {
     risePIDControl.reset();
   }
 
-  
+  public void setRiseMotor(double riseMotorSpeed){
+    riseMotor.set(riseMotorSpeed);
+  }
 
   @Override
   public void setDefaultCommand(final Command defaultCommand) {

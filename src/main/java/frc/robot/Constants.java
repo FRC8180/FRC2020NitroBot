@@ -74,6 +74,8 @@ public final class Constants {
     public static final Color kRedTarget = ColorMatch.makeColor(0.460, 0.370, 0.161);   
     public static final Color kYellowTarget = ColorMatch.makeColor(0.326, 0.537, 0.137); 
     
+    //Basic Spinner Setting
+    public static final double spinnerRiseMotorSpeed = 0.5;
     //CPIntake setting
     public static final byte CPintakeMotor = 88;
     public static final byte CPrise = 1;
@@ -94,4 +96,5 @@ public final class Constants {
     public static final byte intakeRiserEncoderPinB = 5;
     public static final boolean intakeRiserlEncoderReverse = false;
     public static final double intakeMotorSpeed = 0.8;
+    public static final double intakeRiserMotorSpeed = 0.5;
 }

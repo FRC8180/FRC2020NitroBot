@@ -38,6 +38,8 @@ public class BasicClimb extends CommandBase {
     if(Robot.m_oi.getRawAxis(Constants.axisJRY) > 0.2 || Robot.m_oi.getRawAxis(Constants.axisJRY) <0.2){
       climber.setLiftMotorSpeed(Robot.m_oi.getRawAxis(Constants.axisJRY)*0.5);
     }
+
+    
   }
 
   // Called once the command ends or is interrupted.

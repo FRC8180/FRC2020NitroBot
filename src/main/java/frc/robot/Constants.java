@@ -68,4 +68,9 @@ public final class Constants {
     public static final byte shooterLowerEncoderPinA = 9;
     public static final byte shooterLowerEncoderPinB = 8;
     public static final boolean shooterLowerEncoderDirectionInverted = false;
+    //
+    public static final byte hookAID = 4;
+    public static final byte hookBID = 11;
+    public static final byte hangerID = 3;
+
 }

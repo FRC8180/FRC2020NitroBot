@@ -28,7 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
   private final XboxController driverJoystick = new XboxController(0);
-  
+  public final XboxController driverJoystick2 = new XboxController(1);
   // Subsystem defined here!!!
   private final Chassis m_chassis = new Chassis();
   private final Climber m_climber = new Climber();
@@ -65,7 +65,7 @@ public class RobotContainer {
     configureButtonBindings();
     // Set Default Command!
     //m_chassis.setDefaultCommand(m_basicDrive);
-    //m_climber.setDefaultCommand();
+    m_climber.setDefaultCommand(m_basicClimb);
     //m_intake.setDefaultCommand();
     //m_shooter.setDefaultCommand(m_basicShoot);
     //m_spinner.setDefaultCommand();

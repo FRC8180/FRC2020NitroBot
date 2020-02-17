@@ -9,15 +9,35 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class Climber extends SubsystemBase {
-  
+  private WPI_TalonSRX hookA = new WPI_TalonSRX(Constants.hookAID);
+  private WPI_TalonSRX hookB = new WPI_TalonSRX(Constants.hookBID);
+  private WPI_TalonSRX hanger = new WPI_TalonSRX(Constants.hangerID);
+
   public Climber() {
+    hookA.follow(hookB);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    if(Robot.m_oi.driverJoystick2.getRawAxis(1)>0.2){
+      hookA.set(Robot.m_oi.driverJoystick2.getRawAxis(1));
+    }
+    else{
+      hookA.set(0);
+    }
+    if(Robot.m_oi.driverJoystick2.getRawAxis(5)>0.2){
+      hanger.set(Robot.m_oi.driverJoystick2.getRawAxis(5));
+    }
+    else{
+      hanger.set(0);
+    }
+    
   }
 
   @Override

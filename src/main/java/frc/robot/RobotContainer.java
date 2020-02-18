@@ -17,17 +17,14 @@ import frc.robot.commands.intake.BasicIntake;
 import frc.robot.commands.shooter.BasicPIDShoot;
 import frc.robot.commands.shooter.BasicShoot;
 import frc.robot.commands.spinner.BasicSpin;
+import frc.robot.commands.CP.*;
 
-import frc.robot.subsystems.Chassis;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Spinner;
+import frc.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
-  private final XboxController driverJoystick = new XboxController(0);
+  public final XboxController driverJoystick = new XboxController(0);
   public final XboxController driverJoystick2 = new XboxController(1);
   // Subsystem defined here!!!
   private final Chassis m_chassis = new Chassis();
@@ -35,7 +32,7 @@ public class RobotContainer {
   private final Intake  m_intake  = new Intake();
   private final Shooter m_shooter = new Shooter();
   private final Spinner m_spinner = new Spinner();
-
+  private final CPbot m_cp = new CPbot();
   // Command defined here!!!
   //private final AutoMove m_autoCommand = new AutoMove(m_auto)
   private final BasicDrive m_basicDrive = new BasicDrive(m_chassis);
@@ -46,6 +43,7 @@ public class RobotContainer {
   private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
   private final BasicShoot m_basicShoot = new BasicShoot(m_shooter);
   private final BasicSpin m_basicSpin = new BasicSpin(m_spinner);
+  private final CPbot2whole m_wholecp = new CPbot2whole(m_cp);
 
   // Button defined here!!!
   private final JoystickButton buttonY = new JoystickButton(driverJoystick,Constants.buttonY);
@@ -62,8 +60,9 @@ public class RobotContainer {
 
   public RobotContainer() {
     // Configure the button bindings
-    configureButtonBindings();
+    //configureButtonBindings();
     // Set Default Command!
+    m_cp.setDefaultCommand(m_wholecp);
     //m_chassis.setDefaultCommand(m_basicDrive);
     //m_climber.setDefaultCommand(m_basicClimb);
     //m_intake.setDefaultCommand();

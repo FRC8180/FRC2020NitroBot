@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.PIDController;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
 import com.revrobotics.ColorSensorV3;
@@ -18,7 +19,7 @@ import com.revrobotics.ColorMatch;
 import edu.wpi.first.wpilibj.DriverStation;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.controller.PIDController;
+//import edu.wpi.first.wpilibj.controller.PIDController;
 
 public class Spinner extends SubsystemBase {
 
@@ -55,16 +56,16 @@ public class Spinner extends SubsystemBase {
     colorMatcher.addColorMatch(Constants.kGreenTarget);
     colorMatcher.addColorMatch(Constants.kRedTarget);
     colorMatcher.addColorMatch(Constants.kYellowTarget);
-    risePIDControl.setTolerance(10);
+    risePIDControl.enableAutoStop(10,0.25);
     m_Encoder.reset();
   }
 
 
   @Override
   public void periodic() {
-    /*if(spinnerPIDIsEnable()){
+    if(spinnerPIDIsEnable()){
       risePIDOutput(risePIDControl.calculate(getrisePIDMeasurment(), risePIDSetpoint));
-    }*/
+    }
     //gameData = DriverStation.getInstance().getGameSpecificMessage();(!?????????????????????????????)
     // This method will be called once per scheduler run
   }
@@ -137,7 +138,7 @@ public class Spinner extends SubsystemBase {
   }
 
   public boolean atSetpoint(){
-    return risePIDControl.atSetpoint();
+    return risePIDControl.finished();
   }
 
   public void risePIDDisable(){
@@ -151,13 +152,14 @@ public class Spinner extends SubsystemBase {
 
   public void setriseSetpoint(double setpoint){
     risePIDSetpoint = setpoint;
-    risePIDControl.setSetpoint(setpoint);
     //risePIDControl.
   }
 
+  /*
   public double getSetpoint(){
     return risePIDControl.getSetpoint();
   }
+  */
 
   public void risePIDOutput(double output){
     riseMotor.setVoltage(output);

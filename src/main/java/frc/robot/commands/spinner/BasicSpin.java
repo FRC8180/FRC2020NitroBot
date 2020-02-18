@@ -50,6 +50,8 @@ public class BasicSpin extends CommandBase {
       spinner.setRiseMotorSpeed(Constants.spinnerRiseMotorSpeed);
     }else if(Robot.m_oi.getRawButton(Constants.buttonY)){
       spinner.setRiseMotorSpeed(-Constants.spinnerRiseMotorSpeed);
+    }else{
+      spinner.setRiseMotorSpeed(0);
     }
 
     if(gameData.length() > 0 && Robot.m_oi.getRawButton(Constants.buttonRB)){

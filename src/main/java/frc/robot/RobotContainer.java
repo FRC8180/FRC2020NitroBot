@@ -17,6 +17,7 @@ import frc.robot.commands.intake.BasicIntake;
 import frc.robot.commands.shooter.BasicPIDShoot;
 import frc.robot.commands.shooter.BasicShoot;
 import frc.robot.commands.spinner.BasicSpin;
+import frc.robot.commands.spinner.BasicPIDSpin;
 import frc.robot.subsystems.CPIntake;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Climber;
@@ -44,7 +45,8 @@ public class RobotContainer {
   //private final BasicIntake m_basicIntake = new BasicIntake(m_intake);
   //private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
   //private final BasicShoot m_basicShoot = new BasicShoot(m_shooter);
-  private final BasicSpin m_basicSpin = new BasicSpin(m_spinner);
+  //private final BasicSpin m_basicSpin = new BasicSpin(m_spinner);
+  private final BasicPIDSpin m_basicPIDSpin = new BasicPIDSpin(m_spinner);
   //private final BasicCPIntake m_basicCPIntake = new BasicCPIntake(m_cpIntake) ;
 
   // Button defined here!!!
@@ -68,7 +70,8 @@ public class RobotContainer {
     //m_climber.setDefaultCommand();
     //m_intake.setDefaultCommand();
     //m_shooter.setDefaultCommand(m_basicShoot);
-    m_spinner.setDefaultCommand(m_basicSpin);
+    //m_spinner.setDefaultCommand(m_basicSpin);
+    m_spinner.setDefaultCommand(m_basicPIDSpin);
     //m_shooter.setDefaultCommand(m_basicShoot);
     //m_cpIntake.setDefaultCommand(m_basicCPIntake);
     

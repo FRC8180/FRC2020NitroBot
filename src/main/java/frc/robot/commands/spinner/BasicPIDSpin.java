@@ -5,7 +5,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-/*
+
 package frc.robot.commands.spinner;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,16 +16,15 @@ import com.revrobotics.ColorMatchResult;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Spinner;
 
-public class BasicSpin extends CommandBase {
+public class BasicPIDSpin extends CommandBase {
 
   private final Spinner spinner;
-  public BasicSpin(Spinner subsystem) {
+  public BasicPIDSpin(Spinner subsystem) {
     spinner = subsystem;
     addRequirements(subsystem);
   }
 
   private int counter = 0;
-  private boolean codeIsRunning = false;
   private Color color_inf;
   private Color target;
   private Color targetColor;
@@ -47,7 +46,7 @@ public class BasicSpin extends CommandBase {
   public void execute() {
     
     SmartDashboard.putNumber("PID", spinner.getrisePIDMeasurment());
-    /*if(Robot.m_oi.getRawAxis(Constants.axisJRY) > 0.2 || Robot.m_oi.getRawAxis(Constants.axisJRY) < 0.2){
+    if(Robot.m_oi.getRawAxis(Constants.axisJRY) > 0.2 || Robot.m_oi.getRawAxis(Constants.axisJRY) < 0.2){
       spinner.setRiseMotorSpeed(Robot.m_oi.getRawAxis(Constants.axisJRY));
     }
     
@@ -96,6 +95,7 @@ public class BasicSpin extends CommandBase {
 
     if(spinner.positionControlIsEnable()){
       showColorInf();
+      /*
       detectedColor = spinner.getColor();
       match = spinner.match(detectedColor);
       if(match.color != target && match.confidence > 0.96){
@@ -105,7 +105,7 @@ public class BasicSpin extends CommandBase {
       if(counter > 25){
         spinner.stopMotor();
         spinner.positionControlDisable();
-      }
+      }*/
       PID(0);
     }
 
@@ -135,7 +135,6 @@ public class BasicSpin extends CommandBase {
       spinner.risePIDDisable();
       SmartDashboard.putBoolean("PID_enable", spinner.spinnerPIDIsEnable());
       SmartDashboard.putString("motorRun", "didn't Run");
-      SmartDashboard.putNumber("setpoint", spinner.getSetpoint());
     }else{
         SmartDashboard.putString("motorRun", "Run");
       }
@@ -185,7 +184,7 @@ public class BasicSpin extends CommandBase {
     SmartDashboard.putString("Detected Color", colorString);
   }
 }
-*/
+
 
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
@@ -193,7 +192,7 @@ public class BasicSpin extends CommandBase {
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
+/*
 package frc.robot.commands.spinner;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -343,3 +342,4 @@ public class BasicPIDSpin extends CommandBase {
     SmartDashboard.putString("Detected Color", colorString);
   }
 }
+*/

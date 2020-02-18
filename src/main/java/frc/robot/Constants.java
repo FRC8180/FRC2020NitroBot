@@ -62,13 +62,13 @@ public final class Constants {
     public static final byte inputMotorID = 3;
 
     //Spinner Setting
-    public static final byte spinnerSpinMotor = 88;
+    public static final byte spinnerSpinMotor = 1;
     public static final double spinnerSpinMotorSpeed = 1;
-    public static final byte spinnerriseMotor = 4;
+    public static final byte spinnerriseMotor = 2;
 
-    public static final byte m_EncoderPinA = 1;
-    public static final byte m_EncoderPinB = 2;
-    public static final boolean m_EncoderReverse = false;
+    public static final byte m_EncoderPinA = 2;
+    public static final byte m_EncoderPinB = 1;
+    public static final boolean m_EncoderReverse = true;
     public static final Color kBlueTarget = ColorMatch.makeColor(0.135, 0.429, 0.400);   // Adjust parameters by distance
     public static final Color kGreenTarget = ColorMatch.makeColor(0.183, 0.554, 0.260);  
     public static final Color kRedTarget = ColorMatch.makeColor(0.460, 0.370, 0.161);   
@@ -76,11 +76,15 @@ public final class Constants {
     
     //Basic Spinner Setting
     public static final double spinnerRiseMotorSpeed = 0.5;
+
     //CPIntake setting
-    public static final byte CPintakeMotor = 88;
+    public static final byte CPintakeMotor = 2;
     public static final byte CPrise = 1;
     public static final double CPintakeMotorSpeed_in = 1;
     public static final double CPintakeMotorSpeed_out = -CPintakeMotorSpeed_in;
+    public static final byte CPIntakeEncoderPinA = 0;
+    public static final byte CPIntakeEncoderPinB = 1;    
+    public static final boolean CPIntakeEncoderReverse = true;
 
     //Climber setting
     public static final byte liftEncoderPinA = 8;

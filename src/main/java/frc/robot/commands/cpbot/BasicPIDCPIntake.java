@@ -7,17 +7,18 @@
 
 package frc.robot.commands.cpbot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.CPIntake;
 
-public class BasicCPIntake extends CommandBase {
+public class BasicPIDCPIntake extends CommandBase {
   /**
-   * Creates a new BasicCPIntake.
+   * Creates a new BasicPIDCPIntake.
    */
   private final CPIntake cpIntake;
-  public BasicCPIntake(CPIntake subsystem) {
+  public BasicPIDCPIntake(CPIntake subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     cpIntake = subsystem;
     addRequirements(subsystem);
@@ -40,6 +41,16 @@ public class BasicCPIntake extends CommandBase {
     }else{
       cpIntake.setRiseMotorSpeed(0);
       cpIntake.setIntakeMotorSpeed(0);
+    }
+    SmartDashboard.putNumber("Encoder", cpIntake.getrisePIDMeasurment());
+    if(Robot.m_oi.getRawButton(Constants.buttonX)){
+      cpIntake.risePIDReset();
+    }
+    if(Robot.m_oi.getRawButton(Constants.buttonRB)){
+      cpIntake.setriseSetpoint(1000);
+    }
+    if(Robot.m_oi.getRawButton(Constants.buttonLB)){
+      cpIntake.setriseSetpoint(0);
     }
   }
 

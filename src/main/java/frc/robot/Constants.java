@@ -69,6 +69,7 @@ public final class Constants {
     public static final byte shooterLowerEncoderPinA = 9;
     public static final byte shooterLowerEncoderPinB = 8;
     public static final boolean shooterLowerEncoderDirectionInverted = false;
+<<<<<<< HEAD
     
     //Climber Setting
     public static final byte hookAID = 1; //ID
@@ -85,5 +86,11 @@ public final class Constants {
 
 
 
+=======
+    //
+    public static final byte hookAID = 1;
+    public static final byte hookBID = 2;
+    public static final byte hangerID = 3;
+>>>>>>> c7ee8f5664d26a4de730ec2721b0ced7f7d9edda
 
 }

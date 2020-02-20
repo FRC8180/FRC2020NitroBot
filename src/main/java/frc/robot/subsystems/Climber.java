@@ -5,6 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+//Climber(鵬嘉)
+//hook:2LY
+//hanger:2RY
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -14,18 +17,26 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class Climber extends SubsystemBase {
+<<<<<<< HEAD
   private WPI_TalonSRX hookA = new WPI_TalonSRX(20);//(Constants.hookAID);
   private WPI_TalonSRX hookB = new WPI_TalonSRX(30);//(Constants.hookBID);
   private WPI_TalonSRX hanger = new WPI_TalonSRX(1);//(Constants.hangerID);
   private WPI_TalonSRX rotate = new WPI_TalonSRX(2);
+=======
+  private WPI_TalonSRX hookA = new WPI_TalonSRX(Constants.hookAID);
+  private WPI_TalonSRX hookB = new WPI_TalonSRX(Constants.hookBID);
+  private WPI_TalonSRX hanger = new WPI_TalonSRX(Constants.hangerID);
+
+>>>>>>> 4f333c249f3f68be513218098c59d9c5ec96dfa7
 
   public Climber() {
-    hookA.follow(hookB);
+    hookB.follow(hookA);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+<<<<<<< HEAD
     if(Robot.m_oi.driverJoystick2.getAButton()){
       hookA.set(1);
       hookB.set(1);
@@ -55,6 +66,10 @@ public class Climber extends SubsystemBase {
       rotate.set(0);
     } 
     /*if(Robot.m_oi.driverJoystick2.getRawAxis(1)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(1)<-0.2){
+=======
+    
+    if(Robot.m_oi.driverJoystick2.getRawAxis(1)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(1)<-0.2){
+>>>>>>> 4f333c249f3f68be513218098c59d9c5ec96dfa7
       hookA.set(-Robot.m_oi.driverJoystick2.getRawAxis(1));
     }
     else{
@@ -65,7 +80,7 @@ public class Climber extends SubsystemBase {
     }
     else{
       hanger.set(0);
-    }*/
+    }
     
   }
 

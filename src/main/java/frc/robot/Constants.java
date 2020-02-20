@@ -43,10 +43,10 @@ public final class Constants {
     public static final double axisLYScale = 1;
 
     //Chassis Setting
-    public static final byte chassisMotorRFID = 4; //ID
-    public static final byte chassisMotorRBID = 11;  //ID
+    public static final byte chassisMotorRFID = 1; //ID
+    public static final byte chassisMotorRBID = 2;  //ID
     public static final byte chassisMotorLFID = 3; //ID
-    public static final byte chassisMotorLBID = 13; //ID
+    public static final byte chassisMotorLBID = 4; //ID
     public static final boolean chassisMotorRInverted = true;
     public static final boolean chassisMotorLInverted = false;
     public static final double chassisMotorNormalModeSpeedScale = 0.5;
@@ -54,9 +54,9 @@ public final class Constants {
     public static final double chassisPIDRestartTime = 0.25;
 
     //Shooter Setting
-    public static final byte shooterUpperMotorID = 2; //ID
-    public static final byte shooterLowerMotorID = 1; //ID
-    public static final byte helperID = 1; //ID
+    public static final byte shooterUpperMotorID = 22; //ID
+    public static final byte shooterLowerMotorID = 23; //ID
+    //public static final byte helperID = 1; //ID
     public static final boolean shooterUpperMotorInverted = true;
     public static final boolean shooterLowerMotorInverted = false;
     public static final double shooterUpperMotorMaxPIDRPS = 60;
@@ -69,26 +69,31 @@ public final class Constants {
     public static final byte shooterLowerEncoderPinA = 9;
     public static final byte shooterLowerEncoderPinB = 8;
     public static final boolean shooterLowerEncoderDirectionInverted = false;
+    public static final byte shooterContainerID = 51; //ID
+    public static final byte shooterSmallID = 21; //ID
     
     //Climber Setting
-    public static final byte hookAID = 1; //ID
-    public static final byte hookBID = 2; //ID
-    public static final byte hangerID = 3; //ID
+    public static final byte hookAID = 12; //ID
+    public static final byte hookBID = 13; //ID
+    public static final byte hangerID = 11; //ID
     
     //Intake Setting
-    public static final byte intakeLiftID = 1; //ID
-    public static final byte intakeSpinID = 2; //ID
+    public static final byte intakeLiftID = 31; //ID
+    public static final byte intakeSpinID = 32; //ID
+    public static final double intakeSpinSpeed = 1.0;
 
     //Rotator Setting
-    public static final byte colorLiftID = 1; //ID
-    public static final byte colorSpinID = 2; //ID
+    //public static final byte colorLiftID = 1; //ID
+    //public static final byte colorSpinID = 2; //ID
+
+    //Spinner Setting
+    public static final byte spinnerLiftID = 41; //ID
+    public static final byte spinnerSpinID = 42; //ID
 
     //CPbot Setting
     public static final byte CPRID = 1; //ID
     public static final byte CPLID = 2; //ID
     public static final byte CPLiftID = 3; //ID
     public static final byte CPIntakeID = 4; //ID
-
-
 
 }

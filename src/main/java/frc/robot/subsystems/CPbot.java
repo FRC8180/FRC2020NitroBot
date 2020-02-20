@@ -26,8 +26,9 @@ public class CPbot extends SubsystemBase {
 
   @Override
   public void periodic() {
+    
     // This method will be called once per scheduler run
-    m_robotDrive.arcadeDrive(Robot.m_oi.driverJoystick.getRawAxis(1), Robot.m_oi.driverJoystick.getRawAxis(4));
+    /*m_robotDrive.arcadeDrive(Robot.m_oi.driverJoystick.getRawAxis(1), Robot.m_oi.driverJoystick.getRawAxis(4));
     
     if(Robot.m_oi.driverJoystick.getXButton()){
       CPIntake.set(1);
@@ -45,7 +46,7 @@ public class CPbot extends SubsystemBase {
     else{
       CPLift.set(0);
     }
-    
+    */
     /*if(Robot.m_oi.driverJoystick2.getRawAxis(1)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(1)<-0.2){
       hookA.set(-Robot.m_oi.driverJoystick2.getRawAxis(1));
     }

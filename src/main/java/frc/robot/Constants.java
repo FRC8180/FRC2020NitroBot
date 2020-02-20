@@ -69,6 +69,8 @@ public final class Constants {
     public static final byte shooterLowerEncoderPinA = 9;
     public static final byte shooterLowerEncoderPinB = 8;
     public static final boolean shooterLowerEncoderDirectionInverted = false;
+    public static final byte shooterContainerID = 1; //ID
+    public static final byte shooterSmallID = 1; //ID
     
     //Climber Setting
     public static final byte hookAID = 1; //ID
@@ -84,12 +86,14 @@ public final class Constants {
     public static final byte colorLiftID = 1; //ID
     public static final byte colorSpinID = 2; //ID
 
+    //Spinner Setting
+    public static final byte spinnerLiftID = 1; //ID
+    public static final byte spinnerSpinID = 1; //ID
+
     //CPbot Setting
     public static final byte CPRID = 1; //ID
     public static final byte CPLID = 2; //ID
     public static final byte CPLiftID = 3; //ID
     public static final byte CPIntakeID = 4; //ID
-
-
 
 }

@@ -6,8 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 //Intake功能(靖凱)
-//手動Lift:RT/LT
-//單向Spin:
+//手動Lift:1RT/1LT
+//單向Spin:1X 反向1B
 //一鍵Encoder:
 
 package frc.robot.subsystems;
@@ -31,7 +31,7 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(Robot.m_oi.driverJoystick.getAButton()){//單向Spin
+    if(Robot.m_oi.driverJoystick.getXButton()){//單向Spin
       intakeSpin.set(Constants.intakeSpinSpeed);
     }
     if(Robot.m_oi.driverJoystick.getBButton()){

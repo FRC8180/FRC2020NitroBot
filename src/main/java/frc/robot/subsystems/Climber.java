@@ -5,6 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+//Climber(鵬嘉)
+//hook:2LY
+//hanger:2RY
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,7 +23,7 @@ public class Climber extends SubsystemBase {
 
 
   public Climber() {
-    hookA.follow(hookB);
+    hookB.follow(hookA);
   }
 
   @Override

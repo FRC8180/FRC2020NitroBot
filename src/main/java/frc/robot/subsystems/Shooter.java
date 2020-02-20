@@ -4,7 +4,10 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
+//Shooter(鵬嘉)
+//Shoot(High):2LT
+//Container:2LX
+//
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -15,6 +18,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class Shooter extends SubsystemBase {
   
@@ -27,6 +31,8 @@ public class Shooter extends SubsystemBase {
 
   private WPI_TalonSRX upperMotor;
   private WPI_TalonSRX lowerMotor;
+  private WPI_TalonSRX container = new WPI_TalonSRX(Constants.shooterContainerID);
+  private WPI_TalonSRX smallMotor = new WPI_TalonSRX(Constants.shooterSmallID);  
   private Encoder upperEncoder;
   private Encoder lowerEncoder;
   private Timer timer;
@@ -57,12 +63,30 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if(Robot.m_oi.driverJoystick2.getRawAxis(2)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(2)<-0.2){
+      smallMotor.set(0.5);
+      upperMotor.set(1);
+      lowerMotor.set(1);
+    }
+    else{
+      smallMotor.set(0);
+      upperMotor.set(0);
+      lowerMotor.set(0);      
+    }
+    if(Robot.m_oi.driverJoystick2.getRawAxis(0)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(0)<-0.2){
+      container.set(-Robot.m_oi.driverJoystick2.getRawAxis(0));
+    }
+    else{
+      container.set(0);
+    }
+
     /*if(upperPIDEnable){
       upperPIDOutput(upperPID.calculate(getUpperPIDMeasurment(), upperPIDSetpoint));
     }
     if(lowerPIDEnable){
       lowerPIDOutput(lowerPID.calculate(getLowerPIDMeasurment(), lowerPIDSetpoint));
     }*/
+
   }
 
   @Override

@@ -21,6 +21,11 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class Shooter extends SubsystemBase {
+
+  private WPI_TalonSRX containerMotor;
+  private WPI_TalonSRX feedMotor;
+  private WPI_TalonSRX upperMotor;
+  private WPI_TalonSRX lowerMotor;
   
   private final PIDController upperPID;
   private final PIDController lowerPID;
@@ -28,11 +33,7 @@ public class Shooter extends SubsystemBase {
   private boolean lowerPIDEnable = false;
   private double upperPIDSetpoint = 0;
   private double lowerPIDSetpoint = 0;
-
-  private WPI_TalonSRX upperMotor = new WPI_TalonSRX(Constants.shooterUpperMotorID);
-  private WPI_TalonSRX lowerMotor = new WPI_TalonSRX(Constants.shooterLowerMotorID);;
-  private WPI_TalonSRX container = new WPI_TalonSRX(Constants.shooterContainerID);
-  private WPI_TalonSRX smallMotor = new WPI_TalonSRX(Constants.shooterSmallID);  
+   
   private Encoder upperEncoder;
   private Encoder lowerEncoder;
   private Timer timer;
@@ -43,13 +44,18 @@ public class Shooter extends SubsystemBase {
   private double lowerPreviousTime = 0;
 
   public Shooter() {
-    upperPID = new PIDController(0.1, 0, 0.15);
-    lowerPID = new PIDController(1, 0.1, 0.01);
 
-    //upperMotor = new WPI_TalonSRX(Constants.shooterUpperMotorID);
-    //lowerMotor = new WPI_TalonSRX(Constants.shooterLowerMotorID);
+    containerMotor = new WPI_TalonSRX(Constants.shooterContainerMotorID);
+    feedMotor = new WPI_TalonSRX(Constants.shooterFeedMotorID);
+    upperMotor = new WPI_TalonSRX(Constants.shooterUpperMotorID);
+    lowerMotor = new WPI_TalonSRX(Constants.shooterLowerMotorID);
+    containerMotor.setInverted(Constants.shooterContainerMotorInverted);
+    feedMotor.setInverted(Constants.shooterFeedMotorInverted);
     upperMotor.setInverted(Constants.shooterUpperMotorInverted);
     lowerMotor.setInverted(Constants.shooterLowerMotorInverted);
+
+    upperPID = new PIDController(0.1, 0, 0.15);
+    lowerPID = new PIDController(1, 0.1, 0.01);
 
     upperEncoder = new Encoder(Constants.shooterUpperEncoderPinA,Constants.shooterUpperEncoderPinB,Constants.shooterUpperEncoderDirectionInverted);
     lowerEncoder = new Encoder(Constants.shooterLowerEncoderPinA,Constants.shooterLowerEncoderPinB,Constants.shooterLowerEncoderDirectionInverted);
@@ -63,29 +69,12 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(Robot.m_oi.driverJoystick2.getRawAxis(2)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(2)<-0.2){
-      smallMotor.set(0.3);
-      upperMotor.set(-1);
-      lowerMotor.set(1);
-    }
-    else{
-      smallMotor.set(0);
-      upperMotor.set(0);
-      lowerMotor.set(0);      
-    }
-    if(Robot.m_oi.driverJoystick.getRawAxis(0)>0.2||Robot.m_oi.driverJoystick.getRawAxis(0)<-0.2){
-      container.set(-Robot.m_oi.driverJoystick.getRawAxis(0));
-    }
-    else{
-      container.set(0);
-    }
-
-    /*if(upperPIDEnable){
+    if(upperPIDEnable){
       upperPIDOutput(upperPID.calculate(getUpperPIDMeasurment(), upperPIDSetpoint));
     }
     if(lowerPIDEnable){
       lowerPIDOutput(lowerPID.calculate(getLowerPIDMeasurment(), lowerPIDSetpoint));
-    }*/
+    }
 
   }
 
@@ -95,58 +84,75 @@ public class Shooter extends SubsystemBase {
     super.setDefaultCommand(defaultCommand);
   }
 
+  public void setContainerMotorSpeed(double speed){
+    containerMotor.set(speed);
+  }
+  public void setContainerMotorStop(){
+    containerMotor.set(0);
+  }
+
+  public void setFeedMotorSpeed(double speed){
+    feedMotor.set(speed);
+  }
+  public void setFeedMotorStop(){
+    feedMotor.set(0);
+  }
+
+  public void setUpperMotorSpeed(double speed){
+    upperMotor.set(speed);
+  }
+  public void setUpperMotorStop(){
+    upperMotor.set(0);
+  }
+
+  public void setLowerMotorSpeed(double speed){
+    lowerMotor.set(speed);
+  }
+  public void setLowerMotorStop(){
+    lowerMotor.set(0);
+  }
+
+  //Speed Control PID Function
   public boolean upperPIDIsEnable(){
     return upperPIDEnable;
   }
-
   public boolean lowerPIDIsEnable(){
     return lowerPIDEnable;
   }
-  
   public void upperPIDEnable(){
     upperPIDEnable = true;
     upperPID.reset();
   }
-
   public void lowerPIDEnable(){
     lowerPIDEnable = true;
     lowerPID.reset();
   }
-
   public void upperPIDDisable(){
     upperPIDEnable = false;
     upperPIDOutput(0);
   }
-  
   public void lowerPIDDisable(){
     lowerPIDEnable = false;
     lowerPIDOutput(0);
   }
-
   public void setUpperPIDSetpoint(double setpoint){
     upperPIDSetpoint = setpoint;
   }
-
   public void setLowerPIDSetpoint(double setpoint){
     lowerPIDSetpoint = setpoint;
   }
-
   public void upperPIDReset(){
     upperPID.reset();
   }
-
   public void lowerPIDReset(){
     lowerPID.reset();
   }
-  
   public void upperPIDOutput(double output){
     upperMotor.setVoltage(output);
   }
-
   public void lowerPIDOutput(double output){
     lowerMotor.setVoltage(output);
   }
-
   public double getUpperPIDMeasurment(){
     double rotation = upperEncoder.get();
     double time = timer.get();
@@ -157,7 +163,6 @@ public class Shooter extends SubsystemBase {
     double RPS = deltaRotation / deltaTime / Constants.shooterUpperEncoderPPR;
     return RPS;
   }
-
   public double getLowerPIDMeasurment(){
     double rotation = lowerEncoder.get();
     double time = timer.get();
@@ -167,15 +172,5 @@ public class Shooter extends SubsystemBase {
     lowerPreviousTime = time;
     double RPS = deltaRotation / deltaTime / Constants.shooterLowerEncoderPPR;
     return RPS;
-  }
-  
-  public void setUpperSpeed(double speed){
-    upperPIDEnable = false;
-    upperMotor.set(speed);
-  }
-
-  public void setLowerSpeed(double speed){
-    lowerPIDEnable = false;
-    lowerMotor.set(speed);
   }
 }

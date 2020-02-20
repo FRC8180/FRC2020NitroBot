@@ -44,10 +44,10 @@ public class AssistDrive extends CommandBase {
       disable = false;
     }
 
-    double joystickLY = Robot.m_oi.getLY();
-    double joystickRX = Robot.m_oi.getRX();
+    double joystickLY = Robot.m_oi.getALY();
+    double joystickRX = Robot.m_oi.getARX();
 
-    if(Robot.m_oi.isRXDeadzone()){
+    if(Robot.m_oi.isARXDeadzone()){
       if(chassis.PIDIsEnable()){
       }else{
         if(timer.get() >= previousTime + Constants.chassisPIDRestartTime){

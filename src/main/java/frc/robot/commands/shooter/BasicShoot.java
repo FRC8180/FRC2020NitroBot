@@ -16,14 +16,6 @@ import frc.robot.subsystems.Shooter;
 
 public class BasicShoot extends CommandBase {
 
-  private int buttonYStatus = 0;
-  private int buttonBStatus = 0;
-  private int buttonXStatus = 0;
-  private int buttonAStatus = 0;
-
-  private double upperVoltage = 0;
-  private double lowerVoltage = 0;
-
   private final Shooter shooter;
   public BasicShoot(Shooter subsystem) {
     shooter = subsystem;
@@ -38,39 +30,25 @@ public class BasicShoot extends CommandBase {
 
   @Override
   public void execute() {
-    SmartDashboard.putBoolean("status", true);
-    if(Robot.m_oi.getRawButton(Constants.buttonY) && buttonYStatus == 0){
-      upperVoltage += 0.5;
-      buttonYStatus = 1;
-    }else if(!Robot.m_oi.getRawButton(Constants.buttonY) && buttonYStatus == 1){
-      buttonYStatus = 0;
-    }
-    if(Robot.m_oi.getRawButton(Constants.buttonB) && buttonBStatus == 0){
-      upperVoltage -= 0.5;
-      buttonBStatus = 1;
-    }else if(!Robot.m_oi.getRawButton(Constants.buttonB) && buttonBStatus == 1){
-      buttonBStatus = 0;
+    double BLT = Robot.m_oi.getBRawAxis(Constants.axisLT);
+    double ALX = Robot.m_oi.getARawAxis(Constants.axisJLX);
+
+    if(Math.abs(BLT) > Constants.joystickDeadZone){
+      shooter.setFeedMotorSpeed(0.3);
+      shooter.setUpperMotorSpeed(1);
+      shooter.setLowerMotorSpeed(1);
+    }else{
+      shooter.setFeedMotorSpeed(0);
+      shooter.setUpperMotorSpeed(0);
+      shooter.setLowerMotorSpeed(0);     
     }
 
-    if(Robot.m_oi.getRawButton(Constants.buttonX) && buttonXStatus == 0){
-      lowerVoltage += 0.5;
-      buttonXStatus = 1;
-    }else if(!Robot.m_oi.getRawButton(Constants.buttonX) && buttonXStatus == 1){
-      buttonXStatus = 0;
-    }
-    if(Robot.m_oi.getRawButton(Constants.buttonA) && buttonAStatus == 0){
-      lowerVoltage -= 0.5;
-      buttonAStatus = 1;
-    }else if(!Robot.m_oi.getRawButton(Constants.buttonA) && buttonAStatus == 1) {
-      buttonAStatus = 0;
+    if(Math.abs(ALX) > Constants.joystickDeadZone){
+      shooter.setContainerMotorSpeed(ALX);
+    }else{
+      shooter.setContainerMotorSpeed(0);
     }
 
-    upperVoltage = Utility.Constrain(upperVoltage, 0, 10);
-    lowerVoltage = Utility.Constrain(lowerVoltage, 0, 10);
-
-    SmartDashboard.putNumber("UpperVoltage", upperVoltage);
-    SmartDashboard.putNumber("LowerVoltage", lowerVoltage);
-    
     /*
     double upperSpeed = Robot.m_oi.getRawAxis(Constants.axisRT);
     double lowerSpeed = Robot.m_oi.getRawAxis(Constants.axisLT);
@@ -86,13 +64,14 @@ public class BasicShoot extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    SmartDashboard.putBoolean("Status", false);
-    shooter.setUpperSpeed(0);
-    shooter.setLowerSpeed(0);
+    shooter.setContainerMotorStop();
+    shooter.setFeedMotorStop();
+    shooter.setUpperMotorStop();
+    shooter.setLowerMotorStop();
   }
 
   @Override
   public boolean isFinished() {
-    return Robot.m_oi.getRawButton(Constants.buttonBack);
+    return false;
   }
 }

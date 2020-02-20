@@ -8,6 +8,8 @@
 package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.Climber;
 
 public class BasicClimb extends CommandBase {
@@ -20,10 +22,27 @@ public class BasicClimb extends CommandBase {
 
   @Override
   public void initialize() {
+
   }
 
   @Override
   public void execute() {
+
+    double LY = Robot.m_oi.getBRawAxis(Constants.axisJLY);
+    double RY = Robot.m_oi.getBRawAxis(Constants.axisJRY);
+
+    if(Math.abs(LY) > Constants.joystickDeadZone){
+      climber.setHookMotorSpeed(LY);
+    }else{
+      climber.setHookMotorSpeed(0);
+    }
+
+    if(Math.abs(RY) > Constants.joystickDeadZone){
+      climber.setLiftMotorSpeed(RY);
+    }else{
+      climber.setLiftMotorSpeed(0);
+    }
+    
   }
 
   @Override

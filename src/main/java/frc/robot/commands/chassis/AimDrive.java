@@ -57,6 +57,6 @@ public class AimDrive extends CommandBase {
     }
     return false;
     */
-    return Robot.m_oi.getRawButton(Constants.buttonBack);
+    return Robot.m_oi.getARawButton(Constants.buttonBack);
   }
 }

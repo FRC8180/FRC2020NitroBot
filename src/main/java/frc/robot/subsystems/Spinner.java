@@ -30,6 +30,7 @@ public class Spinner extends SubsystemBase {
 
   @Override
   public void periodic() {
+    /*
     // This method will be called once per scheduler run
     if(Robot.m_oi.driverJoystick.getYButton()){//單向Spin
       spinnerLift.set(1);
@@ -50,6 +51,7 @@ public class Spinner extends SubsystemBase {
     else{
       spinnerSpin.set(0);
     }
+    */
   }
 
   @Override

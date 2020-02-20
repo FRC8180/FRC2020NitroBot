@@ -19,6 +19,7 @@ public final class Constants {
     public static final byte buttonOption = 8;
     public static final byte buttonJR = 10;
     public static final byte buttonJL = 9;
+    
     public static final byte axisJRX = 4;
     public static final byte axisJRY = 5;
     public static final byte axisJLX = 0;
@@ -49,16 +50,22 @@ public final class Constants {
     public static final byte chassisMotorLBID = 4; //ID
     public static final boolean chassisMotorRInverted = false;
     public static final boolean chassisMotorLInverted = false;
+
     public static final double chassisMotorNormalModeSpeedScale = 0.5;
     public static final double chassisMotorSlowModeSpeedScale = 0.3;
+
     public static final double chassisPIDRestartTime = 0.25;
 
     //Shooter Setting
-    public static final byte shooterUpperMotorID = 22; //ID
-    public static final byte shooterLowerMotorID = 23; //ID
-    public static final byte helperID = 1; //ID
+    public static final byte shooterContainerMotorID = 51;  //ID
+    public static final byte shooterFeedMotorID = 21;       //ID
+    public static final byte shooterUpperMotorID = 22;      //ID
+    public static final byte shooterLowerMotorID = 23;      //ID
+    public static final boolean shooterContainerMotorInverted = false;
+    public static final boolean shooterFeedMotorInverted = false;
     public static final boolean shooterUpperMotorInverted = true;
     public static final boolean shooterLowerMotorInverted = false;
+
     public static final double shooterUpperMotorMaxPIDRPS = 60;
     public static final double shooterLowerMotorMaxPIDRPS = 60;
     public static final int shooterUpperEncoderPPR = 2048;
@@ -69,13 +76,14 @@ public final class Constants {
     public static final byte shooterLowerEncoderPinA = 9;
     public static final byte shooterLowerEncoderPinB = 8;
     public static final boolean shooterLowerEncoderDirectionInverted = false;
-    public static final byte shooterContainerID = 51; //ID
-    public static final byte shooterSmallID = 21; //ID
+    
     
     //Climber Setting
-    public static final byte hookAID = 12; //ID
-    public static final byte hookBID = 13; //ID
-    public static final byte hangerID = 11; //ID
+    public static final byte climberLiftMotorID = 11;       //ID
+    public static final byte climberHookFrontMotorID = 12;  //ID
+    public static final byte climberHookBackMotorID = 13;   //ID
+    public static final boolean climberHookMotorInverted = false;
+    public static final boolean climberLiftMotorInverted = false;
     
     //Intake Setting
     public static final byte intakeLiftID = 31; //ID

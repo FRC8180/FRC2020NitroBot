@@ -7,7 +7,7 @@
 
 //BasicDrive:
 //drive:1LY 1RX
-//
+
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Network;
 import frc.robot.Robot;
-//import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 
 public class Chassis extends SubsystemBase {
@@ -36,12 +35,10 @@ public class Chassis extends SubsystemBase {
   private AHRS navx;
   private Network network;
 
-  private WPI_TalonSRX motorRF = new WPI_TalonSRX(Constants.chassisMotorRFID);;
+  private WPI_TalonSRX motorRF = new WPI_TalonSRX(Constants.chassisMotorRFID);
   private WPI_TalonSRX motorRB = new WPI_TalonSRX(Constants.chassisMotorRBID);
   private WPI_TalonSRX motorLF = new WPI_TalonSRX(Constants.chassisMotorLFID);
   private WPI_TalonSRX motorLB = new WPI_TalonSRX(Constants.chassisMotorLBID);
-  //private final DifferentialDrive m_robotDrive = new DifferentialDrive(motorLF, motorRF);
-  //private final DifferentialDrive m_robotDrive2 = new DifferentialDrive(motorLB, motorRB);
 
   private double lockAngle = 0;
 
@@ -55,9 +52,8 @@ public class Chassis extends SubsystemBase {
     motorLB = new WPI_TalonSRX(Constants.chassisMotorLBID);
     motorRF.setInverted(Constants.chassisMotorRInverted);
     motorLF.setInverted(Constants.chassisMotorLInverted);
-    motorRB.setInverted(Constants.chassisMotorRInverted);
-    motorLB.setInverted(Constants.chassisMotorRInverted);
-
+    motorRB.follow(motorRF);
+    motorLB.follow(motorLB);
 
     navx = new AHRS(SPI.Port.kMXP);
     navx.reset();
@@ -71,17 +67,12 @@ public class Chassis extends SubsystemBase {
 
   @Override
   public void periodic() {
-    //m_robotDrive.arcadeDrive(0.5*Robot.m_oi.driverJoystick.getRawAxis(1), 0.5*Robot.m_oi.driverJoystick.getRawAxis(4));
-    //m_robotDrive2.arcadeDrive(0.5*Robot.m_oi.driverJoystick.getRawAxis(1), 0.5*Robot.m_oi.driverJoystick.getRawAxis(4));
-
-    
     if(PIDEnable){
       PIDOutput(PID.calculate(PIDMeasurment(), PIDSetpoint));
     }
     if(aimPIDEnable){
       aimPIDOutput(aimPID.calculate(aimPIDMeasurment(), aimPIDSetpoint));
     }
-    
   }
 
   @Override
@@ -90,6 +81,36 @@ public class Chassis extends SubsystemBase {
     super.setDefaultCommand(defaultCommand);
   }
 
+  //Motor control function
+  public void setMotorSpeed(double Lspd, double Rspd){
+    if(Robot.m_oi.getARawButton(Constants.buttonOption)){
+      motorLF.set(Lspd * Constants.chassisMotorSlowModeSpeedScale);
+      motorRF.set(Rspd * Constants.chassisMotorSlowModeSpeedScale);
+    }else{
+      motorLF.set(Lspd * Constants.chassisMotorNormalModeSpeedScale);
+      motorRF.set(Rspd * Constants.chassisMotorNormalModeSpeedScale);
+    }
+  }
+  public void setMotorVoltage(double Lvoltage, double Rvoltage){
+    motorLF.setVoltage(Lvoltage);
+    motorRF.setVoltage(Rvoltage);
+  }
+  public void setMotorStop(){
+    setMotorSpeed(0, 0);
+  }
+
+  //NavX function
+  public double getRawAngle(){
+    return navx.getAngle() % 360;
+  }
+  public double getCalAngle(){
+    return (((((getRawAngle() + (360 - lockAngle)) % 360) + 180) % 360) - 180);
+  }
+  public void setLockAngle(double angle){
+    lockAngle = angle;
+  }
+
+  //Heading control PID function
   public void PIDEnable(){
     PIDEnable = true;
     PID.reset();
@@ -115,42 +136,12 @@ public class Chassis extends SubsystemBase {
     return getCalAngle();
   }
   public void PIDOutput(double output){
-    double Rspd = Robot.m_oi.getLY() - output;
-    double Lspd = Robot.m_oi.getLY() + output;
+    double Rspd = Robot.m_oi.getALY() - output;
+    double Lspd = Robot.m_oi.getALY() + output;
     setMotorSpeed(Lspd, Rspd);
   }
 
-  public void setMotorSpeed(double Lspd, double Rspd){
-    if(Robot.m_oi.getRawButton(Constants.buttonOption)){
-      motorLF.set(Lspd * Constants.chassisMotorSlowModeSpeedScale);
-      motorRF.set(Rspd * Constants.chassisMotorSlowModeSpeedScale);
-      motorLB.set(Lspd * Constants.chassisMotorSlowModeSpeedScale);
-      motorRB.set(Rspd * Constants.chassisMotorSlowModeSpeedScale);
-    }else{
-      motorLF.set(Lspd * Constants.chassisMotorNormalModeSpeedScale);
-      motorRF.set(Rspd * Constants.chassisMotorNormalModeSpeedScale);
-      motorLB.set(Lspd * Constants.chassisMotorNormalModeSpeedScale);
-      motorRB.set(Rspd * Constants.chassisMotorNormalModeSpeedScale);
-    }
-  }
-  public void setMotorVoltage(double Lvoltage, double Rvoltage){
-    motorLF.setVoltage(Lvoltage);
-    motorRF.setVoltage(Rvoltage);
-  }
-  public void setMotorStop(){
-    setMotorSpeed(0, 0);
-  }
-
-  public double getRawAngle(){
-    return navx.getAngle() % 360;
-  }
-  public double getCalAngle(){
-    return (((((getRawAngle() + (360 - lockAngle)) % 360) + 180) % 360) - 180);
-  }
-  public void setLockAngle(double angle){
-    lockAngle = angle;
-  }
-
+  //Aim target PID function
   public void aimPIDEnable(){
     aimPIDEnable = true;
     aimPID.reset();
@@ -175,8 +166,8 @@ public class Chassis extends SubsystemBase {
     return (network.ntGetDouble("Vision", "h_angle"));
   }
   public void aimPIDOutput(double output){
-    double Rspd = Robot.m_oi.getLY() + output;
-    double Lspd = Robot.m_oi.getLY() - output;
+    double Rspd = Robot.m_oi.getALY() + output;
+    double Lspd = Robot.m_oi.getALY() - output;
     setMotorSpeed(Lspd, Rspd);
   }
   public boolean aimPIDIsStable(){

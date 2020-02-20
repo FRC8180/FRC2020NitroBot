@@ -26,8 +26,8 @@ public class BasicDrive extends CommandBase {
 
   @Override
   public void execute() {
-    double Rspd = Robot.m_oi.getLY() - Robot.m_oi.getRX();
-    double Lspd = Robot.m_oi.getLY() + Robot.m_oi.getRX();
+    double Rspd = Robot.m_oi.getALY() - Robot.m_oi.getARX();
+    double Lspd = Robot.m_oi.getALY() + Robot.m_oi.getARX();
     Rspd = Utility.Constrain(Rspd, -1, 1);
     Lspd = Utility.Constrain(Lspd, -1, 1);
     chassis.setMotorSpeed(Lspd, Rspd);

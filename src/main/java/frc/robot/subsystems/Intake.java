@@ -19,19 +19,18 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class Intake extends SubsystemBase {
-  /**
-   * Creates a new Intake.
-   */
+
   private WPI_VictorSPX intakeLift = new WPI_VictorSPX(Constants.intakeLiftID);
   private WPI_VictorSPX intakeSpin = new WPI_VictorSPX(Constants.intakeSpinID);
+
   public Intake() {
 
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    if(Robot.m_oi.driverJoystick.getXButton()){//單向Spin
+    /*
+    if(Robot.m_oi.driverJoystick.getXButton()){
       intakeSpin.set(Constants.intakeSpinSpeed);
     }
     else if(Robot.m_oi.driverJoystick.getBButton()){
@@ -50,6 +49,7 @@ public class Intake extends SubsystemBase {
     else{
       intakeLift.set(0);
     }
+    */
   }
 
   @Override

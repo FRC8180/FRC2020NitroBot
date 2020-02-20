@@ -26,7 +26,6 @@ public class AimDrive extends CommandBase {
   @Override
   public void initialize() {
     chassis.aimPIDEnable();
-    chassis.aimPIDSetTolerance(1);
   }
 
   @Override
@@ -57,6 +56,6 @@ public class AimDrive extends CommandBase {
     }
     return false;
     */
-    return Robot.m_oi.getRawButton(Constants.buttonBack);
+    return chassis.aimPIDIsStable();
   }
 }

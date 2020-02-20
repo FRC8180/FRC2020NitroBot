@@ -37,7 +37,7 @@ public class CPbot extends SubsystemBase {
     }
 
     if(Robot.m_oi.driverJoystick.getRawAxis(5)>0.2||Robot.m_oi.driverJoystick.getRawAxis(5)<-0.2){
-      CPLift.set(Robot.m_oi.driverJoystick.getRawAxis(5));
+      CPLift.set(-Robot.m_oi.driverJoystick.getRawAxis(5));
     }
     else{
       CPLift.set(0);

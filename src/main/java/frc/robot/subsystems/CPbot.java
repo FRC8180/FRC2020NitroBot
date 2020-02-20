@@ -28,13 +28,6 @@ public class CPbot extends SubsystemBase {
   public void periodic() {
     
     // This method will be called once per scheduler run
-<<<<<<< HEAD
-    if(Robot.m_oi.driverJoystick.getAButton()){
-      CPIntake.set(0.5);
-    }
-    else if(Robot.m_oi.driverJoystick.getBButton()){
-      CPIntake.set(-0.5);
-=======
     /*m_robotDrive.arcadeDrive(Robot.m_oi.driverJoystick.getRawAxis(1), Robot.m_oi.driverJoystick.getRawAxis(4));
     
     if(Robot.m_oi.driverJoystick.getXButton()){
@@ -42,7 +35,6 @@ public class CPbot extends SubsystemBase {
     }
     else if(Robot.m_oi.driverJoystick.getYButton()){
       CPIntake.set(-1);
->>>>>>> 4f333c249f3f68be513218098c59d9c5ec96dfa7
     }
     else{
       CPIntake.set(0);

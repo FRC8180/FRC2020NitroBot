@@ -57,12 +57,12 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(upperPIDEnable){
+    /*if(upperPIDEnable){
       upperPIDOutput(upperPID.calculate(getUpperPIDMeasurment(), upperPIDSetpoint));
     }
     if(lowerPIDEnable){
       lowerPIDOutput(lowerPID.calculate(getLowerPIDMeasurment(), lowerPIDSetpoint));
-    }
+    }*/
   }
 
   @Override

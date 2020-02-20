@@ -78,6 +78,7 @@ public final class Constants {
     //Intake Setting
     public static final byte intakeLiftID = 1; //ID
     public static final byte intakeSpinID = 2; //ID
+    public static final double intakeSpinSpeed = 1.0;
 
     //Rotator Setting
     public static final byte colorLiftID = 1; //ID

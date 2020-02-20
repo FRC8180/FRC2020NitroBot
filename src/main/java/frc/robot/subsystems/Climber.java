@@ -17,7 +17,7 @@ public class Climber extends SubsystemBase {
   private WPI_TalonSRX hookA = new WPI_TalonSRX(Constants.hookAID);
   private WPI_TalonSRX hookB = new WPI_TalonSRX(Constants.hookBID);
   private WPI_TalonSRX hanger = new WPI_TalonSRX(Constants.hangerID);
-  private WPI_TalonSRX rotate = new WPI_TalonSRX(4);
+
 
   public Climber() {
     hookA.follow(hookB);
@@ -26,28 +26,8 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(Robot.m_oi.driverJoystick2.getAButton()){
-      hookA.set(1);
-      hookB.set(1);
-    }
-    else{
-      hookA.set(0);
-      hookB.set(0);
-    }
-    if(Robot.m_oi.driverJoystick2.getBButton()){
-      hanger.set(0.3);
-    }
-    else{
-      hanger.set(0);
-    }
-    if(Robot.m_oi.driverJoystick2.getRawAxis(5)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(5)<-0.2){
-      rotate.set(-Robot.m_oi.driverJoystick2.getRawAxis(5));
-    }
-    else{
-      rotate.set(0);
-    }
     
-    /*if(Robot.m_oi.driverJoystick2.getRawAxis(1)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(1)<-0.2){
+    if(Robot.m_oi.driverJoystick2.getRawAxis(1)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(1)<-0.2){
       hookA.set(-Robot.m_oi.driverJoystick2.getRawAxis(1));
     }
     else{
@@ -58,7 +38,7 @@ public class Climber extends SubsystemBase {
     }
     else{
       hanger.set(0);
-    }*/
+    }
     
   }
 

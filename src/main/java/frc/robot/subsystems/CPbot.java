@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
@@ -18,7 +19,7 @@ public class CPbot extends SubsystemBase {
   private WPI_TalonSRX CPL = new WPI_TalonSRX(Constants.CPRID);
   private WPI_TalonSRX CPLift = new WPI_TalonSRX(Constants.CPLiftID);
   private WPI_TalonSRX CPIntake = new WPI_TalonSRX(Constants.CPIntakeID);
-
+  private final DifferentialDrive m_robotDrive = new DifferentialDrive(CPL, CPR);
   public CPbot() {
     
   }
@@ -26,10 +27,12 @@ public class CPbot extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(Robot.m_oi.driverJoystick.getAButton()){
+    m_robotDrive.arcadeDrive(Robot.m_oi.driverJoystick.getRawAxis(1), Robot.m_oi.driverJoystick.getRawAxis(4));
+    
+    if(Robot.m_oi.driverJoystick.getXButton()){
       CPIntake.set(1);
     }
-    else if(Robot.m_oi.driverJoystick.getBButton()){
+    else if(Robot.m_oi.driverJoystick.getYButton()){
       CPIntake.set(-1);
     }
     else{

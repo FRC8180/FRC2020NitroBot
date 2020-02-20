@@ -47,7 +47,7 @@ public final class Constants {
     public static final byte chassisMotorRBID = 2;  //ID
     public static final byte chassisMotorLFID = 3; //ID
     public static final byte chassisMotorLBID = 4; //ID
-    public static final boolean chassisMotorRInverted = true;
+    public static final boolean chassisMotorRInverted = false;
     public static final boolean chassisMotorLInverted = false;
     public static final double chassisMotorNormalModeSpeedScale = 0.5;
     public static final double chassisMotorSlowModeSpeedScale = 0.3;
@@ -56,7 +56,7 @@ public final class Constants {
     //Shooter Setting
     public static final byte shooterUpperMotorID = 22; //ID
     public static final byte shooterLowerMotorID = 23; //ID
-    //public static final byte helperID = 1; //ID
+    public static final byte helperID = 1; //ID
     public static final boolean shooterUpperMotorInverted = true;
     public static final boolean shooterLowerMotorInverted = false;
     public static final double shooterUpperMotorMaxPIDRPS = 60;
@@ -80,11 +80,11 @@ public final class Constants {
     //Intake Setting
     public static final byte intakeLiftID = 31; //ID
     public static final byte intakeSpinID = 32; //ID
-    public static final double intakeSpinSpeed = 1.0;
+    public static final double intakeSpinSpeed = 0.5;
 
     //Rotator Setting
-    //public static final byte colorLiftID = 1; //ID
-    //public static final byte colorSpinID = 2; //ID
+    public static final byte colorLiftID = 1; //ID
+    public static final byte colorSpinID = 2; //ID
 
     //Spinner Setting
     public static final byte spinnerLiftID = 41; //ID

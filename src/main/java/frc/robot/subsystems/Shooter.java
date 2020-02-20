@@ -29,8 +29,8 @@ public class Shooter extends SubsystemBase {
   private double upperPIDSetpoint = 0;
   private double lowerPIDSetpoint = 0;
 
-  private WPI_TalonSRX upperMotor;
-  private WPI_TalonSRX lowerMotor;
+  private WPI_TalonSRX upperMotor = new WPI_TalonSRX(Constants.shooterUpperMotorID);
+  private WPI_TalonSRX lowerMotor = new WPI_TalonSRX(Constants.shooterLowerMotorID);;
   private WPI_TalonSRX container = new WPI_TalonSRX(Constants.shooterContainerID);
   private WPI_TalonSRX smallMotor = new WPI_TalonSRX(Constants.shooterSmallID);  
   private Encoder upperEncoder;
@@ -46,8 +46,8 @@ public class Shooter extends SubsystemBase {
     upperPID = new PIDController(0.1, 0, 0.15);
     lowerPID = new PIDController(1, 0.1, 0.01);
 
-    upperMotor = new WPI_TalonSRX(Constants.shooterUpperMotorID);
-    lowerMotor = new WPI_TalonSRX(Constants.shooterLowerMotorID);
+    //upperMotor = new WPI_TalonSRX(Constants.shooterUpperMotorID);
+    //lowerMotor = new WPI_TalonSRX(Constants.shooterLowerMotorID);
     upperMotor.setInverted(Constants.shooterUpperMotorInverted);
     lowerMotor.setInverted(Constants.shooterLowerMotorInverted);
 
@@ -64,8 +64,8 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     if(Robot.m_oi.driverJoystick2.getRawAxis(2)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(2)<-0.2){
-      smallMotor.set(0.5);
-      upperMotor.set(1);
+      smallMotor.set(0.3);
+      upperMotor.set(-1);
       lowerMotor.set(1);
     }
     else{
@@ -73,8 +73,8 @@ public class Shooter extends SubsystemBase {
       upperMotor.set(0);
       lowerMotor.set(0);      
     }
-    if(Robot.m_oi.driverJoystick2.getRawAxis(0)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(0)<-0.2){
-      container.set(-Robot.m_oi.driverJoystick2.getRawAxis(0));
+    if(Robot.m_oi.driverJoystick.getRawAxis(0)>0.2||Robot.m_oi.driverJoystick.getRawAxis(0)<-0.2){
+      container.set(-Robot.m_oi.driverJoystick.getRawAxis(0));
     }
     else{
       container.set(0);

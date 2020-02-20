@@ -13,7 +13,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
@@ -21,8 +21,8 @@ public class Spinner extends SubsystemBase {
   /**
    * Creates a new Spinner.
    */
-  private WPI_TalonSRX spinnerLift = new WPI_TalonSRX(Constants.spinnerLiftID);
-  private WPI_TalonSRX spinnerSpin = new WPI_TalonSRX(Constants.spinnerSpinID);
+  private WPI_VictorSPX spinnerLift = new WPI_VictorSPX(Constants.spinnerLiftID);
+  private WPI_VictorSPX spinnerSpin = new WPI_VictorSPX(Constants.spinnerSpinID);
 
   public Spinner() {
 
@@ -34,7 +34,7 @@ public class Spinner extends SubsystemBase {
     if(Robot.m_oi.driverJoystick.getYButton()){//單向Spin
       spinnerLift.set(1);
     }
-    if(Robot.m_oi.driverJoystick.getAButton()){
+    else if(Robot.m_oi.driverJoystick.getAButton()){
       spinnerLift.set(-1);
     }
     else{

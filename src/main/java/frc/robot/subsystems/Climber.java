@@ -31,11 +31,12 @@ public class Climber extends SubsystemBase {
     // This method will be called once per scheduler run
     
     if(Robot.m_oi.driverJoystick2.getRawAxis(1)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(1)<-0.2){
-      hookA.set(-Robot.m_oi.driverJoystick2.getRawAxis(1));
+      hookA.set(Robot.m_oi.driverJoystick2.getRawAxis(1));
     }
     else{
       hookA.set(0);
     }
+
     if(Robot.m_oi.driverJoystick2.getRawAxis(5)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(5)<-0.2){
       hanger.set(-Robot.m_oi.driverJoystick2.getRawAxis(5));
     }

@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -22,8 +24,19 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public static RobotContainer m_oi;
 
+  private static AddressableLED m_led;
+  private static AddressableLEDBuffer m_ledBuffer;
   @Override
   public void robotInit() {
+    m_led = new AddressableLED(0);
+    m_ledBuffer = new AddressableLEDBuffer(42);
+    m_led.setLength(m_ledBuffer.getLength());
+
+    for(var i=0; i<m_ledBuffer.getLength(); i++){
+      m_ledBuffer.setRGB(i, 0, 255, 0);
+    }
+    m_led.setData(m_ledBuffer);
+    m_led.start();
     m_oi = new RobotContainer();
   }
 

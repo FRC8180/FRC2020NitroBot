@@ -63,8 +63,8 @@ public class RobotContainer {
     //configureButtonBindings();
     // Set Default Command!
     //m_cp.setDefaultCommand(m_wholecp);
-    //m_chassis.setDefaultCommand(m_basicDrive);
-    m_climber.setDefaultCommand(m_basicClimb);
+    m_chassis.setDefaultCommand(m_basicDrive);
+   // m_climber.setDefaultCommand(m_basicClimb);
     //m_intake.setDefaultCommand();
     //m_shooter.setDefaultCommand(m_basicShoot);
     //m_spinner.setDefaultCommand();
@@ -72,7 +72,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     //Trig command defined here!!!!
-    buttonB.whenPressed(m_aimDrive);
+    //buttonB.whenPressed(m_aimDrive);
     //buttonX.whenPressed(() -> m_chassis.(func));
   }
 

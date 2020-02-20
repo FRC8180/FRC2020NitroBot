@@ -14,7 +14,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
@@ -22,8 +22,8 @@ public class Intake extends SubsystemBase {
   /**
    * Creates a new Intake.
    */
-  private WPI_TalonSRX intakeLift = new WPI_TalonSRX(Constants.intakeLiftID);
-  private WPI_TalonSRX intakeSpin = new WPI_TalonSRX(Constants.intakeSpinID);
+  private WPI_VictorSPX intakeLift = new WPI_VictorSPX(Constants.intakeLiftID);
+  private WPI_VictorSPX intakeSpin = new WPI_VictorSPX(Constants.intakeSpinID);
   public Intake() {
 
   }
@@ -34,17 +34,17 @@ public class Intake extends SubsystemBase {
     if(Robot.m_oi.driverJoystick.getXButton()){//單向Spin
       intakeSpin.set(Constants.intakeSpinSpeed);
     }
-    if(Robot.m_oi.driverJoystick.getBButton()){
+    else if(Robot.m_oi.driverJoystick.getBButton()){
       intakeSpin.set(-1*Constants.intakeSpinSpeed);
     }
     else{
       intakeSpin.set(0);
     }
 
-    if(Robot.m_oi.driverJoystick.getRawAxis(3)<-0.2){
+    if(Robot.m_oi.driverJoystick.getRawAxis(3)>0.2){
       intakeLift.set(Robot.m_oi.driverJoystick.getRawAxis(3));
     }
-    else if(Robot.m_oi.driverJoystick.getRawAxis(2)<-0.2){
+    else if(Robot.m_oi.driverJoystick.getRawAxis(2)>0.2){
       intakeLift.set(-Robot.m_oi.driverJoystick.getRawAxis(2));
     }
     else{

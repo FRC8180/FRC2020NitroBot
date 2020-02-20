@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Network;
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+//import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 
 public class Chassis extends SubsystemBase {
@@ -36,11 +36,12 @@ public class Chassis extends SubsystemBase {
   private AHRS navx;
   private Network network;
 
-  private WPI_TalonSRX motorRF;
-  private WPI_TalonSRX motorRB;
-  private WPI_TalonSRX motorLF;
-  private WPI_TalonSRX motorLB;
-  private final DifferentialDrive m_robotDrive = new DifferentialDrive(motorLF, motorRF);
+  private WPI_TalonSRX motorRF = new WPI_TalonSRX(Constants.chassisMotorRFID);;
+  private WPI_TalonSRX motorRB = new WPI_TalonSRX(Constants.chassisMotorRBID);
+  private WPI_TalonSRX motorLF = new WPI_TalonSRX(Constants.chassisMotorLFID);
+  private WPI_TalonSRX motorLB = new WPI_TalonSRX(Constants.chassisMotorLBID);
+  //private final DifferentialDrive m_robotDrive = new DifferentialDrive(motorLF, motorRF);
+  //private final DifferentialDrive m_robotDrive2 = new DifferentialDrive(motorLB, motorRB);
 
   private double lockAngle = 0;
 
@@ -54,8 +55,9 @@ public class Chassis extends SubsystemBase {
     motorLB = new WPI_TalonSRX(Constants.chassisMotorLBID);
     motorRF.setInverted(Constants.chassisMotorRInverted);
     motorLF.setInverted(Constants.chassisMotorLInverted);
-    motorRB.follow(motorRF);
-    motorLB.follow(motorLF);
+    motorRB.setInverted(Constants.chassisMotorRInverted);
+    motorLB.setInverted(Constants.chassisMotorRInverted);
+
 
     navx = new AHRS(SPI.Port.kMXP);
     navx.reset();
@@ -69,15 +71,17 @@ public class Chassis extends SubsystemBase {
 
   @Override
   public void periodic() {
-    m_robotDrive.arcadeDrive(Robot.m_oi.driverJoystick.getRawAxis(1), Robot.m_oi.driverJoystick.getRawAxis(4));
-    /*
+    //m_robotDrive.arcadeDrive(0.5*Robot.m_oi.driverJoystick.getRawAxis(1), 0.5*Robot.m_oi.driverJoystick.getRawAxis(4));
+    //m_robotDrive2.arcadeDrive(0.5*Robot.m_oi.driverJoystick.getRawAxis(1), 0.5*Robot.m_oi.driverJoystick.getRawAxis(4));
+
+    
     if(PIDEnable){
       PIDOutput(PID.calculate(PIDMeasurment(), PIDSetpoint));
     }
     if(aimPIDEnable){
       aimPIDOutput(aimPID.calculate(aimPIDMeasurment(), aimPIDSetpoint));
     }
-    */
+    
   }
 
   @Override
@@ -117,12 +121,16 @@ public class Chassis extends SubsystemBase {
   }
 
   public void setMotorSpeed(double Lspd, double Rspd){
-    if(Robot.m_oi.getRawAxis(Constants.axisRT) > Constants.chassisPIDRestartTime){
+    if(Robot.m_oi.getRawButton(Constants.buttonOption)){
       motorLF.set(Lspd * Constants.chassisMotorSlowModeSpeedScale);
       motorRF.set(Rspd * Constants.chassisMotorSlowModeSpeedScale);
+      motorLB.set(Lspd * Constants.chassisMotorSlowModeSpeedScale);
+      motorRB.set(Rspd * Constants.chassisMotorSlowModeSpeedScale);
     }else{
       motorLF.set(Lspd * Constants.chassisMotorNormalModeSpeedScale);
       motorRF.set(Rspd * Constants.chassisMotorNormalModeSpeedScale);
+      motorLB.set(Lspd * Constants.chassisMotorNormalModeSpeedScale);
+      motorRB.set(Rspd * Constants.chassisMotorNormalModeSpeedScale);
     }
   }
   public void setMotorVoltage(double Lvoltage, double Rvoltage){

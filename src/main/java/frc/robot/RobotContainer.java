@@ -62,9 +62,9 @@ public class RobotContainer {
     // Configure the button bindings
     //configureButtonBindings();
     // Set Default Command!
-    m_cp.setDefaultCommand(m_wholecp);
+    //m_cp.setDefaultCommand(m_wholecp);
     //m_chassis.setDefaultCommand(m_basicDrive);
-    //m_climber.setDefaultCommand(m_basicClimb);
+    m_climber.setDefaultCommand(m_basicClimb);
     //m_intake.setDefaultCommand();
     //m_shooter.setDefaultCommand(m_basicShoot);
     //m_spinner.setDefaultCommand();

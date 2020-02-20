@@ -27,10 +27,10 @@ public class CPbot extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     if(Robot.m_oi.driverJoystick.getAButton()){
-      CPIntake.set(1);
+      CPIntake.set(0.5);
     }
     else if(Robot.m_oi.driverJoystick.getBButton()){
-      CPIntake.set(-1);
+      CPIntake.set(-0.5);
     }
     else{
       CPIntake.set(0);

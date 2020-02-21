@@ -31,6 +31,10 @@ public class Chassis extends SubsystemBase {
   private boolean aimPIDEnable = false;
   private double aimPIDSetpoint = 0;
 
+  private PIDController rightPID;
+  private boolean rightPIDEnable = false;
+  private double rightPIDSetpoint = 0;
+
   private Timer timer;
   private AHRS navx;
   private Network network;
@@ -45,6 +49,8 @@ public class Chassis extends SubsystemBase {
   public Chassis() {
     PID = new PIDController(0.1, 0, 0.01);
     aimPID = new PIDController(0.025, 0, 0.01);
+
+    rightPID = new PIDController(1, 0, 0);
 
     motorRF = new WPI_TalonSRX(Constants.chassisMotorRFID);
     motorRB = new WPI_TalonSRX(Constants.chassisMotorRBID);
@@ -70,8 +76,13 @@ public class Chassis extends SubsystemBase {
     if(PIDEnable){
       PIDOutput(PID.calculate(PIDMeasurment(), PIDSetpoint));
     }
+
     if(aimPIDEnable){
       aimPIDOutput(aimPID.calculate(aimPIDMeasurment(), aimPIDSetpoint));
+    }
+
+    if(rightPIDEnable){
+      rightPIDOutput(rightPID.calculate(rightPIDMeasurment(), rightPIDSetpoint));
     }
   }
 
@@ -97,6 +108,13 @@ public class Chassis extends SubsystemBase {
   }
   public void setMotorStop(){
     setMotorSpeed(0, 0);
+  }
+  //Motor Sensor function
+  public double getMotorEncoderRight(){
+    return (-motorRF.getSensorCollection().getPulseWidthPosition() / 4096.0);
+  }
+  public double getMotorEncoderLeft(){
+    return (motorLF.getSensorCollection().getPulseWidthPosition() / 4096.0);
   }
 
   //NavX function
@@ -172,5 +190,38 @@ public class Chassis extends SubsystemBase {
   }
   public boolean aimPIDIsStable(){
     return aimPID.atSetpoint();
+  }
+
+  //Right motor PID function
+  public void rightPIDEnable(){
+    rightPIDEnable = true;
+    rightPID.reset();
+  }
+  public void rightPIDDisable(){
+    rightPIDEnable = false;
+    rightPIDOutput(0);
+  }
+  public void rightPIDReset(){
+    rightPID.reset();
+  }
+  public boolean rightPIDIsEnable(){
+    return rightPIDEnable;
+  }
+  public void rightPIDSetSetpoint(double setpoint){
+    rightPIDSetpoint = setpoint;
+  }
+  public void rightPIDSetTolerance(double value){
+    rightPID.setTolerance(value);
+  }
+  public double rightPIDMeasurment(){
+    double value = getMotorEncoderRight();
+    System.out.println(value);
+    return value;
+  }
+  public void rightPIDOutput(double output){
+    setMotorSpeed(0, output);
+  }
+  public boolean rightPIDIsStable(){
+    return rightPID.atSetpoint();
   }
 }

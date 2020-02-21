@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.commands.chassis.AimDrive;
 import frc.robot.commands.chassis.AssistDrive;
 import frc.robot.commands.chassis.BasicDrive;
+import frc.robot.commands.chassis.DistanceDrive;
 import frc.robot.commands.climber.BasicClimb;
 import frc.robot.commands.cpbot.BasicCp;
 import frc.robot.commands.intake.BasicIntake;
@@ -44,6 +45,7 @@ public class RobotContainer {
   private final BasicDrive m_basicDrive = new BasicDrive(m_chassis);
   private final AssistDrive m_assistDrive = new AssistDrive(m_chassis);
   private final AimDrive m_aimDrive = new AimDrive(m_chassis);
+  private final DistanceDrive m_distanceDrive = new DistanceDrive(m_chassis);
   //private final BasicClimb m_basicClimb = new BasicClimb(m_climber);
   private final BasicIntake m_basicIntake = new BasicIntake(m_intake);
   private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
@@ -70,7 +72,7 @@ public class RobotContainer {
     //configureButtonBindings();
     // Set Default Command!
     //m_cp.setDefaultCommand(m_wholecp);
-    m_chassis.setDefaultCommand(m_basicDrive);
+    m_chassis.setDefaultCommand(m_distanceDrive);
    // m_climber.setDefaultCommand(m_basicClimb);
     //m_intake.setDefaultCommand();
     //m_shooter.setDefaultCommand(m_basicShoot);

@@ -49,8 +49,8 @@ public final class Constants {
     public static final byte chassisMotorLBID = 4; //ID
     public static final boolean chassisMotorRInverted = false;
     public static final boolean chassisMotorLInverted = false;
-    public static final double chassisMotorNormalModeSpeedScale = 0.5;
-    public static final double chassisMotorSlowModeSpeedScale = 0.3;
+    public static final double chassisMotorNormalModeSpeedScale = 0.3;
+    public static final double chassisMotorSlowModeSpeedScale = 0.2;
     public static final double chassisPIDRestartTime = 0.25;
 
     //Shooter Setting

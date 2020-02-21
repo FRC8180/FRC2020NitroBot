@@ -64,17 +64,21 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     if(Robot.m_oi.driverJoystick2.getRawAxis(2)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(2)<-0.2){
-      smallMotor.set(0.3);
-      upperMotor.set(-1);
-      lowerMotor.set(1);
+      upperMotor.set(-0.35);
+      lowerMotor.set(0.8);
     }
     else{
-      smallMotor.set(0);
       upperMotor.set(0);
       lowerMotor.set(0);      
     }
-    if(Robot.m_oi.driverJoystick.getRawAxis(0)>0.2||Robot.m_oi.driverJoystick.getRawAxis(0)<-0.2){
-      container.set(-Robot.m_oi.driverJoystick.getRawAxis(0));
+    if(Robot.m_oi.driverJoystick2.getRawAxis(3)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(3)<-0.2){
+      smallMotor.set(0.3);
+    }
+    else{
+      smallMotor.set(0);     
+    }
+    if(Robot.m_oi.driverJoystick2.getRawAxis(0)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(0)<-0.2){
+      container.set(-Robot.m_oi.driverJoystick2.getRawAxis(0));
     }
     else{
       container.set(0);

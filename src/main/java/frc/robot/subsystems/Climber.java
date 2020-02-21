@@ -30,11 +30,13 @@ public class Climber extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     
-    if(Robot.m_oi.driverJoystick2.getRawAxis(1)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(1)<-0.2){
-      hookA.set(Robot.m_oi.driverJoystick2.getRawAxis(1));
+    if(Robot.m_oi.driverJoystick2.getRawAxis(1)<-0.2){
+      hookA.set(-Robot.m_oi.driverJoystick2.getRawAxis(1));
+      hookB.set(-Robot.m_oi.driverJoystick2.getRawAxis(1));
     }
     else{
       hookA.set(0);
+      hookB.set(0);
     }
 
     if(Robot.m_oi.driverJoystick2.getRawAxis(5)>0.2||Robot.m_oi.driverJoystick2.getRawAxis(5)<-0.2){

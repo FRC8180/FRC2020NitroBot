@@ -32,10 +32,10 @@ public class Spinner extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     if(Robot.m_oi.driverJoystick.getYButton()){//單向Spin
-      spinnerLift.set(1);
+      spinnerLift.set(0.5);
     }
     else if(Robot.m_oi.driverJoystick.getAButton()){
-      spinnerLift.set(-1);
+      spinnerLift.set(-0.5);
     }
     else{
       spinnerLift.set(0);

@@ -8,6 +8,8 @@
 package frc.robot.commands.spinner;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.Spinner;
 
 public class BasicSpin extends CommandBase {
@@ -18,22 +20,36 @@ public class BasicSpin extends CommandBase {
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-  }
+    
+    if(Robot.m_oi.getARawButton(Constants.buttonY)){//單向Spin
+      spinner.setLiftMotorSpeed(1);
+    }else if(Robot.m_oi.getARawButton(Constants.buttonA)){
+      spinner.setLiftMotorSpeed(-1);
+    }else{
+      spinner.setLiftMotorSpeed(0);
+    }
 
-  // Called once the command ends or is interrupted.
+    if(Robot.m_oi.getARawButton(Constants.buttonLB)){
+      spinner.setSpinMotorSpeed(1);
+    }else if(Robot.m_oi.getARawButton(Constants.buttonRB)){
+      spinner.setSpinMotorSpeed(-1);
+    }else{
+      spinner.setSpinMotorSpeed(0);
+    }
+    
+  }
   @Override
   public void end(boolean interrupted) {
+    spinner.setLiftMotorStop();
+    spinner.setSpinMotorStop();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

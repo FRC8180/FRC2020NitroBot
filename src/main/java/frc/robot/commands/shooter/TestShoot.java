@@ -38,7 +38,6 @@ public class TestShoot extends CommandBase {
 
   @Override
   public void execute() {
-    SmartDashboard.putBoolean("status", true);
     if(Robot.m_oi.getARawButton(Constants.buttonY) && buttonYStatus == 0){
       upperVoltage += 0.5;
       buttonYStatus = 1;
@@ -86,13 +85,12 @@ public class TestShoot extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    SmartDashboard.putBoolean("Status", false);
     shooter.setUpperMotorSpeed(0);
     shooter.setLowerMotorSpeed(0);
   }
 
   @Override
   public boolean isFinished() {
-    return Robot.m_oi.getARawButton(Constants.buttonBack);
+    return false;
   }
 }

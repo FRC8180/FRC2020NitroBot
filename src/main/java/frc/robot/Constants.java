@@ -84,6 +84,8 @@ public final class Constants {
     public static final byte climberHookBackMotorID = 13;   //ID
     public static final boolean climberHookMotorInverted = false;
     public static final boolean climberLiftMotorInverted = false;
+    public static final byte climberLiftTopLimitSwID = 0;
+    public static final byte climberLiftBottomLimitSwID = 0;
     
     //Intake Setting
     public static final byte intakeLiftID = 31; //ID
@@ -95,8 +97,11 @@ public final class Constants {
     public static final byte colorSpinID = 2; //ID
 
     //Spinner Setting
-    public static final byte spinnerLiftID = 41; //ID
-    public static final byte spinnerSpinID = 42; //ID
+    public static final byte spinnerZeroLimitSwID = 0;
+    public static final byte spinnerLiftMotorID = 41; //ID
+    public static final byte spinnerSpinMotorID = 42; //ID
+    public static final boolean spinnerLiftMotorInverted = false;
+    public static final boolean spinnerSpinMotorInverted = false;
 
     //CPbot Setting
     public static final byte CPRID = 1; //ID

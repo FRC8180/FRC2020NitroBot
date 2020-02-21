@@ -106,6 +106,6 @@ public class BasicPIDShoot extends CommandBase {
   
   @Override
   public boolean isFinished() {
-    return Robot.m_oi.getARawButton(Constants.buttonBack);
+    return false;
   }
 }

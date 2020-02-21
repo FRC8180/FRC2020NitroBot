@@ -34,8 +34,8 @@ public class Climber extends SubsystemBase {
     lift.setInverted(Constants.climberLiftMotorInverted);
     hookB.follow(hookF);
 
-    liftTopLimitSw = new DigitalInput(0);
-    liftBottomSwLimitSw = new DigitalInput(0);
+    liftTopLimitSw = new DigitalInput(Constants.climberLiftTopLimitSwID);
+    liftBottomSwLimitSw = new DigitalInput(Constants.climberLiftBottomLimitSwID);
   }
 
   @Override
@@ -53,9 +53,6 @@ public class Climber extends SubsystemBase {
   public void setHookMotorSpeed(double spd){
     hookF.set(spd);
   }
-  public void setHookMotorVoltage(double voltage){
-    hookF.setVoltage(voltage);
-  }
   public void setHookMotorStop(){
     hookF.set(0);
   }
@@ -71,18 +68,14 @@ public class Climber extends SubsystemBase {
     */
     lift.set(spd);
   }
-  public void setLiftMotorVoltage(double voltage){
-    /* LimitSw Protect Feature
-    if(liftTopLimitSw.get() || liftBottomSwLimitSw.get()){
-      lift.setVoltage(0);
-    }else{
-      lift.setVoltage(voltage);
-    }
-    */
-    lift.setVoltage(voltage);
-  }
   public void setLiftMotorStop(){
     lift.set(0);
   }
-  
+
+  public boolean getLiftTopLimitSw(){
+    return liftTopLimitSw.get();
+  }
+  public boolean getLiftBottomLimitSw(){
+    return liftBottomLimitSw.get();
+  }
 }

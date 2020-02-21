@@ -14,7 +14,7 @@ import frc.robot.Robot;
 import frc.robot.Utility;
 import frc.robot.subsystems.Shooter;
 
-public class TestShoot extends CommandBase {
+public class MeasureShoot extends CommandBase {
 
   private int buttonYStatus = 0;
   private int buttonBStatus = 0;
@@ -25,7 +25,7 @@ public class TestShoot extends CommandBase {
   private double lowerVoltage = 0;
 
   private final Shooter shooter;
-  public TestShoot(Shooter subsystem) {
+  public MeasureShoot(Shooter subsystem) {
     shooter = subsystem;
     addRequirements(subsystem);
   }

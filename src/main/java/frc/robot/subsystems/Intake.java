@@ -20,41 +20,38 @@ import frc.robot.Robot;
 
 public class Intake extends SubsystemBase {
 
-  private WPI_VictorSPX intakeLift = new WPI_VictorSPX(Constants.intakeLiftID);
-  private WPI_VictorSPX intakeSpin = new WPI_VictorSPX(Constants.intakeSpinID);
+  private WPI_VictorSPX liftMotor;
+  private WPI_VictorSPX spinMotor;
 
   public Intake() {
-
+    liftMotor = new WPI_VictorSPX(Constants.intakeLiftMotorID);
+    spinMotor = new WPI_VictorSPX(Constants.intakeSpinMotorID);
+    liftMotor.setInverted(Constants.intakeLiftMotorInverted);
+    spinMotor.setInverted(Constants.intakeSpinMotorInverted);
   }
 
   @Override
   public void periodic() {
-    /*
-    if(Robot.m_oi.driverJoystick.getXButton()){
-      intakeSpin.set(Constants.intakeSpinSpeed);
-    }
-    else if(Robot.m_oi.driverJoystick.getBButton()){
-      intakeSpin.set(-1*Constants.intakeSpinSpeed);
-    }
-    else{
-      intakeSpin.set(0);
-    }
-
-    if(Robot.m_oi.driverJoystick.getRawAxis(3)>0.2){
-      intakeLift.set(Robot.m_oi.driverJoystick.getRawAxis(3));
-    }
-    else if(Robot.m_oi.driverJoystick.getRawAxis(2)>0.2){
-      intakeLift.set(-Robot.m_oi.driverJoystick.getRawAxis(2));
-    }
-    else{
-      intakeLift.set(0);
-    }
-    */
+    
   }
 
   @Override
   public void setDefaultCommand(Command defaultCommand) {
     // TODO Auto-generated method stub
     super.setDefaultCommand(defaultCommand);
+  }
+
+  public void setLiftMotorSpeed(double spd){
+    liftMotor.set(spd);
+  }
+  public void setLiftMotorStop(){
+    liftMotor.set(0);
+  }
+
+  public void setSpinMotorSpeed(double spd){
+    spinMotor.set(spd);
+  }
+  public void setSpinMotorStop(){
+    spinMotor.set(0);
   }
 }

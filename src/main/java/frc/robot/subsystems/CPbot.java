@@ -14,13 +14,13 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
-public class CPbot extends SubsystemBase {
+public class Cpbot extends SubsystemBase {
   private WPI_TalonSRX CPR = new WPI_TalonSRX(Constants.CPLID);
   private WPI_TalonSRX CPL = new WPI_TalonSRX(Constants.CPRID);
   private WPI_TalonSRX CPLift = new WPI_TalonSRX(Constants.CPLiftID);
   private WPI_TalonSRX CPIntake = new WPI_TalonSRX(Constants.CPIntakeID);
   private final DifferentialDrive m_robotDrive = new DifferentialDrive(CPL, CPR);
-  public CPbot() {
+  public Cpbot() {
     
   }
 

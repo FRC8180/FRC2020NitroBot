@@ -3,9 +3,7 @@
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
-//Climber(鵬嘉)
+/*----------------------------------------------------------------------------*///Climber(鵬嘉)
 //hook:2LY
 //hanger:2RY
 package frc.robot.subsystems;
@@ -23,19 +21,24 @@ public class Climber extends SubsystemBase {
   private WPI_TalonSRX hookB;
   private WPI_TalonSRX lift;
 
-  private DigitalInput liftTopLimitSw;
-  private DigitalInput liftBottomSwLimitSw;
+  //private DigitalInput liftTopLimitSw;
+  //private DigitalInput liftBottomLimitSw;
 
   public Climber() {
+    
     hookF = new WPI_TalonSRX(Constants.climberHookFrontMotorID);
     hookB = new WPI_TalonSRX(Constants.climberHookBackMotorID);
     lift = new WPI_TalonSRX(Constants.climberLiftMotorID);
+    
+    //liftTopLimitSw = new DigitalInput(Constants.climberLiftTopLimitSwID);
+    //liftBottomLimitSw = new DigitalInput(Constants.climberLiftBottomLimitSwID);
+
     hookF.setInverted(Constants.climberHookMotorInverted);
     lift.setInverted(Constants.climberLiftMotorInverted);
     hookB.follow(hookF);
 
-    liftTopLimitSw = new DigitalInput(Constants.climberLiftTopLimitSwID);
-    liftBottomSwLimitSw = new DigitalInput(Constants.climberLiftBottomLimitSwID);
+    
+    
   }
 
   @Override
@@ -59,23 +62,26 @@ public class Climber extends SubsystemBase {
 
   //Hanger motor function
   public void setLiftMotorSpeed(double spd){
-    /* LimitSw Protect Feature
-    if(liftTopLimitSw.get() || liftBottomSwLimitSw.get()){
+    //LimitSw Protect Feature
+    /*
+    if(liftTopLimitSw.get() || liftBottomLimitSw.get()){
       lift.set(0);
     }else{
       lift.set(spd);
     }
     */
+    
     lift.set(spd);
   }
   public void setLiftMotorStop(){
     lift.set(0);
   }
-
+/*
   public boolean getLiftTopLimitSw(){
     return liftTopLimitSw.get();
   }
   public boolean getLiftBottomLimitSw(){
     return liftBottomLimitSw.get();
   }
+*/
 }

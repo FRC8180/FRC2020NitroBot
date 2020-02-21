@@ -8,6 +8,8 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.Intake;
 
 public class BasicIntake extends CommandBase {
@@ -18,22 +20,40 @@ public class BasicIntake extends CommandBase {
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    double ART = Robot.m_oi.getARawAxis(Constants.axisRT);
+    double ALT = Robot.m_oi.getARawAxis(Constants.axisLT);
+    
+    if(Robot.m_oi.getARawButton(Constants.buttonX)){
+      intake.setSpinMotorSpeed(0.5);
+    }else if(Robot.m_oi.getARawButton(Constants.buttonB)){
+      intake.setSpinMotorSpeed(-0.5);
+    }else{
+      intake.setSpinMotorSpeed(0);
+    }
+
+    if(ART > Constants.joystickDeadZone){
+      intake.setLiftMotorSpeed(ART);
+    }else if(ALT > Constants.joystickDeadZone){
+      intake.setLiftMotorSpeed(ALT);
+    }else{
+      intake.setLiftMotorSpeed(0);
+    }
+    
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    intake.setLiftMotorStop();
+    intake.setSpinMotorStop();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

@@ -88,13 +88,10 @@ public final class Constants {
     public static final byte climberLiftBottomLimitSwID = 0;
     
     //Intake Setting
-    public static final byte intakeLiftID = 31; //ID
-    public static final byte intakeSpinID = 32; //ID
-    public static final double intakeSpinSpeed = 0.5;
-
-    //Rotator Setting
-    public static final byte colorLiftID = 1; //ID
-    public static final byte colorSpinID = 2; //ID
+    public static final byte intakeLiftMotorID = 31; //ID
+    public static final byte intakeSpinMotorID = 32; //ID
+    public static final boolean intakeLiftMotorInverted = false;
+    public static final boolean intakeSpinMotorInverted = false;
 
     //Spinner Setting
     public static final byte spinnerZeroLimitSwID = 0;

@@ -13,11 +13,12 @@ import frc.robot.commands.chassis.AimDrive;
 import frc.robot.commands.chassis.AssistDrive;
 import frc.robot.commands.chassis.BasicDrive;
 import frc.robot.commands.climber.BasicClimb;
+import frc.robot.commands.cpbot.BasicCp;
 import frc.robot.commands.intake.BasicIntake;
 import frc.robot.commands.shooter.BasicPIDShoot;
 import frc.robot.commands.shooter.BasicShoot;
+import frc.robot.commands.shooter.MeasureShoot;
 import frc.robot.commands.spinner.BasicSpin;
-import frc.robot.commands.CP.*;
 
 import frc.robot.subsystems.*;
 
@@ -35,20 +36,21 @@ public class RobotContainer {
   private final Intake  m_intake  = new Intake();
   private final Shooter m_shooter = new Shooter();
   private final Spinner m_spinner = new Spinner();
-  private final CPbot m_cp = new CPbot();
+
+  private final Cpbot m_cpbot = new Cpbot();
 
   // Command defined
   //private final AutoMove m_autoCommand = new AutoMove(m_auto)
   private final BasicDrive m_basicDrive = new BasicDrive(m_chassis);
   private final AssistDrive m_assistDrive = new AssistDrive(m_chassis);
   private final AimDrive m_aimDrive = new AimDrive(m_chassis);
-  private final BasicClimb m_basicClimb = new BasicClimb(m_climber);
+  //private final BasicClimb m_basicClimb = new BasicClimb(m_climber);
   private final BasicIntake m_basicIntake = new BasicIntake(m_intake);
   private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
   private final BasicShoot m_basicShoot = new BasicShoot(m_shooter);
+  private final MeasureShoot m_measureShoot = new MeasureShoot(m_shooter);
   private final BasicSpin m_basicSpin = new BasicSpin(m_spinner);
-
-  private final CPbot2whole m_wholecp = new CPbot2whole(m_cp);
+  private final BasicCp m_BasicCp = new BasicCp(m_cpbot);
 
   // Button defined here!!!
   private final JoystickButton buttonY = new JoystickButton(joystickA,Constants.buttonY);

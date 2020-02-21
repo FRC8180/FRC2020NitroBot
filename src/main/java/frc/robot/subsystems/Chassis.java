@@ -28,6 +28,10 @@ public class Chassis extends SubsystemBase {
   private boolean aimPIDEnable = false;
   private double aimPIDSetpoint = 0;
 
+  private PIDController aimPID1;
+  private boolean aimPIDEnable1 = false;
+  private double aimPIDSetpoint1 = 0;
+
   private Timer timer;
   private AHRS navx;
   private Network network;
@@ -48,6 +52,9 @@ public class Chassis extends SubsystemBase {
     aimPID.enable();
     aimPID.enableAutoStop(1, 0.25);
     aimPID.enableTimeOut(2);
+
+    aimPID1 = new PIDController(0.025, 0, 0.01);
+    aimPID1.enable();
 
     motorRF = new WPI_TalonSRX(Constants.chassisMotorRFID);
     motorRB = new WPI_TalonSRX(Constants.chassisMotorRBID);

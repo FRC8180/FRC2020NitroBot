@@ -30,7 +30,7 @@ public class AssistDrive extends CommandBase {
   @Override
   public void initialize() {
     chassis.setLockAngle(chassis.getRawAngle());
-    chassis.PIDEnable();
+    chassis.headingPIDEnable();
     timer = new Timer();
     timer.reset();
     timer.start();
@@ -40,7 +40,7 @@ public class AssistDrive extends CommandBase {
   public void execute() {
     if(disable){
       chassis.setLockAngle(chassis.getRawAngle());
-      chassis.PIDEnable();
+      chassis.headingPIDEnable();
       disable = false;
     }
 
@@ -48,18 +48,18 @@ public class AssistDrive extends CommandBase {
     double joystickRX = Robot.m_oi.getARX();
 
     if(Robot.m_oi.isARXDeadzone()){
-      if(chassis.PIDIsEnable()){
+      if(chassis.headingPIDIsEnable()){
       }else{
-        if(timer.get() >= previousTime + Constants.chassisPIDRestartTime){
+        if(timer.get() >= previousTime + Constants.chassisHeadingPIDRestartTime){
           chassis.setLockAngle(chassis.getRawAngle());
-          chassis.PIDEnable();
+          chassis.headingPIDEnable();
         }
         double Lspd = Utility.Constrain(joystickLY, -1, 1);
         double Rspd = Utility.Constrain(joystickLY, -1, 1);
         chassis.setMotorSpeed(Lspd, Rspd);
       }
     }else{
-      chassis.PIDDisable();
+      chassis.headingPIDDisable();
       previousTime = timer.get();
       double Lspd = Utility.Constrain((joystickLY + joystickRX), -1, 1);
       double Rspd = Utility.Constrain((joystickLY - joystickRX), -1, 1);
@@ -69,7 +69,7 @@ public class AssistDrive extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    chassis.PIDDisable();
+    chassis.headingPIDDisable();
     chassis.setMotorStop();
     disable = true;
   }

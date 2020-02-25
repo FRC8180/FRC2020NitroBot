@@ -25,21 +25,21 @@ public class AimDrive extends CommandBase {
 
   @Override
   public void initialize() {
-    chassis.aimPIDEnable();
-    chassis.aimPIDSetTolerance(1);
+    chassis.visionPIDEnable();
+    chassis.visionPIDSetTolerance(1);
   }
 
   @Override
   public void execute(){
     if(disable){
-      chassis.aimPIDEnable();
+      chassis.visionPIDEnable();
       disable = false;
     }
   }
 
   @Override
   public void end(boolean interrupted) {
-    chassis.aimPIDDisable();
+    chassis.visionPIDDisable();
     chassis.setMotorStop();
     disable = true;
     //PIDBugIgnore = true;

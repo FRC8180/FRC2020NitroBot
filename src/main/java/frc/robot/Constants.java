@@ -49,13 +49,30 @@ public final class Constants {
     public static final byte chassisMotorRBID = 2;  //ID
     public static final byte chassisMotorLFID = 3; //ID
     public static final byte chassisMotorLBID = 4; //ID
+
     public static final boolean chassisMotorRInverted = false;
     public static final boolean chassisMotorLInverted = false;
+    public static final boolean chassisMotorREncoderInverted = false;
+    public static final boolean chassisMotorLEncoderInverted = false;
 
     public static final double chassisMotorNormalModeSpeedScale = 0.5;
     public static final double chassisMotorSlowModeSpeedScale = 0.3;
 
-    public static final double chassisPIDRestartTime = 0.25;
+    public static final double chassisWheelPerimeter = 6 * 0.0254 * Math.PI;
+
+    public static final double chassisHeadingPIDKp = 0.1;
+    public static final double chassisHeadingPIDKi = 0;
+    public static final double chassisHeadingPIDKd = 0.01;
+    public static final double chassisHeadingPIDRestartTime = 0.25;
+
+    public static final double chassisVisionPIDKp = 0.025;
+    public static final double chassisVisionPIDKi = 0;
+    public static final double chassisVisionPIDKd = 0.01;
+
+    public static final double chassisMotorPIDKp = 0.5;
+    public static final double chassisMotorPIDKi = 0;
+    public static final double chassisMotorPIDKd = 0;
+    public static final double chassisMotorPIDOutputScale = 0.2;
 
     //Shooter Setting
     public static final byte shooterContainerMotorID = 51;  //ID

@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
+//import frc.robot.Robot;
 
 public class Shooter extends SubsystemBase {
 
@@ -80,7 +80,6 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void setDefaultCommand(Command defaultCommand) {
-    // TODO Auto-generated method stub
     super.setDefaultCommand(defaultCommand);
   }
 

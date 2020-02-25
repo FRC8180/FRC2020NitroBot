@@ -18,17 +18,17 @@ public class Network {
     }
 
     public boolean ntGetBoolean(String tableName, String keyName){
-        NetworkTableInstance inst = NetworkTableInstance.getDefault();
-        NetworkTable table = inst.getTable(tableName);
-        NetworkTableEntry data = table.getEntry(keyName);
-        boolean result = data.getBoolean(false);
-        return result;
-      }
-      public double ntGetDouble(String tableName, String keyName){
-        NetworkTableInstance inst = NetworkTableInstance.getDefault();
-        NetworkTable table = inst.getTable(tableName);
-        NetworkTableEntry data = table.getEntry(keyName);
-        double result = data.getDouble(0.0);
-        return result;
-      }
+      NetworkTableInstance inst = NetworkTableInstance.getDefault();
+      NetworkTable table = inst.getTable(tableName);
+      NetworkTableEntry data = table.getEntry(keyName);
+      boolean result = data.getBoolean(false);
+      return result;
+    }
+    public double ntGetDouble(String tableName, String keyName){
+      NetworkTableInstance inst = NetworkTableInstance.getDefault();
+      NetworkTable table = inst.getTable(tableName);
+      NetworkTableEntry data = table.getEntry(keyName);
+      double result = data.getDouble(0.0);
+      return result;
+    }
 }

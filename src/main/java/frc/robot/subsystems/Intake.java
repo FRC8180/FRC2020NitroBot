@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import frc.robot.Constants;
-import frc.robot.Robot;
+//import frc.robot.Robot;
 
 public class Intake extends SubsystemBase {
 
@@ -37,7 +37,6 @@ public class Intake extends SubsystemBase {
 
   @Override
   public void setDefaultCommand(Command defaultCommand) {
-    // TODO Auto-generated method stub
     super.setDefaultCommand(defaultCommand);
   }
 

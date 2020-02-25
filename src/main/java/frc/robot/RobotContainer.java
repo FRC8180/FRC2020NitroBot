@@ -9,16 +9,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import frc.robot.commands.autonomous.BasicAuto;
 import frc.robot.commands.chassis.AimDrive;
 import frc.robot.commands.chassis.AssistDrive;
 import frc.robot.commands.chassis.BasicDrive;
-import frc.robot.commands.chassis.DistanceDrive;
 import frc.robot.commands.climber.BasicClimb;
-import frc.robot.commands.cpbot.BasicCp;
 import frc.robot.commands.intake.BasicIntake;
 import frc.robot.commands.shooter.BasicPIDShoot;
 import frc.robot.commands.shooter.BasicShoot;
-import frc.robot.commands.shooter.MeasureShoot;
 import frc.robot.commands.spinner.BasicSpin;
 
 import frc.robot.subsystems.*;
@@ -38,21 +36,30 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final Spinner m_spinner = new Spinner();
 
-  private final Cpbot m_cpbot = new Cpbot();
-
   // Command defined
-  //private final AutoMove m_autoCommand = new AutoMove(m_auto)
+  private final BasicAuto m_basicAuto = new BasicAuto(m_chassis);
+  
+  // m_chassis
   private final BasicDrive m_basicDrive = new BasicDrive(m_chassis);
   private final AssistDrive m_assistDrive = new AssistDrive(m_chassis);
   private final AimDrive m_aimDrive = new AimDrive(m_chassis);
-  private final DistanceDrive m_distanceDrive = new DistanceDrive(m_chassis);
+
+  // m_climber
   //private final BasicClimb m_basicClimb = new BasicClimb(m_climber);
+
+  // m_Intake
   private final BasicIntake m_basicIntake = new BasicIntake(m_intake);
+
+  // m_shooter
   private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
   private final BasicShoot m_basicShoot = new BasicShoot(m_shooter);
-  private final MeasureShoot m_measureShoot = new MeasureShoot(m_shooter);
+  //private final MeasureShoot m_measureShoot = new MeasureShoot(m_shooter);
+
+  // m_spinner
   private final BasicSpin m_basicSpin = new BasicSpin(m_spinner);
-  private final BasicCp m_BasicCp = new BasicCp(m_cpbot);
+
+  // m_cp
+  //private final BasicCp m_BasicCp = new BasicCp(m_cpbot);
 
   // Button defined here!!!
   private final JoystickButton buttonY = new JoystickButton(joystickA,Constants.buttonY);
@@ -72,8 +79,8 @@ public class RobotContainer {
     //configureButtonBindings();
     // Set Default Command!
     //m_cp.setDefaultCommand(m_wholecp);
-    m_chassis.setDefaultCommand(m_distanceDrive);
-   // m_climber.setDefaultCommand(m_basicClimb);
+    //m_chassis.setDefaultCommand(m_distanceDrive);
+    // m_climber.setDefaultCommand(m_basicClimb);
     //m_intake.setDefaultCommand();
     //m_shooter.setDefaultCommand(m_basicShoot);
     //m_spinner.setDefaultCommand();
@@ -81,7 +88,9 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     //Trig command defined here!!!!
-    //buttonB.whenPressed(m_aimDrive);
+
+    buttonB.whenPressed(m_basicAuto);//autonomous command test v0.1 becareful!!!!
+    
     //buttonX.whenPressed(() -> m_chassis.(func));
   }
 
@@ -91,6 +100,7 @@ public class RobotContainer {
     //return m_autoCommand;
   }
   */
+  
 
   //Joystick-A
   public int getARawPOV(){

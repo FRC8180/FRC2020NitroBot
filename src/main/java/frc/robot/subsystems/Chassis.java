@@ -13,7 +13,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,34 +22,39 @@ import frc.robot.Robot;
 
 
 public class Chassis extends SubsystemBase {
-  private PIDController PID;
-  private boolean PIDEnable = false;
-  private double PIDSetpoint = 0;
+  private PIDController headingPID;
+  private boolean headingPIDEnable = false;
+  private double headingPIDSetpoint = 0;
 
-  private PIDController aimPID;
-  private boolean aimPIDEnable = false;
-  private double aimPIDSetpoint = 0;
+  private PIDController visionPID;
+  private boolean visionPIDEnable = false;
+  private double visionPIDSetpoint = 0;
 
-  private PIDController rightPID;
-  private boolean rightPIDEnable = false;
-  private double rightPIDSetpoint = 0;
+  private PIDController LMotorPID;
+  private boolean LMotorPIDEnable = false;
+  private double LMotorPIDSetpoint = 0;
 
-  private Timer timer;
+  private PIDController RMotorPID;
+  private boolean RMotorPIDEnable = false;
+  private double RMotorPIDSetpoint = 0;
+
+  //private Timer timer;
   private AHRS navx;
   private Network network;
 
-  private WPI_TalonSRX motorRF = new WPI_TalonSRX(Constants.chassisMotorRFID);
-  private WPI_TalonSRX motorRB = new WPI_TalonSRX(Constants.chassisMotorRBID);
-  private WPI_TalonSRX motorLF = new WPI_TalonSRX(Constants.chassisMotorLFID);
-  private WPI_TalonSRX motorLB = new WPI_TalonSRX(Constants.chassisMotorLBID);
+  private WPI_TalonSRX motorRF;
+  private WPI_TalonSRX motorRB;
+  private WPI_TalonSRX motorLF;
+  private WPI_TalonSRX motorLB;
 
   private double lockAngle = 0;
 
   public Chassis() {
-    PID = new PIDController(0.1, 0, 0.01);
-    aimPID = new PIDController(0.025, 0, 0.01);
+    headingPID = new PIDController(Constants.chassisHeadingPIDKp, Constants.chassisHeadingPIDKi, Constants.chassisHeadingPIDKd);
+    visionPID = new PIDController(Constants.chassisVisionPIDKp, Constants.chassisVisionPIDKi, Constants.chassisVisionPIDKd);
 
-    rightPID = new PIDController(1, 0, 0);
+    LMotorPID = new PIDController(Constants.chassisMotorPIDKp, Constants.chassisMotorPIDKi, Constants.chassisMotorPIDKd);
+    RMotorPID = new PIDController(Constants.chassisMotorPIDKp, Constants.chassisMotorPIDKi, Constants.chassisMotorPIDKd);
 
     motorRF = new WPI_TalonSRX(Constants.chassisMotorRFID);
     motorRB = new WPI_TalonSRX(Constants.chassisMotorRBID);
@@ -64,33 +68,37 @@ public class Chassis extends SubsystemBase {
     navx = new AHRS(SPI.Port.kMXP);
     navx.reset();
 
-    timer = new Timer();
-    timer.reset();
-    timer.start();
-
     network = new Network();
   }
 
   @Override
   public void periodic() {
-    if(PIDEnable){
-      PIDOutput(PID.calculate(PIDMeasurment(), PIDSetpoint));
+
+    //Used by "AssistDrive"
+    if(headingPIDEnable){
+      headingPIDOutput(headingPID.calculate(headingPIDMeasurment(), headingPIDSetpoint));
     }
 
-    if(aimPIDEnable){
-      aimPIDOutput(aimPID.calculate(aimPIDMeasurment(), aimPIDSetpoint));
+    //Use by "AimDrive"
+    if(visionPIDEnable){
+      visionPIDOutput(visionPID.calculate(visionPIDMeasurment(), visionPIDSetpoint));
     }
 
-    if(rightPIDEnable){
-      rightPIDOutput(rightPID.calculate(rightPIDMeasurment(), rightPIDSetpoint));
+    //Used by "DistanceDrive"
+    if(LMotorPIDEnable){
+      LMotorPIDOutput(LMotorPID.calculate(LMotorPIDMeasurment(), LMotorPIDSetpoint));
     }
+    if(RMotorPIDEnable){
+      RMotorPIDOutput(RMotorPID.calculate(RMotorPIDMeasurment(), RMotorPIDSetpoint));
+    }
+
   }
 
   @Override
   public void setDefaultCommand(Command defaultCommand) {
-    // TODO Auto-generated method stub
     super.setDefaultCommand(defaultCommand);
   }
+
 
   //Motor control function
   public void setMotorSpeed(double Lspd, double Rspd){
@@ -109,13 +117,43 @@ public class Chassis extends SubsystemBase {
   public void setMotorStop(){
     setMotorSpeed(0, 0);
   }
+
+  public void setLeftMotorSpeed(double spd){
+    if(Robot.m_oi.getARawButton(Constants.buttonOption)){
+      motorLF.set(spd * Constants.chassisMotorSlowModeSpeedScale);
+    }else{
+      motorLF.set(spd * Constants.chassisMotorNormalModeSpeedScale);
+    }
+  }
+  public void setLeftMotorVoltage(double voltage){
+    motorLF.setVoltage(voltage);
+  }
+  public void setLeftMotorStop(){
+    setLeftMotorSpeed(0);
+  }
+
+  public void setRightMotorSpeed(double spd){
+    if(Robot.m_oi.getARawButton(Constants.buttonOption)){
+      motorRF.set(spd * Constants.chassisMotorSlowModeSpeedScale);
+    }else{
+      motorRF.set(spd * Constants.chassisMotorNormalModeSpeedScale);
+    }
+  }
+  public void setRightMotorVoltage(double voltage){
+    motorRF.setVoltage(voltage);
+  }
+  public void setRightMotorStop(){
+    setRightMotorSpeed(0);
+  }
+  
   //Motor Sensor function
-  public double getMotorEncoderRight(){
-    return (-motorRF.getSensorCollection().getPulseWidthPosition() / 4096.0);
+  public double getRightMotorEncoder(){
+    return (motorRF.getSensorCollection().getPulseWidthPosition());
   }
-  public double getMotorEncoderLeft(){
-    return (motorLF.getSensorCollection().getPulseWidthPosition() / 4096.0);
+  public double getLeftMotorEncoder(){
+    return (motorLF.getSensorCollection().getPulseWidthPosition());
   }
+
 
   //NavX function
   public double getRawAngle(){
@@ -128,100 +166,140 @@ public class Chassis extends SubsystemBase {
     lockAngle = angle;
   }
 
+
   //Heading control PID function
-  public void PIDEnable(){
-    PIDEnable = true;
-    PID.reset();
+  public void headingPIDEnable(){
+    headingPIDEnable = true;
+    headingPID.reset();
   }
-  public void PIDDisable(){
-    PIDEnable = false;
-    PIDOutput(0);
+  public void headingPIDDisable(){
+    headingPIDEnable = false;
+    headingPIDOutput(0);
   }
-  public void PIDReset(){
-    PIDSetpoint = 0;
-    PID.reset();
+  public void headingPIDReset(){
+    headingPIDSetpoint = 0;
+    headingPID.reset();
   }
-  public boolean PIDIsEnable(){
-    return PIDEnable;
+  public boolean headingPIDIsEnable(){
+    return headingPIDEnable;
   }
-  public void PIDSetSetpoint(double setpoint){
-    PIDSetpoint = setpoint;
+  public void headingPIDSetSetpoint(double setpoint){
+    headingPIDSetpoint = setpoint;
   }
-  public void PIDSetTolerance(double value){
-    PID.setTolerance(value);
+  public void headingPIDSetTolerance(double value){
+    headingPID.setTolerance(value);
   }
-  public double PIDMeasurment(){
+  public double headingPIDMeasurment(){
     return getCalAngle();
   }
-  public void PIDOutput(double output){
+  public void headingPIDOutput(double output){
     double Rspd = Robot.m_oi.getALY() - output;
     double Lspd = Robot.m_oi.getALY() + output;
     setMotorSpeed(Lspd, Rspd);
   }
 
-  //Aim target PID function
-  public void aimPIDEnable(){
-    aimPIDEnable = true;
-    aimPID.reset();
+
+  //Vision PID function
+  public void visionPIDEnable(){
+    visionPIDEnable = true;
+    visionPID.reset();
   }
-  public void aimPIDDisable(){
-    aimPIDEnable = false;
-    aimPIDOutput(0);
+  public void visionPIDDisable(){
+    visionPIDEnable = false;
+    visionPIDOutput(0);
   }
-  public void aimPIDReset(){
-    aimPID.reset();
+  public void visionPIDReset(){
+    visionPID.reset();
   }
-  public boolean aimPIDIsEnable(){
-    return aimPIDEnable;
+  public boolean visionPIDIsEnable(){
+    return visionPIDEnable;
   }
-  public void aimPIDSetSetpoint(double setpoint){
-    aimPIDSetpoint = setpoint;
+  public void visionPIDSetSetpoint(double setpoint){
+    visionPIDSetpoint = setpoint;
   }
-  public void aimPIDSetTolerance(double value){
-    aimPID.setTolerance(value);
+  public void visionPIDSetTolerance(double value){
+    visionPID.setTolerance(value);
   }
-  public double aimPIDMeasurment(){
-    return (network.ntGetDouble("Vision", "h_angle"));
+  public double visionPIDMeasurment(){
+    return network.ntGetDouble("Vision", "h_angle");
   }
-  public void aimPIDOutput(double output){
+  public void visionPIDOutput(double output){
     double Rspd = Robot.m_oi.getALY() + output;
     double Lspd = Robot.m_oi.getALY() - output;
     setMotorSpeed(Lspd, Rspd);
   }
-  public boolean aimPIDIsStable(){
-    return aimPID.atSetpoint();
+  public boolean visionPIDIsStable(){
+    return visionPID.atSetpoint();
+  }
+
+
+  //Left motor PID function
+  public void LMotorPIDEnable(){
+    LMotorPIDEnable = true;
+    LMotorPID.reset();
+  }
+  public void LMotorPIDDisable(){
+    LMotorPIDEnable = false;
+    LMotorPIDOutput(0);
+  }
+  public void LMotorPIDReset(){
+    LMotorPID.reset();
+  }
+  public boolean LMotorPIDIsEnable(){
+    return LMotorPIDEnable;
+  }
+  public void LMotorPIDSetSetpoint(double setpoint){
+    LMotorPIDSetpoint = setpoint;
+  }
+  public void LMotorPIDSetTolerance(double value){
+    LMotorPID.setTolerance(value);
+  }
+  public double LMotorPIDMeasurment(){
+    if(Constants.chassisMotorLEncoderInverted){
+      return (-1.0 * getLeftMotorEncoder());
+    }else{
+      return getLeftMotorEncoder();
+    }
+  }
+  public void LMotorPIDOutput(double output){
+    //setLeftMotorSpeed(output);
+  }
+  public boolean LMotorPIDIsStable(){
+    return LMotorPID.atSetpoint();
   }
 
   //Right motor PID function
-  public void rightPIDEnable(){
-    rightPIDEnable = true;
-    rightPID.reset();
+  public void RMotorPIDEnable(){
+    RMotorPIDEnable = true;
+    RMotorPID.reset();
   }
-  public void rightPIDDisable(){
-    rightPIDEnable = false;
-    rightPIDOutput(0);
+  public void RMotorPIDDisable(){
+    RMotorPIDEnable = false;
+    RMotorPIDOutput(0);
   }
-  public void rightPIDReset(){
-    rightPID.reset();
+  public void RMotorPIDReset(){
+    RMotorPID.reset();
   }
-  public boolean rightPIDIsEnable(){
-    return rightPIDEnable;
+  public boolean RMotorPIDIsEnable(){
+    return RMotorPIDEnable;
   }
-  public void rightPIDSetSetpoint(double setpoint){
-    rightPIDSetpoint = setpoint;
+  public void RMotorPIDSetSetpoint(double setpoint){
+    RMotorPIDSetpoint = setpoint;
   }
-  public void rightPIDSetTolerance(double value){
-    rightPID.setTolerance(value);
+  public void RMotorPIDSetTolerance(double value){
+    RMotorPID.setTolerance(value);
   }
-  public double rightPIDMeasurment(){
-    double value = getMotorEncoderRight();
-    System.out.println(value);
-    return value;
+  public double RMotorPIDMeasurment(){
+    if(Constants.chassisMotorREncoderInverted){
+      return (-1.0 * getRightMotorEncoder());
+    }else{
+      return getRightMotorEncoder();
+    }
   }
-  public void rightPIDOutput(double output){
-    setMotorSpeed(0, output);
+  public void RMotorPIDOutput(double output){
+    //setRightMotorSpeed(output);
   }
-  public boolean rightPIDIsStable(){
-    return rightPID.atSetpoint();
+  public boolean RMotorPIDIsStable(){
+    return RMotorPID.atSetpoint();
   }
 }

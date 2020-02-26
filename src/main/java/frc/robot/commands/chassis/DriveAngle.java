@@ -8,38 +8,41 @@
 package frc.robot.commands.chassis;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.subsystems.Chassis;
 
-public class AimDrive extends CommandBase {
-  
-  private boolean disable = false;
-  private boolean ignore = true;
+public class DriveAngle extends CommandBase {
+
+  boolean disable = false;
+  boolean ignore = true;
+  double targetAngle = 0;
 
   Chassis chassis;
-  public AimDrive(Chassis subsystem) {
+  public DriveAngle(Chassis subsystem,double turnAngle) {
     chassis = subsystem;
     addRequirements(subsystem);
+    targetAngle = turnAngle;
+    chassis.turnPIDSetTolerance(1);
+    chassis.turnPIDSetSetpoint(0);
   }
 
   @Override
   public void initialize() {
-    chassis.visionPIDSetTolerance(1);
-    chassis.visionPIDEnable();
+    chassis.setLockAngle(chassis.getRawAngle() + targetAngle);
+    chassis.turnPIDEnable();
   }
 
   @Override
-  public void execute(){
+  public void execute() {
     if(disable){
-      chassis.visionPIDEnable();
+      //chassis.setLockAngle(chassis.getRawAngle() + targetAngle);
+      chassis.turnPIDEnable();
       disable = false;
     }
   }
 
   @Override
   public void end(boolean interrupted) {
-    chassis.visionPIDDisable();
+    chassis.turnPIDDisable();
     chassis.setMotorStop();
     disable = true;
     ignore = true;
@@ -47,13 +50,14 @@ public class AimDrive extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    boolean finished = chassis.headingPIDIsStable();
+    boolean finished = chassis.turnPIDIsStable();
     if(finished && ignore){
       ignore = false;
       return false;
     }else if(finished && !ignore){
       return true;
+    }else{
+      return false;
     }
-    return false;
   }
 }

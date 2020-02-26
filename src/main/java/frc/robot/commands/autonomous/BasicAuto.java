@@ -8,6 +8,7 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.chassis.DriveAngle;
 import frc.robot.commands.chassis.DriveDistance;
 import frc.robot.subsystems.Chassis;
 
@@ -18,9 +19,14 @@ import frc.robot.subsystems.Chassis;
 public class BasicAuto extends SequentialCommandGroup {
   public BasicAuto(Chassis m_chassis) {
     super(
-      new DriveDistance(m_chassis,2,2),//go straight 2m
-      new DriveDistance(m_chassis,-3,-3),//go back 3m
-      new DriveDistance(m_chassis,1,-1)//turn ummm Right
+      new DriveDistance(m_chassis,1,1), //go straight 2m
+      new DriveAngle(m_chassis, 90),    //turn clockwise 90deg
+      new DriveDistance(m_chassis,1,1), //go straight 2m
+      new DriveAngle(m_chassis, 90),    //turn clockwise 90deg
+      new DriveDistance(m_chassis,1,1), //go straight 2m
+      new DriveAngle(m_chassis, 90),    //turn clockwise 90deg
+      new DriveDistance(m_chassis,1,1), //go straight 2m
+      new DriveAngle(m_chassis, 90)     //turn clockwise 90deg
     );
   }
 }

@@ -65,14 +65,20 @@ public final class Constants {
     public static final double chassisHeadingPIDKd = 0.01;
     public static final double chassisHeadingPIDRestartTime = 0.25;
 
+    public static final double chassisTurnPIDKp = 0.1;
+    public static final double chassisTurnPIDKi = 0;
+    public static final double chassisTurnPIDKd = 0.01;
+    public static final double chassisTurnPIDMaxOutputVoltage = 0;
+
     public static final double chassisVisionPIDKp = 0.025;
     public static final double chassisVisionPIDKi = 0;
     public static final double chassisVisionPIDKd = 0.01;
+    public static final double chassisVisionPIDMaxOutputVoltage = 5;
 
     public static final double chassisMotorPIDKp = 0.5;
     public static final double chassisMotorPIDKi = 0;
     public static final double chassisMotorPIDKd = 0;
-    public static final double chassisMotorPIDOutputScale = 0.2;
+    public static final double chassisMotorPIDMaxOutputVoltage = 5;
 
     //Shooter Setting
     public static final byte shooterContainerMotorID = 51;  //ID

@@ -19,12 +19,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Network;
 import frc.robot.Robot;
+import frc.robot.Utility;
 
 
 public class Chassis extends SubsystemBase {
   private PIDController headingPID;
   private boolean headingPIDEnable = false;
   private double headingPIDSetpoint = 0;
+
+  private PIDController turnPID;
+  private boolean turnPIDEnable = false;
+  private double turnPIDSetpoint = 0;
 
   private PIDController visionPID;
   private boolean visionPIDEnable = false;
@@ -51,8 +56,8 @@ public class Chassis extends SubsystemBase {
 
   public Chassis() {
     headingPID = new PIDController(Constants.chassisHeadingPIDKp, Constants.chassisHeadingPIDKi, Constants.chassisHeadingPIDKd);
+    turnPID = new PIDController(Constants.chassisTurnPIDKp, Constants.chassisTurnPIDKi, Constants.chassisTurnPIDKd);
     visionPID = new PIDController(Constants.chassisVisionPIDKp, Constants.chassisVisionPIDKi, Constants.chassisVisionPIDKd);
-
     LMotorPID = new PIDController(Constants.chassisMotorPIDKp, Constants.chassisMotorPIDKi, Constants.chassisMotorPIDKd);
     RMotorPID = new PIDController(Constants.chassisMotorPIDKp, Constants.chassisMotorPIDKi, Constants.chassisMotorPIDKd);
 
@@ -84,12 +89,16 @@ public class Chassis extends SubsystemBase {
       visionPIDOutput(visionPID.calculate(visionPIDMeasurment(), visionPIDSetpoint));
     }
 
-    //Used by "DistanceDrive"
+    //Used by "DriveDistance"
     if(LMotorPIDEnable){
       LMotorPIDOutput(LMotorPID.calculate(LMotorPIDMeasurment(), LMotorPIDSetpoint));
     }
     if(RMotorPIDEnable){
       RMotorPIDOutput(RMotorPID.calculate(RMotorPIDMeasurment(), RMotorPIDSetpoint));
+    }
+    //Used by "DriveAngle"
+    if(turnPIDEnable){
+      turnPIDOutput(turnPID.calculate(turnPIDMeasurment(), turnPIDSetpoint));
     }
 
   }
@@ -197,7 +206,47 @@ public class Chassis extends SubsystemBase {
     double Lspd = Robot.m_oi.getALY() + output;
     setMotorSpeed(Lspd, Rspd);
   }
+  public boolean headingPIDIsStable(){
+    return headingPID.atSetpoint();
+  }
 
+
+  //Turn control PID function
+  public void turnPIDEnable(){
+    turnPIDEnable = true;
+    turnPID.reset();
+  }
+  public void turnPIDDisable(){
+    turnPIDEnable = false;
+    turnPIDOutput(0);
+  }
+  public void turnPIDReset(){
+    turnPIDSetpoint = 0;
+    turnPID.reset();
+  }
+  public boolean turnPIDIsEnable(){
+    return turnPIDEnable;
+  }
+  public void turnPIDSetSetpoint(double setpoint){
+    turnPIDSetpoint = setpoint;
+  }
+  public void turnPIDSetTolerance(double value){
+    turnPID.setTolerance(value);
+  }
+  public double turnPIDMeasurment(){
+    return getCalAngle();
+  }
+  public void turnPIDOutput(double output){
+    double Rvoltage = output;
+    double Lvoltage = output;
+    Rvoltage = Utility.Constrain(Rvoltage, -Constants.chassisTurnPIDMaxOutputVoltage, Constants.chassisTurnPIDMaxOutputVoltage);
+    Lvoltage = Utility.Constrain(Lvoltage, -Constants.chassisTurnPIDMaxOutputVoltage, Constants.chassisTurnPIDMaxOutputVoltage);
+    setMotorSpeed(Lvoltage, Rvoltage);
+  }
+  public boolean turnPIDIsStable(){
+    return turnPID.atSetpoint();
+  }
+  
 
   //Vision PID function
   public void visionPIDEnable(){
@@ -224,9 +273,11 @@ public class Chassis extends SubsystemBase {
     return network.ntGetDouble("Vision", "h_angle");
   }
   public void visionPIDOutput(double output){
-    double Rspd = Robot.m_oi.getALY() + output;
-    double Lspd = Robot.m_oi.getALY() - output;
-    setMotorSpeed(Lspd, Rspd);
+    double Rvoltage = output;
+    double Lvoltage = output;
+    Rvoltage = Utility.Constrain(Rvoltage, -Constants.chassisVisionPIDMaxOutputVoltage, Constants.chassisVisionPIDMaxOutputVoltage);
+    Lvoltage = Utility.Constrain(Lvoltage, -Constants.chassisVisionPIDMaxOutputVoltage, Constants.chassisVisionPIDMaxOutputVoltage);
+    setMotorVoltage(Lvoltage, Rvoltage);
   }
   public boolean visionPIDIsStable(){
     return visionPID.atSetpoint();
@@ -262,7 +313,9 @@ public class Chassis extends SubsystemBase {
     }
   }
   public void LMotorPIDOutput(double output){
-    //setLeftMotorSpeed(output);
+    double Lvoltage = output;
+    Utility.Constrain(Lvoltage, -Constants.chassisMotorPIDMaxOutputVoltage, Constants.chassisMotorPIDMaxOutputVoltage);
+    setLeftMotorVoltage(Lvoltage); 
   }
   public boolean LMotorPIDIsStable(){
     return LMotorPID.atSetpoint();
@@ -297,7 +350,9 @@ public class Chassis extends SubsystemBase {
     }
   }
   public void RMotorPIDOutput(double output){
-    //setRightMotorSpeed(output);
+    double Rvoltage = output;
+    Utility.Constrain(Rvoltage, -Constants.chassisMotorPIDMaxOutputVoltage, Constants.chassisMotorPIDMaxOutputVoltage);
+    setRightMotorVoltage(Rvoltage); 
   }
   public boolean RMotorPIDIsStable(){
     return RMotorPID.atSetpoint();

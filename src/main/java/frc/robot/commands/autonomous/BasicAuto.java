@@ -10,6 +10,7 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.chassis.DriveAngle;
 import frc.robot.commands.chassis.DriveDistance;
+import frc.robot.commands.chassis.DriveTime;
 import frc.robot.subsystems.Chassis;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -19,6 +20,7 @@ import frc.robot.subsystems.Chassis;
 public class BasicAuto extends SequentialCommandGroup {
   public BasicAuto(Chassis m_chassis) {
     super(
+      new DriveTime(m_chassis, 1.0, 0.2, 0.2), //Set Motor Left Speed 0.2, Right Speed 0.2 and Drive 1 Second 
       new DriveDistance(m_chassis,1,1), //go straight 1m
       new DriveAngle(m_chassis, 90),    //turn clockwise 90deg
       new DriveDistance(m_chassis,1,1), //go straight 1m

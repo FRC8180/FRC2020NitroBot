@@ -33,6 +33,7 @@ public class Intake extends SubsystemBase {
   private Encoder liftEncoder;
 
   public Intake() {
+    liftPID = new PIDController(Constants.intakeLiftPIDKp,Constants.intakeLiftPIDKi,Constants.intakeLiftPIDKd);
     liftMotor = new WPI_VictorSPX(Constants.intakeLiftMotorID);
     spinMotor = new WPI_VictorSPX(Constants.intakeSpinMotorID);
     liftMotor.setInverted(Constants.intakeLiftMotorInverted);

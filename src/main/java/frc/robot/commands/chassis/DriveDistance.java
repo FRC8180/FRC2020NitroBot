@@ -18,13 +18,13 @@ public class DriveDistance extends CommandBase {
   private boolean ignore = true;
 
   Chassis chassis;
-  public DriveDistance(Chassis subsystem,double LeftDistance,double RightDistance) {
+  public DriveDistance(Chassis subsystem, double LeftDistance, double RightDistance) {
     chassis = subsystem;
     addRequirements(subsystem);
     chassis.LMotorPIDSetTolerance(turnsToPulse(0.2));
     chassis.RMotorPIDSetTolerance(turnsToPulse(0.2));
     chassis.LMotorPIDSetSetpoint(distaceToPulse(LeftDistance));
-    chassis.RMotorPIDSetSetpoint(distaceToPulse(LeftDistance));
+    chassis.RMotorPIDSetSetpoint(distaceToPulse(RightDistance));
   }
 
   @Override

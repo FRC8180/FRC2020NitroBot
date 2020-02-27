@@ -19,13 +19,13 @@ import frc.robot.subsystems.Chassis;
 public class BasicAuto extends SequentialCommandGroup {
   public BasicAuto(Chassis m_chassis) {
     super(
-      new DriveDistance(m_chassis,1,1), //go straight 2m
+      new DriveDistance(m_chassis,1,1), //go straight 1m
       new DriveAngle(m_chassis, 90),    //turn clockwise 90deg
-      new DriveDistance(m_chassis,1,1), //go straight 2m
+      new DriveDistance(m_chassis,1,1), //go straight 1m
       new DriveAngle(m_chassis, 90),    //turn clockwise 90deg
-      new DriveDistance(m_chassis,1,1), //go straight 2m
+      new DriveDistance(m_chassis,1,1), //go straight 1m
       new DriveAngle(m_chassis, 90),    //turn clockwise 90deg
-      new DriveDistance(m_chassis,1,1), //go straight 2m
+      new DriveDistance(m_chassis,1,1), //go straight 1m
       new DriveAngle(m_chassis, 90)     //turn clockwise 90deg
     );
   }

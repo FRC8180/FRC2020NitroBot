@@ -44,6 +44,9 @@ public final class Constants {
     public static final double axisLYScale = 1;
 
     
+
+
+    
     //Chassis Setting
     public static final byte chassisMotorRFID = 1; //ID
     public static final byte chassisMotorRBID = 2;  //ID
@@ -68,7 +71,7 @@ public final class Constants {
     public static final double chassisTurnPIDKp = 0.1;
     public static final double chassisTurnPIDKi = 0;
     public static final double chassisTurnPIDKd = 0.01;
-    public static final double chassisTurnPIDMaxOutputVoltage = 0;
+    public static final double chassisTurnPIDMaxOutputVoltage = 5;
 
     public static final double chassisVisionPIDKp = 0.025;
     public static final double chassisVisionPIDKi = 0;
@@ -79,6 +82,10 @@ public final class Constants {
     public static final double chassisMotorPIDKi = 0;
     public static final double chassisMotorPIDKd = 0;
     public static final double chassisMotorPIDMaxOutputVoltage = 5;
+
+
+
+
 
     //Shooter Setting
     public static final byte shooterContainerMotorID = 51;  //ID
@@ -102,43 +109,61 @@ public final class Constants {
     public static final boolean shooterLowerEncoderDirectionInverted = false;
     
     
+
+
+
     //Climber Setting
     public static final byte climberLiftMotorID = 11;       //ID
     public static final byte climberHookFrontMotorID = 12;  //ID
     public static final byte climberHookBackMotorID = 13;   //ID
     public static final boolean climberHookMotorInverted = false;
     public static final boolean climberLiftMotorInverted = false;
+
     public static final byte climberLiftTopLimitSwID = 0;
     public static final byte climberLiftBottomLimitSwID = 0;
     
+
+
+
+
     //Intake Setting
     public static final byte intakeLiftMotorID = 31; //ID
     public static final byte intakeSpinMotorID = 32; //ID
     public static final boolean intakeLiftMotorInverted = false;
     public static final boolean intakeSpinMotorInverted = false;
 
+    public static final double intakeLiftMotorGearRatio = 188;
+    public static final byte intakeLiftEncoderPinA = 0;
+    public static final byte intakeLiftEncoderPinB = 0;
+    public static final boolean intakeLiftEncoderInverted = false;
+    
     public static final double intakeLiftPIDKp = 0;
     public static final double intakeLiftPIDKi = 0;
     public static final double intakeLiftPIDKd = 0;
     public static final double intakeLiftPIDMaxOutputVoltage = 12;
 
-    public static final double intakeLiftMotorGearRatio = 188;
-    
-    public static final byte intakeLiftEncoderPinA = 0;
-    public static final byte intakeLiftEncoderPinB = 0;
-    public static final boolean intakeLiftEncoderInverted = false;
+    public static final byte intakeZeroLimitSwID = 0;
+
+
+
+
 
     //Spinner Setting
-    public static final byte spinnerZeroLimitSwID = 0;
     public static final byte spinnerLiftMotorID = 41; //ID
     public static final byte spinnerSpinMotorID = 42; //ID
     public static final boolean spinnerLiftMotorInverted = false;
     public static final boolean spinnerSpinMotorInverted = false;
 
-    //CPbot Setting
-    public static final byte CPRID = 1; //ID
-    public static final byte CPLID = 2; //ID
-    public static final byte CPLiftID = 3; //ID
-    public static final byte CPIntakeID = 4; //ID
+    public static final double spinnerLiftMotorGearRatio = 188;
+    public static final byte spinnerLiftEncoderPinA = 0;
+    public static final byte spinnerLiftEncoderPinB = 0;
+    public static final boolean spinnerLiftEncoderInverted = false;
+
+    public static final double spinnerLiftPIDKp = 0;
+    public static final double spinnerLiftPIDKi = 0;
+    public static final double spinnerLiftPIDKd = 0;
+    public static final double spinnerLiftPIDMaxOutputVoltage = 12;
+
+    public static final byte spinnerZeroLimitSwID = 0;
 
 }

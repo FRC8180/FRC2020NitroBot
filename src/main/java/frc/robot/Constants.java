@@ -117,6 +117,17 @@ public final class Constants {
     public static final boolean intakeLiftMotorInverted = false;
     public static final boolean intakeSpinMotorInverted = false;
 
+    public static final double intakeLiftPIDKp = 0;
+    public static final double intakeLiftPIDKi = 0;
+    public static final double intakeLiftPIDKd = 0;
+    public static final double intakeLiftPIDMaxOutputVoltage = 12;
+
+    public static final double intakeLiftMotorGearRatio = 188;
+    
+    public static final byte intakeLiftEncoderPinA = 0;
+    public static final byte intakeLiftEncoderPinB = 0;
+    public static final boolean intakeLiftEncoderInverted = false;
+
     //Spinner Setting
     public static final byte spinnerZeroLimitSwID = 0;
     public static final byte spinnerLiftMotorID = 41; //ID

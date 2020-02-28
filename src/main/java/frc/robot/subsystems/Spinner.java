@@ -17,6 +17,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import frc.robot.Constants;
+import com.revrobotics.ColorSensorV3;
+import com.revrobotics.ColorMatchResult;
+import com.revrobotics.ColorMatch;
+import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.I2C;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import edu.wpi.first.wpilibj.DriverStation;
 //import frc.robot.Robot;
 import frc.robot.Utility;
 
@@ -32,6 +39,14 @@ public class Spinner extends SubsystemBase {
   private Encoder liftEncoder;
   private DigitalInput zeroLimitSw;
 
+  private ColorSensorV3 m_colorSensor;
+  private ColorMatch colorMatcher;
+  private String gameData;
+  private boolean positionControlEnable;
+  private boolean rotationControlEnable;
+  private Color detectedColor;
+  private ColorMatchResult match;
+
   public Spinner() {
 
     liftPID = new PIDController(Constants.spinnerLiftPIDKp, Constants.spinnerLiftPIDKi, Constants.spinnerLiftPIDKd);
@@ -41,8 +56,20 @@ public class Spinner extends SubsystemBase {
     spinMotor = new WPI_VictorSPX(Constants.spinnerSpinMotorID);
     liftMotor.setInverted(Constants.spinnerLiftMotorInverted);
     spinMotor.setInverted(Constants.spinnerSpinMotorInverted);
+    m_colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+    colorMatcher = new ColorMatch();
 
     zeroLimitSw = new DigitalInput(Constants.spinnerZeroLimitSwID);
+
+    m_colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+    colorMatcher = new ColorMatch();
+    positionControlEnable = false;
+    rotationControlEnable = false;
+
+    colorMatcher.addColorMatch(Constants.kBlueTarget);
+    colorMatcher.addColorMatch(Constants.kGreenTarget);
+    colorMatcher.addColorMatch(Constants.kRedTarget);
+    colorMatcher.addColorMatch(Constants.kYellowTarget);
   }
 
   @Override
@@ -50,11 +77,51 @@ public class Spinner extends SubsystemBase {
     if(liftPIDEnable){
       liftPIDOutput(liftPID.calculate(liftPIDMeasurment(), liftPIDSetpoint));
     }
+    //gameData = DriverStation.getInstance().getGameSpecificMessage();
   }
 
   @Override
   public void setDefaultCommand(Command defaultCommand) {
     super.setDefaultCommand(defaultCommand);
+  }
+
+  public String getGameData(){
+    gameData = DriverStation.getInstance().getGameSpecificMessage();
+    return gameData;
+  }
+
+  public Color getColor(){
+    detectedColor = m_colorSensor.getColor();
+    return detectedColor;
+  }
+
+  public ColorMatchResult match(Color detected) {
+    match = colorMatcher.matchClosestColor(detected);
+    return match;
+  }
+
+  public void positionControlEnable(){
+    positionControlEnable = true;
+  }
+
+  public boolean positionControlIsEnable(){
+    return positionControlEnable;
+  }
+
+  public void positionControlDisable(){
+    positionControlEnable = false;
+  }
+
+  public boolean rotationControlIsEnable(){
+    return rotationControlEnable;
+  }
+  
+  public void rotationControlEnable(){
+    rotationControlEnable = true;
+  }
+
+  public void rotationControlDisable(){
+    rotationControlEnable = false;
   }
 
   public void setLiftMotorSpeed(double spd){
@@ -75,7 +142,7 @@ public class Spinner extends SubsystemBase {
   }
 
   public void setSpinMotorSpeed(double spd){
-    spinMotor.set(0);
+    spinMotor.set(spd);
   }
   public void setSpinMotorVoltage(double voltage){
     spinMotor.setVoltage(voltage);

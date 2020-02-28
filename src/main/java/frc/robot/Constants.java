@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+import edu.wpi.first.wpilibj.util.Color;
+import com.revrobotics.ColorMatch;
 
 public final class Constants {
     //Joystick index defined
@@ -153,6 +155,7 @@ public final class Constants {
     public static final byte spinnerSpinMotorID = 42; //ID
     public static final boolean spinnerLiftMotorInverted = false;
     public static final boolean spinnerSpinMotorInverted = false;
+    public static final double spinnerSpinMotorSpd = 1;
 
     public static final double spinnerLiftMotorGearRatio = 188;
     public static final byte spinnerLiftEncoderPinA = 0;
@@ -166,4 +169,8 @@ public final class Constants {
 
     public static final byte spinnerZeroLimitSwID = 0;
 
+    public static final Color kBlueTarget = ColorMatch.makeColor(0.103, 0.404, 0.491);   
+    public static final Color kGreenTarget = ColorMatch.makeColor(0.145, 0.598, 0.256);  
+    public static final Color kRedTarget = ColorMatch.makeColor(0.515, 0.353, 0.126);   
+    public static final Color kYellowTarget = ColorMatch.makeColor(0.341, 0.557, 0.100); 
 }

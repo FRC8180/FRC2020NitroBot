@@ -31,8 +31,7 @@ public class BasicShoot extends CommandBase {
   @Override
   public void execute() {
     double BLT = Robot.m_oi.getBRawAxis(Constants.axisLT);
-    double ALX = Robot.m_oi.getARawAxis(Constants.axisJLX);
-
+  
     if(Math.abs(BLT) > Constants.joystickDeadZone){
       shooter.setFeedMotorSpeed(0.3);
       shooter.setUpperMotorSpeed(1);
@@ -43,23 +42,17 @@ public class BasicShoot extends CommandBase {
       shooter.setLowerMotorSpeed(0);     
     }
 
+    
+    double ALX = Robot.m_oi.getARawAxis(Constants.axisJLX);
     if(Math.abs(ALX) > Constants.joystickDeadZone){
-      shooter.setContainerMotorSpeed(ALX);
+      if(ALX > 1){
+        shooter.setContainerMotorSpeed(1);
+      }else if(ALX < 1){
+        shooter.setContainerMotorSpeed(-1);
+      }
     }else{
-      shooter.setContainerMotorSpeed(0);
+      shooter.setContainerMotorStop();
     }
-
-    /*
-    double upperSpeed = Robot.m_oi.getRawAxis(Constants.axisRT);
-    double lowerSpeed = Robot.m_oi.getRawAxis(Constants.axisLT);
-    SmartDashboard.putNumber("upperSpeed", upperSpeed);
-    SmartDashboard.putNumber("lowerSpeed", lowerSpeed);
-    shooter.setUpperSpeed(upperSpeed);
-    shooter.setLowerSpeed(lowerSpeed);
-    SmartDashboard.putNumber("upperNowSpeed", shooter.getUpperPIDMeasurment());
-    SmartDashboard.putNumber("lowerNowSpeed", shooter.getLowerPIDMeasurment());
-    SmartDashboard.putBoolean("Status", true);
-    */
   }
 
   @Override

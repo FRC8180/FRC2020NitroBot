@@ -20,7 +20,7 @@ import frc.robot.commands.shooter.BasicShoot;
 import frc.robot.commands.spinner.BasicSpin;
 
 import frc.robot.subsystems.*;
-
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
@@ -31,32 +31,32 @@ public class RobotContainer {
 
   // Subsystem defined
   private final Chassis m_chassis = new Chassis();
-  private final Climber m_climber = new Climber();
-  private final Intake  m_intake  = new Intake();
-  private final Shooter m_shooter = new Shooter();
-  private final Spinner m_spinner = new Spinner();
+  //private final Climber m_climber = new Climber();
+  //private final Intake  m_intake  = new Intake();
+  //private final Shooter m_shooter = new Shooter();
+  //private final Spinner m_spinner = new Spinner();
 
   // Command defined
   private final BasicAuto m_basicAuto = new BasicAuto(m_chassis);
   
   // m_chassis
-  private final BasicDrive m_basicDrive = new BasicDrive(m_chassis);
+  //private final BasicDrive m_basicDrive = new BasicDrive(m_chassis);//TestOk
   private final AssistDrive m_assistDrive = new AssistDrive(m_chassis);
-  private final AimDrive m_aimDrive = new AimDrive(m_chassis);
+  //private final AimDrive m_aimDrive = new AimDrive(m_chassis);
 
   // m_climber
   //private final BasicClimb m_basicClimb = new BasicClimb(m_climber);
 
   // m_Intake
-  private final BasicIntake m_basicIntake = new BasicIntake(m_intake);
+  //private final BasicIntake m_basicIntake = new BasicIntake(m_intake);
 
   // m_shooter
-  private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
-  private final BasicShoot m_basicShoot = new BasicShoot(m_shooter);
+  //private final BasicPIDShoot m_basicPIDShoot = new BasicPIDShoot(m_shooter);
+  //private final BasicShoot m_basicShoot = new BasicShoot(m_shooter);
   //private final MeasureShoot m_measureShoot = new MeasureShoot(m_shooter);
 
   // m_spinner
-  private final BasicSpin m_basicSpin = new BasicSpin(m_spinner);
+  //private final BasicSpin m_basicSpin = new BasicSpin(m_spinner);
 
   // m_cp
   //private final BasicCp m_BasicCp = new BasicCp(m_cpbot);
@@ -79,7 +79,7 @@ public class RobotContainer {
     //configureButtonBindings();
     // Set Default Command!
     //m_cp.setDefaultCommand(m_wholecp);
-    //m_chassis.setDefaultCommand(m_distanceDrive);
+    m_chassis.setDefaultCommand(m_assistDrive);
     // m_climber.setDefaultCommand(m_basicClimb);
     //m_intake.setDefaultCommand();
     //m_shooter.setDefaultCommand(m_basicShoot);
@@ -88,18 +88,15 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     //Trig command defined here!!!!
-
-    buttonB.whenPressed(m_basicAuto);//autonomous command test v0.1 becareful!!!!
-    
+    //buttonB.whenPressed(m_basicAuto);//autonomous command test v0.1 becareful!!!!
     //buttonX.whenPressed(() -> m_chassis.(func));
   }
 
-  /*
+  
   public Command getAutonomousCommand() {
-     //An ExampleCommand will run in autonomous
-    //return m_autoCommand;
+    return m_basicAuto;
   }
-  */
+  
   
 
   //Joystick-A

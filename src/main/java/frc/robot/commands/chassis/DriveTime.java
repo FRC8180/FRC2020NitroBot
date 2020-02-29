@@ -21,19 +21,24 @@ public class DriveTime extends CommandBase {
 
   Chassis chassis;
   public DriveTime(Chassis subsystem, Double time, Double Lspd, Double Rspd) {
+    System.out.print("Here");
     chassis = subsystem;
     addRequirements(subsystem);
+    this.time = time; 
+    this.Lspd = Lspd;
+    this.Rspd = Rspd;
     timer = new Timer();
+  }
+
+  @Override
+  public void initialize() {
     timer.reset();
     timer.start();
   }
 
   @Override
-  public void initialize() {
-  }
-
-  @Override
   public void execute() {
+    System.out.println(timer.get());
     chassis.setLeftMotorSpeed(Lspd);
     chassis.setRightMotorSpeed(Rspd);
   }

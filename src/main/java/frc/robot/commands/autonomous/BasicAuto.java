@@ -20,15 +20,18 @@ import frc.robot.subsystems.Chassis;
 public class BasicAuto extends SequentialCommandGroup {
   public BasicAuto(Chassis m_chassis) {
     super(
-      new DriveTime(m_chassis, 1.0, 0.2, 0.2), //Set Motor Left Speed 0.2, Right Speed 0.2 and Drive 1 Second 
-      new DriveDistance(m_chassis,1,1), //go straight 1m
-      new DriveAngle(m_chassis, 90),    //turn clockwise 90deg
-      new DriveDistance(m_chassis,1,1), //go straight 1m
-      new DriveAngle(m_chassis, 90),    //turn clockwise 90deg
-      new DriveDistance(m_chassis,1,1), //go straight 1m
-      new DriveAngle(m_chassis, 90),    //turn clockwise 90deg
-      new DriveDistance(m_chassis,1,1), //go straight 1m
-      new DriveAngle(m_chassis, 90)     //turn clockwise 90deg
+      new DriveTime(m_chassis, 2.0, 0.0, 0.0), //Set Motor Left Speed 0.2, Right Speed 0.2 and Drive 1 Second
+      new DriveTime(m_chassis, 2.0, 1.0, -1.0),
+      new DriveTime(m_chassis, 2.0, -1.0, -1.0),
+      new DriveTime(m_chassis, 2.0, -1.0, 1.0)
+      //new DriveDistance(m_chassis,1,1), //go straight 1m
+      //new DriveAngle(m_chassis, 90),    //turn clockwise 90deg
+      //new DriveDistance(m_chassis,1,1), //go straight 1m
+      //new DriveAngle(m_chassis, 90),    //turn clockwise 90deg
+      //new DriveDistance(m_chassis,1,1), //go straight 1m
+      //new DriveAngle(m_chassis, 90),    //turn clockwise 90deg
+      //new DriveDistance(m_chassis,1,1), //go straight 1m
+      //new DriveAngle(m_chassis, 90)     //turn clockwise 90deg
     );
   }
 }

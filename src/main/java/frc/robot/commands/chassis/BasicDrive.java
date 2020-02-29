@@ -35,6 +35,7 @@ public class BasicDrive extends CommandBase {
   
   @Override
   public void end(boolean interrupted) {
+    chassis.setMotorStop();
   }
 
   @Override

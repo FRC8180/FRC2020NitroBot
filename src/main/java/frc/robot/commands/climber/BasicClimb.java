@@ -27,26 +27,26 @@ public class BasicClimb extends CommandBase {
 
   @Override
   public void execute() {
-
-    double LY = Robot.m_oi.getBRawAxis(Constants.axisJLY);
-    double RY = Robot.m_oi.getBRawAxis(Constants.axisJRY);
-
-    if(Math.abs(LY) > Constants.joystickDeadZone){
-      climber.setHookMotorSpeed(LY);
-    }else{
-      climber.setHookMotorSpeed(0);
+    if(Robot.m_oi.getBRawButton(Constants.buttonB)){
+      climber.setHookMotorSpeed(1);
     }
 
+    double RY = Robot.m_oi.getBRawAxis(Constants.axisJRY);
     if(Math.abs(RY) > Constants.joystickDeadZone){
       climber.setLiftMotorSpeed(RY);
+    }else if(RY > 0){
+      climber.setLiftMotorSpeed(1);
+    }else if(RY < 0){
+      climber.setLiftMotorSpeed(-1);
     }else{
       climber.setLiftMotorSpeed(0);
     }
-    
   }
 
   @Override
   public void end(boolean interrupted) {
+    climber.setHookMotorStop();
+    climber.setLiftMotorStop();
   }
 
   @Override

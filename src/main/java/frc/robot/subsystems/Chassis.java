@@ -68,7 +68,7 @@ public class Chassis extends SubsystemBase {
     motorRF.setInverted(Constants.chassisMotorRInverted);
     motorLF.setInverted(Constants.chassisMotorLInverted);
     motorRB.follow(motorRF);
-    motorLB.follow(motorLB);
+    motorLB.follow(motorLF);
 
     navx = new AHRS(SPI.Port.kMXP);
     navx.reset();
@@ -79,6 +79,7 @@ public class Chassis extends SubsystemBase {
   @Override
   public void periodic() {
 
+    /*
     //Used by "AssistDrive"
     if(headingPIDEnable){
       headingPIDOutput(headingPID.calculate(headingPIDMeasurment(), headingPIDSetpoint));
@@ -100,6 +101,7 @@ public class Chassis extends SubsystemBase {
     if(turnPIDEnable){
       turnPIDOutput(turnPID.calculate(turnPIDMeasurment(), turnPIDSetpoint));
     }
+    */
 
   }
 
